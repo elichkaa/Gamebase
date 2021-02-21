@@ -1,0 +1,99 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Data", "Gamebase.Data\Gamebase.Data.csproj", "{24B8E02E-C74E-4294-97D9-EDB33891246E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Models", "Gamebase.Models\Gamebase.Models.csproj", "{961814C0-B392-46DB-AB91-3F06B174499F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Services", "Gamebase.Services\Gamebase.Services.csproj", "{2649DCCC-45FC-4432-81BB-35C240E47530}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{9AC26D38-2DAE-4FBB-B664-776E406DAD1D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5D94C917-EC12-49D2-A441-46673735B431}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Data.Services", "Gamebase.Data.Services\Gamebase.Data.Services.csproj", "{BC84E430-9096-4EE4-98E6-B85F50758558}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C9CF93AF-7BA7-4E05-A6F3-976FF6A51624}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{30271150-7B01-4419-9485-1F54A2D32965}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Services.Mapping", "Gamebase.Services.Mapping\Gamebase.Services.Mapping.csproj", "{441FED0F-3A99-4E93-B185-3E2457D47552}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Services.Tests", "Gamebase.Services.Tests\Gamebase.Services.Tests.csproj", "{B1F7C6FE-DC40-49E8-AFB0-A2B850A575BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Web.Tests", "Gamebase.Web.Tests\Gamebase.Web.Tests.csproj", "{4D9C0050-7812-4DC5-880F-3E88E7F4217A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Web.ViewModels", "Gamebase.Web.ViewModels\Gamebase.Web.ViewModels.csproj", "{5C61A7AC-1815-4478-A411-6108DA741DEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Web.InputModels", "Gamebase.Web.InputModels\Gamebase.Web.InputModels.csproj", "{C6EEAD24-028E-4C8F-BD2A-A9D601C442C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Web", "Gamebase.Web\Gamebase.Web.csproj", "{C8515FDB-9DFE-4392-BC83-C49DB547807A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24B8E02E-C74E-4294-97D9-EDB33891246E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24B8E02E-C74E-4294-97D9-EDB33891246E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24B8E02E-C74E-4294-97D9-EDB33891246E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24B8E02E-C74E-4294-97D9-EDB33891246E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{961814C0-B392-46DB-AB91-3F06B174499F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{961814C0-B392-46DB-AB91-3F06B174499F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{961814C0-B392-46DB-AB91-3F06B174499F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{961814C0-B392-46DB-AB91-3F06B174499F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2649DCCC-45FC-4432-81BB-35C240E47530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2649DCCC-45FC-4432-81BB-35C240E47530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2649DCCC-45FC-4432-81BB-35C240E47530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2649DCCC-45FC-4432-81BB-35C240E47530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC84E430-9096-4EE4-98E6-B85F50758558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC84E430-9096-4EE4-98E6-B85F50758558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC84E430-9096-4EE4-98E6-B85F50758558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC84E430-9096-4EE4-98E6-B85F50758558}.Release|Any CPU.Build.0 = Release|Any CPU
+		{441FED0F-3A99-4E93-B185-3E2457D47552}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{441FED0F-3A99-4E93-B185-3E2457D47552}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{441FED0F-3A99-4E93-B185-3E2457D47552}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{441FED0F-3A99-4E93-B185-3E2457D47552}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1F7C6FE-DC40-49E8-AFB0-A2B850A575BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F7C6FE-DC40-49E8-AFB0-A2B850A575BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F7C6FE-DC40-49E8-AFB0-A2B850A575BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F7C6FE-DC40-49E8-AFB0-A2B850A575BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D9C0050-7812-4DC5-880F-3E88E7F4217A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D9C0050-7812-4DC5-880F-3E88E7F4217A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D9C0050-7812-4DC5-880F-3E88E7F4217A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D9C0050-7812-4DC5-880F-3E88E7F4217A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C61A7AC-1815-4478-A411-6108DA741DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C61A7AC-1815-4478-A411-6108DA741DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C61A7AC-1815-4478-A411-6108DA741DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C61A7AC-1815-4478-A411-6108DA741DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6EEAD24-028E-4C8F-BD2A-A9D601C442C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6EEAD24-028E-4C8F-BD2A-A9D601C442C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6EEAD24-028E-4C8F-BD2A-A9D601C442C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6EEAD24-028E-4C8F-BD2A-A9D601C442C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8515FDB-9DFE-4392-BC83-C49DB547807A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8515FDB-9DFE-4392-BC83-C49DB547807A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8515FDB-9DFE-4392-BC83-C49DB547807A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8515FDB-9DFE-4392-BC83-C49DB547807A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{24B8E02E-C74E-4294-97D9-EDB33891246E} = {9AC26D38-2DAE-4FBB-B664-776E406DAD1D}
+		{961814C0-B392-46DB-AB91-3F06B174499F} = {9AC26D38-2DAE-4FBB-B664-776E406DAD1D}
+		{2649DCCC-45FC-4432-81BB-35C240E47530} = {5D94C917-EC12-49D2-A441-46673735B431}
+		{BC84E430-9096-4EE4-98E6-B85F50758558} = {5D94C917-EC12-49D2-A441-46673735B431}
+		{441FED0F-3A99-4E93-B185-3E2457D47552} = {5D94C917-EC12-49D2-A441-46673735B431}
+		{B1F7C6FE-DC40-49E8-AFB0-A2B850A575BF} = {30271150-7B01-4419-9485-1F54A2D32965}
+		{4D9C0050-7812-4DC5-880F-3E88E7F4217A} = {30271150-7B01-4419-9485-1F54A2D32965}
+		{5C61A7AC-1815-4478-A411-6108DA741DEB} = {C9CF93AF-7BA7-4E05-A6F3-976FF6A51624}
+		{C6EEAD24-028E-4C8F-BD2A-A9D601C442C7} = {C9CF93AF-7BA7-4E05-A6F3-976FF6A51624}
+		{C8515FDB-9DFE-4392-BC83-C49DB547807A} = {C9CF93AF-7BA7-4E05-A6F3-976FF6A51624}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2E3AE7C-E307-49AE-B35D-07779726E54A}
+	EndGlobalSection
+EndGlobal
