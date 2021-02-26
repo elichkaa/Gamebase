@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\Gamebase.Data\Gamebase.Data.csproj" />
+    <ProjectReference Include="..\..\Data\Gamebase.Models\Gamebase.Models.csproj" />
+  </ItemGroup>
+
 </Project>
