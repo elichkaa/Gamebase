@@ -27,4 +27,8 @@
     <ProjectReference Include="..\..\Data\Gamebase.Data\Gamebase.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+
 </Project>

@@ -19,7 +19,6 @@
         public async Task SeedGames()
         {
             var client = new RestClient("https://api.igdb.com/v4/");
-            var gameNames = new List<string>();
             for (int i = 1; i <= 100; i++)
             {
                 var request = this.CreateRequest("games", $"fields *; where id = {i};");

@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "defaultProvider": "filesystem",
+  "libraries": [
+    {
+      "library": "node_modules/bootstrap/dist/css/bootstrap.min.css",
+      "destination": "wwwroot/lib/bootstrap/css"
+    },
+    {
+      "library": "node_modules/bootstrap/dist/js/bootstrap.min.js",
+      "destination": "wwwroot/lib/bootstrap/js"
+    },
+    {
+      "library": "node_modules/jquery/dist/jquery.min.js",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "node_modules/animate.css/animate.css",
+      "destination": "wwwroot/lib/animate/"
+    },
+    {
+      "library": "node_modules/font-awesome/css/font-awesome.min.css",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
+      "destination": "wwwroot/lib/owlcarousel/"
+    },
+    {
+      "library": "node_modules/owl.carousel/dist/owl.carousel.min.js",
+      "destination": "wwwroot/lib/owlcarousel/"
+    },
+    {
+      "library": "node_modules/jquery.marquee/jquery.marquee.min.js",
+      "destination": "wwwroot/lib/jquery.marquee/"
+    }
+  ]
+}

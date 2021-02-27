@@ -1,0 +1,19 @@
+{
+  "name": "gamebase.web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "bootstrap": "^4.6.0",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.5.1",
+    "jquery.marquee": "^1.6.0",
+    "owl.carousel": "^2.3.4"
+  }
+}
