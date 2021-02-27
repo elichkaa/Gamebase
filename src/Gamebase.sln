@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C9CF93AF-7BA7-4E05-A6F3-976FF6A51624}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gamebase.Web", "Web\Gamebase.Web\Gamebase.Web.csproj", "{C8515FDB-9DFE-4392-BC83-C49DB547807A}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gamebase.Data", "Data\Gamebase.Data\Gamebase.Data.csproj", "{24B8E02E-C74E-4294-97D9-EDB33891246E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gamebase.Models", "Data\Gamebase.Models\Gamebase.Models.csproj", "{961814C0-B392-46DB-AB91-3F06B174499F}"
@@ -14,8 +18,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5D94C917-EC12-49D2-A441-46673735B431}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gamebase.Data.Services", "Services\Gamebase.Data.Services\Gamebase.Data.Services.csproj", "{BC84E430-9096-4EE4-98E6-B85F50758558}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C9CF93AF-7BA7-4E05-A6F3-976FF6A51624}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{30271150-7B01-4419-9485-1F54A2D32965}"
 EndProject
@@ -29,9 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gamebase.Web.ViewModels", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gamebase.Web.InputModels", "Web\Gamebase.Web.InputModels\Gamebase.Web.InputModels.csproj", "{C6EEAD24-028E-4C8F-BD2A-A9D601C442C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gamebase.Web", "Web\Gamebase.Web\Gamebase.Web.csproj", "{C8515FDB-9DFE-4392-BC83-C49DB547807A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Scraper", "Gamebase.Scraper\Gamebase.Scraper.csproj", "{0E9643BF-8E04-4A42-A1D5-84575F04E036}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamebase.Scraper", "Data\Gamebase.Scraper\Gamebase.Scraper.csproj", "{0E9643BF-8E04-4A42-A1D5-84575F04E036}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
