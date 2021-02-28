@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using RestSharp;
+    using Scraping;
 
     public class Seeder : ISeeder
     {

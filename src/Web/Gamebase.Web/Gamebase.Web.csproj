@@ -26,6 +26,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\Gamebase.Data\Gamebase.Data.csproj" />
+    <ProjectReference Include="..\..\Gamebase.Scraping\Gamebase.Services.Scraping.csproj" />
+    <ProjectReference Include="..\..\Services\Gamebase.Services.Scraping\Gamebase.Services.Scraping.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,5 +44,5 @@
     <Exec WorkingDirectory="$(SolutionDir)/Web/Gamebase.Web" Command="npm install" />
   </Target>
 
-  <ProjectExtensions><VisualStudio><UserProperties NpmRestoreOnPackageJsonSave="True" NpmRestoreOnProjectOpen="True" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings" NpmRestoreOnPackageJsonSave="True" NpmRestoreOnProjectOpen="True" /></VisualStudio></ProjectExtensions>
 </Project>

@@ -1,20 +1,15 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace Gamebase.Web
 {
+    using Microsoft.AspNetCore.Builder;
     using Data;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Scraper;
+    using Scraping;
 
     public class Startup
     {
@@ -33,9 +28,18 @@ namespace Gamebase.Web
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            var settings = new ConfigSettings
+            {
+                ClientId = Configuration["ConfigSettings:Client-ID"],
+                Authorization = Configuration["ConfigSettings:Authorization"]
+            };
+            services.AddSingleton(settings);
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<GamebaseDbContext>();
             services.AddControllersWithViews();
+
+            services.AddTransient<ISeeder>(x => new Seeder(settings));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
