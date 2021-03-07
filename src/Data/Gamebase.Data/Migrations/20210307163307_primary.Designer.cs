@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gamebase.Data.Migrations
 {
     [DbContext(typeof(GamebaseDbContext))]
-    [Migration("20210306214433_secondary")]
-    partial class secondary
+    [Migration("20210307163307_primary")]
+    partial class primary
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,8 +58,8 @@ namespace Gamebase.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(50)
@@ -107,6 +107,9 @@ namespace Gamebase.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -126,16 +129,16 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("CoverId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DeveloperId")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DeveloperId1")
+                    b.Property<int>("DeveloperId")
                         .HasColumnType("int");
 
                     b.Property<int>("FranchiseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GenreId")
+                    b.Property<int>("GameEngineId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -144,13 +147,46 @@ namespace Gamebase.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeveloperId1");
+                    b.HasIndex("DeveloperId");
 
                     b.HasIndex("FranchiseId");
 
-                    b.HasIndex("GenreId");
+                    b.HasIndex("GameEngineId");
 
                     b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GameEngine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GameEngines");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GameGenre", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("GameGenres");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Genre", b =>
@@ -159,6 +195,9 @@ namespace Gamebase.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -421,8 +460,10 @@ namespace Gamebase.Data.Migrations
             modelBuilder.Entity("Gamebase.Models.Game", b =>
                 {
                     b.HasOne("Gamebase.Models.Developer", "Developer")
-                        .WithMany()
-                        .HasForeignKey("DeveloperId1");
+                        .WithMany("Games")
+                        .HasForeignKey("DeveloperId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Gamebase.Models.Franchise", "Franchise")
                         .WithMany("Games")
@@ -430,9 +471,9 @@ namespace Gamebase.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Gamebase.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId")
+                    b.HasOne("Gamebase.Models.GameEngine", "GameEngine")
+                        .WithMany("Games")
+                        .HasForeignKey("GameEngineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -440,13 +481,32 @@ namespace Gamebase.Data.Migrations
 
                     b.Navigation("Franchise");
 
+                    b.Navigation("GameEngine");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GameGenre", b =>
+                {
+                    b.HasOne("Gamebase.Models.Game", "Game")
+                        .WithMany("GameGenres")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gamebase.Models.Genre", "Genre")
+                        .WithMany("GameGenres")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
                     b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Screenshot", b =>
                 {
                     b.HasOne("Gamebase.Models.Game", "Game")
-                        .WithMany()
+                        .WithMany("Screenshots")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -508,6 +568,8 @@ namespace Gamebase.Data.Migrations
             modelBuilder.Entity("Gamebase.Models.Developer", b =>
                 {
                     b.Navigation("DeveloperLogo");
+
+                    b.Navigation("Games");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Franchise", b =>
@@ -518,6 +580,20 @@ namespace Gamebase.Data.Migrations
             modelBuilder.Entity("Gamebase.Models.Game", b =>
                 {
                     b.Navigation("Cover");
+
+                    b.Navigation("GameGenres");
+
+                    b.Navigation("Screenshots");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GameEngine", b =>
+                {
+                    b.Navigation("Games");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.Genre", b =>
+                {
+                    b.Navigation("GameGenres");
                 });
 #pragma warning restore 612, 618
         }

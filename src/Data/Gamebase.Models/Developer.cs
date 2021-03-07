@@ -12,8 +12,9 @@ namespace Gamebase.Models
         public int Id { get; set; }
         [MaxLength(50)]
         public string Name { get; set; }
-        public int GameId { get; set; }
+        public string Description { get; set; }
         public DeveloperLogo DeveloperLogo { get; set; }
-        public ICollection<Game> Games;
+        public ICollection<Game> Games { get; set; }
+        public ICollection<DLC> DLCs{ get; set; }
     }
 }

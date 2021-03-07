@@ -19,6 +19,56 @@ namespace Gamebase.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Gamebase.Models.Character", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Characters");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.CharacterImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Animated")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Height")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Width")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("CharacterImages");
+                });
+
             modelBuilder.Entity("Gamebase.Models.Cover", b =>
                 {
                     b.Property<int>("Id")
@@ -49,6 +99,52 @@ namespace Gamebase.Data.Migrations
                     b.ToTable("Covers");
                 });
 
+            modelBuilder.Entity("Gamebase.Models.DLC", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Descritption")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DeveloperId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Name")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeveloperId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("DLCs");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.DLCCharacter", b =>
+                {
+                    b.Property<int>("DLCId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DLCId", "CharacterId");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("DLCCharacters");
+                });
+
             modelBuilder.Entity("Gamebase.Models.Developer", b =>
                 {
                     b.Property<int>("Id")
@@ -56,8 +152,8 @@ namespace Gamebase.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(50)
@@ -105,6 +201,9 @@ namespace Gamebase.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -124,31 +223,103 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("CoverId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DeveloperId")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DeveloperId1")
+                    b.Property<int>("DeveloperId")
                         .HasColumnType("int");
 
                     b.Property<int>("FranchiseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GenreId")
+                    b.Property<int>("GameEngineId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("HasMultiplayer")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("DeveloperId1");
+                    b.HasIndex("DeveloperId");
 
                     b.HasIndex("FranchiseId");
 
-                    b.HasIndex("GenreId");
+                    b.HasIndex("GameEngineId");
 
                     b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GameCharacter", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "CharacterId");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("GameCharacters");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GameEngine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GameEngines");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GameGenre", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("GameGenres");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GamePlatform", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "PlatformId");
+
+                    b.HasIndex("PlatformId");
+
+                    b.ToTable("GamePlatforms");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Genre", b =>
@@ -158,12 +329,36 @@ namespace Gamebase.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.Platform", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Platforms");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Screenshot", b =>
@@ -394,6 +589,17 @@ namespace Gamebase.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Gamebase.Models.CharacterImage", b =>
+                {
+                    b.HasOne("Gamebase.Models.Character", "Character")
+                        .WithMany("CharacterImages")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+                });
+
             modelBuilder.Entity("Gamebase.Models.Cover", b =>
                 {
                     b.HasOne("Gamebase.Models.Game", "Game")
@@ -403,6 +609,40 @@ namespace Gamebase.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.DLC", b =>
+                {
+                    b.HasOne("Gamebase.Models.Developer", "Developer")
+                        .WithMany("DLCs")
+                        .HasForeignKey("DeveloperId");
+
+                    b.HasOne("Gamebase.Models.Game", "Game")
+                        .WithMany("DLCs")
+                        .HasForeignKey("GameId");
+
+                    b.Navigation("Developer");
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.DLCCharacter", b =>
+                {
+                    b.HasOne("Gamebase.Models.Character", "Character")
+                        .WithMany("DLCCharacters")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gamebase.Models.DLC", "DLC")
+                        .WithMany("DLCCharacters")
+                        .HasForeignKey("DLCId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("DLC");
                 });
 
             modelBuilder.Entity("Gamebase.Models.DeveloperLogo", b =>
@@ -419,8 +659,10 @@ namespace Gamebase.Data.Migrations
             modelBuilder.Entity("Gamebase.Models.Game", b =>
                 {
                     b.HasOne("Gamebase.Models.Developer", "Developer")
-                        .WithMany()
-                        .HasForeignKey("DeveloperId1");
+                        .WithMany("Games")
+                        .HasForeignKey("DeveloperId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Gamebase.Models.Franchise", "Franchise")
                         .WithMany("Games")
@@ -428,9 +670,9 @@ namespace Gamebase.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Gamebase.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId")
+                    b.HasOne("Gamebase.Models.GameEngine", "GameEngine")
+                        .WithMany("Games")
+                        .HasForeignKey("GameEngineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -438,13 +680,70 @@ namespace Gamebase.Data.Migrations
 
                     b.Navigation("Franchise");
 
+                    b.Navigation("GameEngine");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GameCharacter", b =>
+                {
+                    b.HasOne("Gamebase.Models.Character", "Character")
+                        .WithMany("GameCharacters")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gamebase.Models.Game", "Game")
+                        .WithMany("GameCharacters")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GameGenre", b =>
+                {
+                    b.HasOne("Gamebase.Models.Game", "Game")
+                        .WithMany("GameGenres")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gamebase.Models.Genre", "Genre")
+                        .WithMany("GameGenres")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
                     b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GamePlatform", b =>
+                {
+                    b.HasOne("Gamebase.Models.Game", "Game")
+                        .WithMany("GamePlatforms")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gamebase.Models.Platform", "Platform")
+                        .WithMany("GamePlatforms")
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("Platform");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Screenshot", b =>
                 {
                     b.HasOne("Gamebase.Models.Game", "Game")
-                        .WithMany()
+                        .WithMany("Screenshots")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -503,9 +802,27 @@ namespace Gamebase.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Gamebase.Models.Character", b =>
+                {
+                    b.Navigation("CharacterImages");
+
+                    b.Navigation("DLCCharacters");
+
+                    b.Navigation("GameCharacters");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.DLC", b =>
+                {
+                    b.Navigation("DLCCharacters");
+                });
+
             modelBuilder.Entity("Gamebase.Models.Developer", b =>
                 {
                     b.Navigation("DeveloperLogo");
+
+                    b.Navigation("DLCs");
+
+                    b.Navigation("Games");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Franchise", b =>
@@ -516,6 +833,31 @@ namespace Gamebase.Data.Migrations
             modelBuilder.Entity("Gamebase.Models.Game", b =>
                 {
                     b.Navigation("Cover");
+
+                    b.Navigation("DLCs");
+
+                    b.Navigation("GameCharacters");
+
+                    b.Navigation("GameGenres");
+
+                    b.Navigation("GamePlatforms");
+
+                    b.Navigation("Screenshots");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GameEngine", b =>
+                {
+                    b.Navigation("Games");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.Genre", b =>
+                {
+                    b.Navigation("GameGenres");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.Platform", b =>
+                {
+                    b.Navigation("GamePlatforms");
                 });
 #pragma warning restore 612, 618
         }

@@ -53,7 +53,7 @@ namespace Gamebase.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    DeveloperId = table.Column<int>(type: "int", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,11 +66,26 @@ namespace Gamebase.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Franchises", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameEngines",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameEngines", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,7 +94,8 @@ namespace Gamebase.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -222,10 +238,11 @@ namespace Gamebase.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeveloperId = table.Column<int>(type: "int", nullable: false),
                     FranchiseId = table.Column<int>(type: "int", nullable: false),
                     CoverId = table.Column<int>(type: "int", nullable: false),
-                    GenreId = table.Column<int>(type: "int", nullable: false)
+                    GameEngineId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -243,9 +260,9 @@ namespace Gamebase.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Games_Genres_GenreId",
-                        column: x => x.GenreId,
-                        principalTable: "Genres",
+                        name: "FK_Games_GameEngines_GameEngineId",
+                        column: x => x.GameEngineId,
+                        principalTable: "GameEngines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -269,6 +286,30 @@ namespace Gamebase.Data.Migrations
                         name: "FK_Covers_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameGenres",
+                columns: table => new
+                {
+                    GameId = table.Column<int>(type: "int", nullable: false),
+                    GenreId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameGenres", x => new { x.GameId, x.GenreId });
+                    table.ForeignKey(
+                        name: "FK_GameGenres_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GameGenres_Genres_GenreId",
+                        column: x => x.GenreId,
+                        principalTable: "Genres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -349,6 +390,11 @@ namespace Gamebase.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_GameGenres_GenreId",
+                table: "GameGenres",
+                column: "GenreId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Games_DeveloperId",
                 table: "Games",
                 column: "DeveloperId");
@@ -359,9 +405,9 @@ namespace Gamebase.Data.Migrations
                 column: "FranchiseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Games_GenreId",
+                name: "IX_Games_GameEngineId",
                 table: "Games",
-                column: "GenreId");
+                column: "GameEngineId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Screenshots_GameId",
@@ -393,6 +439,9 @@ namespace Gamebase.Data.Migrations
                 name: "DeveloperLogos");
 
             migrationBuilder.DropTable(
+                name: "GameGenres");
+
+            migrationBuilder.DropTable(
                 name: "Screenshots");
 
             migrationBuilder.DropTable(
@@ -400,6 +449,9 @@ namespace Gamebase.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Genres");
 
             migrationBuilder.DropTable(
                 name: "Games");
@@ -411,7 +463,7 @@ namespace Gamebase.Data.Migrations
                 name: "Franchises");
 
             migrationBuilder.DropTable(
-                name: "Genres");
+                name: "GameEngines");
         }
     }
 }

@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Gamebase.Models
 {
-    public class Franchise
+    public class Platform
     {
         public int Id { get; set; }
-        [MaxLength(50)]
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Game> Games { get; set; }
+        public DateTime ReleaseDate { get; set; }
+        public ICollection<GamePlatform> GamePlatforms { get; set; }
     }
 }
