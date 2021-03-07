@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\Gamebase.Data\Gamebase.Data.csproj" />
-    <ProjectReference Include="..\..\Gamebase.Scraping\Gamebase.Services.Scraping.csproj" />
     <ProjectReference Include="..\..\Services\Gamebase.Services.Scraping\Gamebase.Services.Scraping.csproj" />
   </ItemGroup>
 
