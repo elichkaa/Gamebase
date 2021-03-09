@@ -6,12 +6,29 @@ using System.Threading.Tasks;
 
 namespace Gamebase.Models
 {
-    public class Platform
+    using Enums;
+    using Newtonsoft.Json;
+
+    public class Platform : BaseEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
+
         public DateTime ReleaseDate { get; set; }
-        public ICollection<GamePlatform> GamePlatforms { get; set; }
+
+        [JsonProperty("abbreviation")]
+        public string Abbreviation { get; set; }
+
+        [JsonProperty("alternative_name")]
+        public string AlternativeName { get; set; }
+
+        [JsonProperty("category")]
+        public PlatformCategoryEnum Category { get; set; }
+
+        [JsonProperty("summary")]
+        public string Summary { get; set; }
+
+        public ICollection<GamesPlatforms> Games { get; set; }
+
+        public ICollection<MultiplayerMode> MultiplayerModes { get; set; }
     }
 }

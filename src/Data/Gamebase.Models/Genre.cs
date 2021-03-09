@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Gamebase.Models
 {
-    public class Genre
+    public class Genre : BaseEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
 
-        public ICollection<GameGenre> GameGenres { get; set; }
+        public ICollection<GamesGenres> GameGenres { get; set; }
     }
 }

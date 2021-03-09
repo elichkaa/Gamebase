@@ -1,15 +1,16 @@
 ﻿namespace Gamebase.Playground
 {
+    using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
-    using Gamebase.Data;
-    using Gamebase.Scraping;
+    using Data;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using Scraper;
+    using Scraping;
+    using Services.Seeding;
 
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             IConfiguration settings = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
@@ -28,6 +29,9 @@
                 ClientId = settings.GetSection("ConfigSettings:Client-ID").Value,
                 Authorization = settings.GetSection("ConfigSettings:Authorization").Value,
             };
+
+            var seeder = new Seeder(apiConfigSettings, appDbContext);
+            await seeder.SeedGames();
         }
     }
 }

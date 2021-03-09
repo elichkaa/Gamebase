@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gamebase.Models
+﻿namespace Gamebase.Models
 {
-    public class GameEngine
+    using System;
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+
+    public class GameEngine : BaseEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
+
+        [JsonIgnore]
         public DateTime ReleaseDate { get; set; }
+
         public ICollection<Game> Games { get; set; }
     }
 }

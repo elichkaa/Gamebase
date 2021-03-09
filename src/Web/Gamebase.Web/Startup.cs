@@ -8,8 +8,8 @@ namespace Gamebase.Web
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using Scraper;
     using Scraping;
+    using Services.Seeding;
 
     public class Startup
     {
@@ -39,7 +39,7 @@ namespace Gamebase.Web
                 .AddEntityFrameworkStores<GamebaseDbContext>();
             services.AddControllersWithViews();
 
-            services.AddTransient<ISeeder>(x => new Seeder(settings));
+            //services.AddTransient<ISeeder>(x => new Seeder(settings));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

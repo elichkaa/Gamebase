@@ -1,15 +1,12 @@
 ﻿namespace Gamebase.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using Scraping;
 
     public class ImportController : Controller
     {
-        private readonly ISeeder seeder;
 
-        public ImportController(ISeeder seeder)
+        public ImportController()
         {
-            this.seeder = seeder;
         }
 
         public IActionResult Index()

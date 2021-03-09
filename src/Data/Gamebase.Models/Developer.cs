@@ -1,20 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gamebase.Models
+﻿namespace Gamebase.Models
 {
-    public class Developer
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Runtime.Serialization.Formatters;
+    using Newtonsoft.Json;
+
+    //company in api
+    public class Developer : BaseEntity
     {
-        public int Id { get; set; }
-        [MaxLength(50)]
-        public string Name { get; set; }
+        [JsonProperty("description")]
         public string Description { get; set; }
-        public DeveloperLogo DeveloperLogo { get; set; }
-        public ICollection<Game> Games { get; set; }
-        public ICollection<DLC> DLCs{ get; set; }
+
+        [JsonProperty("published")]
+        [NotMapped]
+        public ICollection<int> PublishedIds { get; set; }
+
+        public ICollection<GamesDevelopers> Games { get; set; }
+
+        public string PublishedGames
+        {
+            get
+            {
+                if (this.PublishedIds == null || this.PublishedIds.Count == 0)
+                {
+                    return null;
+                }
+                return string.Join(", ", this.PublishedIds);
+            }
+            set { }
+        }
+
+        [JsonProperty("parent")]
+        public int ParentCompanyId { get; set; }
     }
 }
