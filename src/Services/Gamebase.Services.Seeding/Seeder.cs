@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
@@ -34,25 +33,20 @@
             client.UseNewtonsoftJson();
         }
 
-        public async Task SeedGames(int maxId = 10)
+        public async Task SeedGames(ICollection<int> gameIds)
         {
-            for (int i = 1; i <= maxId; i++)
+            RestRequest request = CreateRequest("games", $"fields *;where id=({string.Join(",", gameIds)}); limit 500;");
+            IRestResponse<List<GameDto>> response = await client.ExecuteAsync<List<GameDto>>(request);
+            foreach (var gameDto in response.Data)
             {
-                RestRequest request = CreateRequest("games", $"fields *; where id = {i};");
-                IRestResponse<List<GameDto>> response = await client.ExecuteAsync<List<GameDto>>(request);
-                GameDto gameDto = response.Data[0];
-
                 if (gameDto == null || context.Games.Any(x => x.Id == gameDto.Id)) continue;
                 var game = new Game
                 {
                     Id = gameDto.Id,
-                    //AgeRatings = await GetAgeRatings(gameDto.AgeRatings),
                     AggregatedRating = (gameDto.AggregatedRating != 0 && gameDto.AggregatedRating != null)
                         ? gameDto.AggregatedRating
                         : (double?)null,
                     TotalRating = gameDto.TotalRating,
-                    //AlternativeNames = await GetEntities<AlternativeName>(gameDto.AlternativeNames, "alternative_names"),
-                    //Artworks = await GetEntities<Artwork>(gameDto.Artworks, "artworks"),
                     Bundles = GetEntitiesOfSameTypeAsString(gameDto.Bundles),
                     Category = gameDto.Category,
                     CollectionId = (gameDto.CollectionId != 0 && gameDto.CollectionId != null) ? gameDto.CollectionId : (int?)null,
@@ -62,42 +56,62 @@
                     CreatedAt = gameDto.CreatedAt,
                     Dlcs = GetEntitiesOfSameTypeAsString(gameDto.DLCs),
                     Expansions = GetEntitiesOfSameTypeAsString(gameDto.Expansions),
-                    //ExpandedGames = GetEntitiesOfSameTypeAsString(gameDto.ExpandedGames),
                     FirstReleaseDate = gameDto.FirstReleaseDate,
-                    //FranchiseId = gameDto.FranchiseId != 0 ? gameDto.FranchiseId : (int?)null,
-                    //MainFranchise = (gameDto.FranchiseId != 0 && gameDto.FranchiseId != null)
-                    //    ? await GetEntity<Franchise>(gameDto.FranchiseId, "franchises")
-                    //    : await GetEntity<Franchise>(gameDto.Franchises?.FirstOrDefault() ?? 0, "franchises"),
                     GameEngines = await GetManyToMany<GamesGameEngines, GameEngine>(gameDto.GameEngines, "game_engines",
-                        nameof(GameEngine), gameDto.Id),
+                        nameof(GameEngine), gameDto.Id, "GameId"),
                     GameModes = await GetManyToMany<GamesGameModes, GameMode>(gameDto.GameModes, "game_modes",
-                        nameof(GameMode), gameDto.Id),
-                    Genres = await GetManyToMany<GamesGenres, Genre>(gameDto.Genres, "genres", nameof(Genre), gameDto.Id),
+                        nameof(GameMode), gameDto.Id, "GameId"),
+                    Genres = await GetManyToMany<GamesGenres, Genre>(gameDto.Genres, "genres", nameof(Genre), gameDto.Id, "GameId"),
                     Developers = await GetManyToMany<GamesDevelopers, Developer>(await this.GetActualCompanyIds(gameDto.InvolvedCompanies),
-                        "companies", nameof(Developer), gameDto.Id),
+                        "companies", nameof(Developer), gameDto.Id, "GameId"),
                     Keywords = await GetManyToMany<GamesKeywords, Keyword>(gameDto.Keywords, "keywords", nameof(Keyword),
-                        gameDto.Id),
-                    //MultiplayerModes = await GetEntities<MultiplayerMode>(gameDto.MultiplayerModes, "multiplayer_modes"),
+                        gameDto.Id, "GameId"),
                     Name = gameDto.Name,
                     ParentGameId = (gameDto.ParentGame != 0 && gameDto.ParentGame != null) ? gameDto.ParentGame : (int?)null,
-                    //PlayerPerspectives = await GetManyToMany<GamesPlayerPerspectives, PlayerPerspective>(
-                    //    gameDto.PlayerPerspectives, "player_perspectives", nameof(PlayerPerspective), gameDto.Id),
                     Platforms = await GetManyToMany<GamesPlatforms, Platform>(gameDto.Platforms, "platforms",
-                        nameof(Platform), gameDto.Id),
+                        nameof(Platform), gameDto.Id, "GameId"),
                     Screenshots = await GetEntities<Screenshot>(gameDto.Screenshots, "screenshots"),
                     Status = gameDto.Status,
                     Storyline = gameDto.Storyline,
                     Summary = gameDto.Summary,
                     SimilarGames = GetEntitiesOfSameTypeAsString(gameDto.SimilarGames),
-                    //Themes = await GetManyToMany<GamesThemes, Theme>(gameDto.Themes, "themes", nameof(Theme), gameDto.Id),
                     Url = gameDto.Url,
                     VersionParent = gameDto.VersionParent != 0 ? gameDto.VersionParent : null,
                     VersionTitle = gameDto.VersionTitle,
-                    //Videos = await GetEntities<Video>(gameDto.Videos, "game_videos"),
                     Websites = await GetEntities<Website>(gameDto.Websites, "websites")
                 };
                 Console.WriteLine("success");
                 await context.Games.AddAsync(game);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task SeedCharacters(int maxId = 10)
+        {
+            for (int i = 2; i <= maxId; i++)
+            {
+                RestRequest request = CreateRequest("characters", $"fields *; where id = {i};");
+                IRestResponse<List<Character>> response = await client.ExecuteAsync<List<Character>>(request);
+                var character = response.Data[0];
+
+                if (character == null || context.Characters.Any(x => x.Id == character.Id)) continue;
+
+                await this.SeedGames(character.GameIds);
+                character.Games = new List<GamesCharacters>();
+                foreach (var gameId in character.GameIds)
+                {
+                    character.Games.Add(new GamesCharacters
+                    {
+                        GameId = gameId,
+                        Game = await this.context.Games.FirstOrDefaultAsync(x => x.Id == gameId),
+                        CharacterId = character.Id,
+                    });
+                }
+
+                character.Image = await GetEntity<CharacterImage>(character.ImageId, "character_mug_shots");
+
+                Console.WriteLine("success");
+                await context.Characters.AddAsync(character);
                 await context.SaveChangesAsync();
             }
         }
@@ -158,7 +172,7 @@
         }
 
         private async Task<ICollection<TManyToManyClass>> GetManyToMany<TManyToManyClass, TEntity>(
-            ICollection<int> dtoIds, string subdomain, string entityName, int gameId)
+            ICollection<int> dtoIds, string subdomain, string entityName, int gameId, string propertyName)
             where TManyToManyClass : new() where TEntity : BaseEntity
         {
             if (dtoIds == null || dtoIds.Count == 0) return null;
@@ -173,7 +187,7 @@
                 var entityId = (int)typeof(TEntity).GetProperty("Id")?.GetValue(entity);
                 var mtmEntity = new TManyToManyClass();
                 typeof(TManyToManyClass).GetProperty(entityName + "Id")?.SetValue(mtmEntity, entityId);
-                typeof(TManyToManyClass).GetProperty("GameId")?.SetValue(mtmEntity, gameId);
+                typeof(TManyToManyClass).GetProperty(propertyName)?.SetValue(mtmEntity, gameId);
                 bool connectionAlreadyExists =
                     await context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == entityId) != null;
                 if (!connectionAlreadyExists)

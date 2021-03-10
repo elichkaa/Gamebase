@@ -26,7 +26,7 @@
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<GamesPlatforms> GamePlatforms { get; set; }
         public DbSet<Character> Characters { get; set; }
-        public DbSet<GameCharacter> GameCharacters { get; set; }
+        public DbSet<GamesCharacters> GameCharacters { get; set; }
         public DbSet<CharacterImage> CharacterImages { get; set; }
         public DbSet<Collection> Collections { get; set; }
         public DbSet<GameMode> GameModes { get; set; }
@@ -36,15 +36,15 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-                modelBuilder.Entity<Game>()
-                    .HasOne(a => a.Cover)
-                   .WithOne(b => b.Game)                    
-                   .HasForeignKey<Cover>(b => b.GameId);
+            modelBuilder.Entity<Game>()
+                .HasOne(a => a.Cover)
+               .WithOne(b => b.Game)
+               .HasForeignKey<Cover>(b => b.GameId);
 
-            //modelBuilder.Entity<Developer>()
-            //    .HasOne(a => a.DeveloperLogo)
-            //   .WithOne(b => b.Developer)
-            //   .HasForeignKey<DeveloperLogo>(b => b.DeveloperId);
+            modelBuilder.Entity<Character>()
+                .HasOne(a => a.Image)
+                .WithOne(b => b.Character)
+                .HasForeignKey<CharacterImage>(b => b.CharacterId);
 
             modelBuilder.Entity<GamesDevelopers>()
                 .HasOne(c => c.Developer)
@@ -58,7 +58,7 @@
             modelBuilder.Entity<GamesPlatforms>()
                 .HasKey(bc => new { bc.GameId, bc.PlatformId });
 
-            modelBuilder.Entity<GameCharacter>()
+            modelBuilder.Entity<GamesCharacters>()
                 .HasKey(bc => new { bc.GameId, bc.CharacterId });
 
             modelBuilder.Entity<GamesDevelopers>()

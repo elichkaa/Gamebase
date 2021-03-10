@@ -5,7 +5,7 @@ namespace Gamebase.Models
 {
     using Enums;
 
-    public class Game : MainEntity
+    public class Game : BaseEntity
     {
         //public ICollection<AgeRating> AgeRatings { get; set; }
 
@@ -26,9 +26,6 @@ namespace Gamebase.Models
         public int? CoverId { get; set; }
 
         public Cover Cover { get; set; }
-
-        //todo: convert from unix to normal datetime
-        public string CreatedAt { get; set; }
 
         public string Dlcs { get; set; }
 
@@ -68,8 +65,6 @@ namespace Gamebase.Models
 
         //public ICollection<GamesThemes> Themes { get; set; }
 
-        public string Url { get; set; }
-
         public int? VersionParent { get; set; }
 
         public string VersionTitle { get; set; }
@@ -78,11 +73,8 @@ namespace Gamebase.Models
 
         public ICollection<Website> Websites { get; set; }
 
-        [MaxLength(70)]
-        public string Name { get; set; }
-
         public int? ParentGameId { get; set; }
 
-        public ICollection<GameCharacter> Characters { get; set; }
+        public ICollection<GamesCharacters> Characters { get; set; }
     }
 }

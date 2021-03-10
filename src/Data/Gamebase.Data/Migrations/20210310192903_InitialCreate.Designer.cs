@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gamebase.Data.Migrations
 {
     [DbContext(typeof(GamebaseDbContext))]
-    [Migration("20210310085038_AddApplicationUser")]
-    partial class AddApplicationUser
+    [Migration("20210310192903_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,54 +20,6 @@ namespace Gamebase.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Gamebase.Models.AgeRating", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RatingCoverUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Synopsis")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.ToTable("AgeRatings");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.AlternativeName", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.ToTable("AlternativeNames");
-                });
 
             modelBuilder.Entity("Gamebase.Models.ApplicationUser", b =>
                 {
@@ -146,9 +98,37 @@ namespace Gamebase.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Gamebase.Models.Artwork", b =>
+            modelBuilder.Entity("Gamebase.Models.Character", b =>
                 {
                     b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedAt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Characters");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.CharacterImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CharacterId")
                         .HasColumnType("int");
 
                     b.Property<int>("GameId")
@@ -174,64 +154,10 @@ namespace Gamebase.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CharacterId")
+                        .IsUnique();
+
                     b.HasIndex("GameId");
-
-                    b.ToTable("Artworks");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.Character", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Characters");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.CharacterImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Animated")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Height")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Width")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CharacterId");
 
                     b.ToTable("CharacterImages");
                 });
@@ -247,36 +173,12 @@ namespace Gamebase.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Collections");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.ContentDescription", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AgeRatingId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AgeRatingId");
-
-                    b.ToTable("ContentDescriptions");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Cover", b =>
@@ -333,43 +235,12 @@ namespace Gamebase.Data.Migrations
                     b.Property<string>("PublishedGames")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Developers");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.Franchise", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GameIdsString")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Franchises");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Game", b =>
@@ -398,24 +269,17 @@ namespace Gamebase.Data.Migrations
                     b.Property<string>("Dlcs")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ExpandedGames")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Expansions")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstReleaseDate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FranchiseId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("GameEngineId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ParentGameId")
                         .HasColumnType("int");
@@ -448,26 +312,9 @@ namespace Gamebase.Data.Migrations
 
                     b.HasIndex("CollectionId");
 
-                    b.HasIndex("FranchiseId");
-
                     b.HasIndex("GameEngineId");
 
                     b.ToTable("Games");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.GameCharacter", b =>
-                {
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GameId", "CharacterId");
-
-                    b.HasIndex("CharacterId");
-
-                    b.ToTable("GameCharacters");
                 });
 
             modelBuilder.Entity("Gamebase.Models.GameEngine", b =>
@@ -486,9 +333,6 @@ namespace Gamebase.Data.Migrations
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
@@ -509,15 +353,27 @@ namespace Gamebase.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("GameModes");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GamesCharacters", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "CharacterId");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("GameCharacters");
                 });
 
             modelBuilder.Entity("Gamebase.Models.GamesDevelopers", b =>
@@ -610,36 +466,6 @@ namespace Gamebase.Data.Migrations
                     b.ToTable("GamePlatforms");
                 });
 
-            modelBuilder.Entity("Gamebase.Models.GamesPlayerPerspectives", b =>
-                {
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlayerPerspectiveId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GameId", "PlayerPerspectiveId");
-
-                    b.HasIndex("PlayerPerspectiveId");
-
-                    b.ToTable("GamesPlayerPerspectives");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.GamesThemes", b =>
-                {
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ThemeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GameId", "ThemeId");
-
-                    b.HasIndex("ThemeId");
-
-                    b.ToTable("GamesThemes");
-                });
-
             modelBuilder.Entity("Gamebase.Models.Genre", b =>
                 {
                     b.Property<int>("Id")
@@ -652,9 +478,6 @@ namespace Gamebase.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedAt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
@@ -676,50 +499,12 @@ namespace Gamebase.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Keywords");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.MultiplayerMode", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("CampaignCoop")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("DropIn")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("LanCoop")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("OfflineCoop")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("OnlineCoop")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("PlatformId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.HasIndex("PlatformId");
-
-                    b.ToTable("MultiplayerMode");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Platform", b =>
@@ -751,37 +536,12 @@ namespace Gamebase.Data.Migrations
                     b.Property<string>("Summary")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Platforms");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.PlayerPerspective", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PlayerPerspectives");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Screenshot", b =>
@@ -815,49 +575,6 @@ namespace Gamebase.Data.Migrations
                     b.HasIndex("GameId");
 
                     b.ToTable("Screenshots");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.Theme", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Themes");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.Video", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VideoId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.ToTable("Videos");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Website", b =>
@@ -1025,59 +742,23 @@ namespace Gamebase.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Gamebase.Models.AgeRating", b =>
-                {
-                    b.HasOne("Gamebase.Models.Game", "Game")
-                        .WithMany("AgeRatings")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.AlternativeName", b =>
-                {
-                    b.HasOne("Gamebase.Models.Game", "Game")
-                        .WithMany("AlternativeNames")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.Artwork", b =>
-                {
-                    b.HasOne("Gamebase.Models.Game", "Game")
-                        .WithMany("Artworks")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-                });
-
             modelBuilder.Entity("Gamebase.Models.CharacterImage", b =>
                 {
                     b.HasOne("Gamebase.Models.Character", "Character")
-                        .WithMany("CharacterImages")
-                        .HasForeignKey("CharacterId")
+                        .WithOne("Image")
+                        .HasForeignKey("Gamebase.Models.CharacterImage", "CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gamebase.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Character");
-                });
 
-            modelBuilder.Entity("Gamebase.Models.ContentDescription", b =>
-                {
-                    b.HasOne("Gamebase.Models.AgeRating", "AgeRating")
-                        .WithMany("ContentDescriptions")
-                        .HasForeignKey("AgeRatingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AgeRating");
+                    b.Navigation("Game");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Cover", b =>
@@ -1097,23 +778,17 @@ namespace Gamebase.Data.Migrations
                         .WithMany("Games")
                         .HasForeignKey("CollectionId");
 
-                    b.HasOne("Gamebase.Models.Franchise", "MainFranchise")
-                        .WithMany("Games")
-                        .HasForeignKey("FranchiseId");
-
                     b.HasOne("Gamebase.Models.GameEngine", null)
                         .WithMany("Games")
                         .HasForeignKey("GameEngineId");
 
                     b.Navigation("Collection");
-
-                    b.Navigation("MainFranchise");
                 });
 
-            modelBuilder.Entity("Gamebase.Models.GameCharacter", b =>
+            modelBuilder.Entity("Gamebase.Models.GamesCharacters", b =>
                 {
                     b.HasOne("Gamebase.Models.Character", "Character")
-                        .WithMany("GameCharacters")
+                        .WithMany("Games")
                         .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1243,78 +918,10 @@ namespace Gamebase.Data.Migrations
                     b.Navigation("Platform");
                 });
 
-            modelBuilder.Entity("Gamebase.Models.GamesPlayerPerspectives", b =>
-                {
-                    b.HasOne("Gamebase.Models.Game", "Game")
-                        .WithMany("PlayerPerspectives")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Gamebase.Models.PlayerPerspective", "PlayerPerspective")
-                        .WithMany("Games")
-                        .HasForeignKey("PlayerPerspectiveId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("PlayerPerspective");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.GamesThemes", b =>
-                {
-                    b.HasOne("Gamebase.Models.Game", "Game")
-                        .WithMany("Themes")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Gamebase.Models.Theme", "Theme")
-                        .WithMany("Games")
-                        .HasForeignKey("ThemeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("Theme");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.MultiplayerMode", b =>
-                {
-                    b.HasOne("Gamebase.Models.Game", "Game")
-                        .WithMany("MultiplayerModes")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Gamebase.Models.Platform", "Platform")
-                        .WithMany("MultiplayerModes")
-                        .HasForeignKey("PlatformId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("Platform");
-                });
-
             modelBuilder.Entity("Gamebase.Models.Screenshot", b =>
                 {
                     b.HasOne("Gamebase.Models.Game", "Game")
                         .WithMany("Screenshots")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.Video", b =>
-                {
-                    b.HasOne("Gamebase.Models.Game", "Game")
-                        .WithMany("Videos")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1392,11 +999,6 @@ namespace Gamebase.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Gamebase.Models.AgeRating", b =>
-                {
-                    b.Navigation("ContentDescriptions");
-                });
-
             modelBuilder.Entity("Gamebase.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Logins");
@@ -1406,9 +1008,9 @@ namespace Gamebase.Data.Migrations
 
             modelBuilder.Entity("Gamebase.Models.Character", b =>
                 {
-                    b.Navigation("CharacterImages");
+                    b.Navigation("Games");
 
-                    b.Navigation("GameCharacters");
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Collection", b =>
@@ -1421,19 +1023,8 @@ namespace Gamebase.Data.Migrations
                     b.Navigation("Games");
                 });
 
-            modelBuilder.Entity("Gamebase.Models.Franchise", b =>
-                {
-                    b.Navigation("Games");
-                });
-
             modelBuilder.Entity("Gamebase.Models.Game", b =>
                 {
-                    b.Navigation("AgeRatings");
-
-                    b.Navigation("AlternativeNames");
-
-                    b.Navigation("Artworks");
-
                     b.Navigation("Characters");
 
                     b.Navigation("Cover");
@@ -1448,17 +1039,9 @@ namespace Gamebase.Data.Migrations
 
                     b.Navigation("Keywords");
 
-                    b.Navigation("MultiplayerModes");
-
                     b.Navigation("Platforms");
 
-                    b.Navigation("PlayerPerspectives");
-
                     b.Navigation("Screenshots");
-
-                    b.Navigation("Themes");
-
-                    b.Navigation("Videos");
 
                     b.Navigation("Websites");
                 });
@@ -1484,18 +1067,6 @@ namespace Gamebase.Data.Migrations
                 });
 
             modelBuilder.Entity("Gamebase.Models.Platform", b =>
-                {
-                    b.Navigation("Games");
-
-                    b.Navigation("MultiplayerModes");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.PlayerPerspective", b =>
-                {
-                    b.Navigation("Games");
-                });
-
-            modelBuilder.Entity("Gamebase.Models.Theme", b =>
                 {
                     b.Navigation("Games");
                 });

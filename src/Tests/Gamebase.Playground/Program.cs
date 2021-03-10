@@ -31,7 +31,8 @@
             };
 
             var seeder = new Seeder(apiConfigSettings, appDbContext);
-            await seeder.SeedGames();
+            //await seeder.SeedGames();
+            await seeder.SeedCharacters();
         }
     }
 }

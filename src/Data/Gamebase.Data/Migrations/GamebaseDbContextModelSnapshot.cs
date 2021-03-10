@@ -107,10 +107,10 @@ namespace Gamebase.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("UpdatedAt")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
@@ -124,31 +124,38 @@ namespace Gamebase.Data.Migrations
             modelBuilder.Entity("Gamebase.Models.CharacterImage", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Animated")
-                        .HasColumnType("bit");
+                        .HasColumnType("int");
 
                     b.Property<int>("CharacterId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Height")
-                        .HasColumnType("float");
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<bool>("HasAlphaChannel")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageId")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAnimated")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Width")
-                        .HasColumnType("float");
+                    b.Property<int>("Width")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CharacterId");
+                    b.HasIndex("CharacterId")
+                        .IsUnique();
+
+                    b.HasIndex("GameId");
 
                     b.ToTable("CharacterImages");
                 });
@@ -162,9 +169,6 @@ namespace Gamebase.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedAt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
@@ -229,9 +233,6 @@ namespace Gamebase.Data.Migrations
                     b.Property<string>("PublishedGames")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
@@ -276,8 +277,7 @@ namespace Gamebase.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ParentGameId")
                         .HasColumnType("int");
@@ -315,21 +315,6 @@ namespace Gamebase.Data.Migrations
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("Gamebase.Models.GameCharacter", b =>
-                {
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GameId", "CharacterId");
-
-                    b.HasIndex("CharacterId");
-
-                    b.ToTable("GameCharacters");
-                });
-
             modelBuilder.Entity("Gamebase.Models.GameEngine", b =>
                 {
                     b.Property<int>("Id")
@@ -346,9 +331,6 @@ namespace Gamebase.Data.Migrations
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
@@ -369,15 +351,27 @@ namespace Gamebase.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("GameModes");
+                });
+
+            modelBuilder.Entity("Gamebase.Models.GamesCharacters", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "CharacterId");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("GameCharacters");
                 });
 
             modelBuilder.Entity("Gamebase.Models.GamesDevelopers", b =>
@@ -484,9 +478,6 @@ namespace Gamebase.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedAt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
@@ -504,9 +495,6 @@ namespace Gamebase.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedAt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
@@ -544,9 +532,6 @@ namespace Gamebase.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedAt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
@@ -758,12 +743,20 @@ namespace Gamebase.Data.Migrations
             modelBuilder.Entity("Gamebase.Models.CharacterImage", b =>
                 {
                     b.HasOne("Gamebase.Models.Character", "Character")
-                        .WithMany("CharacterImages")
-                        .HasForeignKey("CharacterId")
+                        .WithOne("Image")
+                        .HasForeignKey("Gamebase.Models.CharacterImage", "CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gamebase.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Character");
+
+                    b.Navigation("Game");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Cover", b =>
@@ -790,10 +783,10 @@ namespace Gamebase.Data.Migrations
                     b.Navigation("Collection");
                 });
 
-            modelBuilder.Entity("Gamebase.Models.GameCharacter", b =>
+            modelBuilder.Entity("Gamebase.Models.GamesCharacters", b =>
                 {
                     b.HasOne("Gamebase.Models.Character", "Character")
-                        .WithMany("GameCharacters")
+                        .WithMany("Games")
                         .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1013,9 +1006,9 @@ namespace Gamebase.Data.Migrations
 
             modelBuilder.Entity("Gamebase.Models.Character", b =>
                 {
-                    b.Navigation("CharacterImages");
+                    b.Navigation("Games");
 
-                    b.Navigation("GameCharacters");
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Collection", b =>

@@ -6,10 +6,8 @@
     using Models.Enums;
     using Newtonsoft.Json;
 
-    public class GameDto
+    public class GameDto : BaseEntity
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
 
         [JsonProperty("age_ratings")]
         public ICollection<int> AgeRatings { get; set; }
@@ -38,9 +36,6 @@
         [JsonProperty("cover")]
         public int? CoverId { get; set; }
 
-        //todo: convert from unix to normal datetime
-        [JsonProperty("created_at")]
-        public string CreatedAt { get; set; }
 
         [JsonProperty("dlcs")]
         public ICollection<int> DLCs { get; set; }
@@ -78,8 +73,6 @@
         [JsonProperty("multiplayer_modes")]
         public ICollection<int> MultiplayerModes { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
 
         [JsonProperty("parent_game")]
         public int? ParentGame { get; set; }
@@ -107,9 +100,6 @@
 
         [JsonProperty("themes")]
         public ICollection<int> Themes { get; set; }
-
-        [JsonProperty("url")]
-        public string Url { get; set; }
 
         [JsonProperty("version_parent")]
         public int? VersionParent { get; set; }
