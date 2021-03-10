@@ -7,6 +7,7 @@
     using System.Net;
     using System.Threading.Tasks;
     using Data;
+    using Dtos;
     using Gamebase.Scraping;
     using Microsoft.EntityFrameworkCore;
     using Models;
@@ -45,13 +46,13 @@
                 var game = new Game
                 {
                     Id = gameDto.Id,
-                    AgeRatings = await GetAgeRatings(gameDto.AgeRatings),
+                    //AgeRatings = await GetAgeRatings(gameDto.AgeRatings),
                     AggregatedRating = (gameDto.AggregatedRating != 0 && gameDto.AggregatedRating != null)
                         ? gameDto.AggregatedRating
                         : (double?)null,
                     TotalRating = gameDto.TotalRating,
-                    AlternativeNames = await GetEntities<AlternativeName>(gameDto.AlternativeNames, "alternative_names"),
-                    Artworks = await GetEntities<Artwork>(gameDto.Artworks, "artworks"),
+                    //AlternativeNames = await GetEntities<AlternativeName>(gameDto.AlternativeNames, "alternative_names"),
+                    //Artworks = await GetEntities<Artwork>(gameDto.Artworks, "artworks"),
                     Bundles = GetEntitiesOfSameTypeAsString(gameDto.Bundles),
                     Category = gameDto.Category,
                     CollectionId = (gameDto.CollectionId != 0 && gameDto.CollectionId != null) ? gameDto.CollectionId : (int?)null,
@@ -61,12 +62,12 @@
                     CreatedAt = gameDto.CreatedAt,
                     Dlcs = GetEntitiesOfSameTypeAsString(gameDto.DLCs),
                     Expansions = GetEntitiesOfSameTypeAsString(gameDto.Expansions),
-                    ExpandedGames = GetEntitiesOfSameTypeAsString(gameDto.ExpandedGames),
+                    //ExpandedGames = GetEntitiesOfSameTypeAsString(gameDto.ExpandedGames),
                     FirstReleaseDate = gameDto.FirstReleaseDate,
-                    FranchiseId = gameDto.FranchiseId != 0 ? gameDto.FranchiseId : (int?)null,
-                    MainFranchise = (gameDto.FranchiseId != 0 && gameDto.FranchiseId != null)
-                        ? await GetEntity<Franchise>(gameDto.FranchiseId, "franchises")
-                        : await GetEntity<Franchise>(gameDto.Franchises?.FirstOrDefault() ?? 0, "franchises"),
+                    //FranchiseId = gameDto.FranchiseId != 0 ? gameDto.FranchiseId : (int?)null,
+                    //MainFranchise = (gameDto.FranchiseId != 0 && gameDto.FranchiseId != null)
+                    //    ? await GetEntity<Franchise>(gameDto.FranchiseId, "franchises")
+                    //    : await GetEntity<Franchise>(gameDto.Franchises?.FirstOrDefault() ?? 0, "franchises"),
                     GameEngines = await GetManyToMany<GamesGameEngines, GameEngine>(gameDto.GameEngines, "game_engines",
                         nameof(GameEngine), gameDto.Id),
                     GameModes = await GetManyToMany<GamesGameModes, GameMode>(gameDto.GameModes, "game_modes",
@@ -76,11 +77,11 @@
                         "companies", nameof(Developer), gameDto.Id),
                     Keywords = await GetManyToMany<GamesKeywords, Keyword>(gameDto.Keywords, "keywords", nameof(Keyword),
                         gameDto.Id),
-                    MultiplayerModes = await GetEntities<MultiplayerMode>(gameDto.MultiplayerModes, "multiplayer_modes"),
+                    //MultiplayerModes = await GetEntities<MultiplayerMode>(gameDto.MultiplayerModes, "multiplayer_modes"),
                     Name = gameDto.Name,
                     ParentGameId = (gameDto.ParentGame != 0 && gameDto.ParentGame != null) ? gameDto.ParentGame : (int?)null,
-                    PlayerPerspectives = await GetManyToMany<GamesPlayerPerspectives, PlayerPerspective>(
-                        gameDto.PlayerPerspectives, "player_perspectives", nameof(PlayerPerspective), gameDto.Id),
+                    //PlayerPerspectives = await GetManyToMany<GamesPlayerPerspectives, PlayerPerspective>(
+                    //    gameDto.PlayerPerspectives, "player_perspectives", nameof(PlayerPerspective), gameDto.Id),
                     Platforms = await GetManyToMany<GamesPlatforms, Platform>(gameDto.Platforms, "platforms",
                         nameof(Platform), gameDto.Id),
                     Screenshots = await GetEntities<Screenshot>(gameDto.Screenshots, "screenshots"),
@@ -88,11 +89,11 @@
                     Storyline = gameDto.Storyline,
                     Summary = gameDto.Summary,
                     SimilarGames = GetEntitiesOfSameTypeAsString(gameDto.SimilarGames),
-                    Themes = await GetManyToMany<GamesThemes, Theme>(gameDto.Themes, "themes", nameof(Theme), gameDto.Id),
+                    //Themes = await GetManyToMany<GamesThemes, Theme>(gameDto.Themes, "themes", nameof(Theme), gameDto.Id),
                     Url = gameDto.Url,
                     VersionParent = gameDto.VersionParent != 0 ? gameDto.VersionParent : null,
                     VersionTitle = gameDto.VersionTitle,
-                    Videos = await GetEntities<Video>(gameDto.Videos, "game_videos"),
+                    //Videos = await GetEntities<Video>(gameDto.Videos, "game_videos"),
                     Websites = await GetEntities<Website>(gameDto.Websites, "websites")
                 };
                 Console.WriteLine("success");
@@ -181,35 +182,6 @@
             }
 
             return entities;
-        }
-
-        private async Task<ICollection<AgeRating>> GetAgeRatings(ICollection<int> ids)
-        {
-            if (ids == null || ids.Count == 0) return null;
-            var ratings = new List<AgeRating>();
-
-            RestRequest request =
-                CreateRequest("age_ratings", $"fields *; where id=({string.Join(",", ids)}); limit 500;");
-            IRestResponse<ICollection<AgeRatingDto>> response =
-                await client.ExecuteAsync<ICollection<AgeRatingDto>>(request);
-            ICollection<AgeRatingDto> ratingDtos = response.Data;
-            foreach (AgeRatingDto rating in ratingDtos)
-            {
-                var ageRating = new AgeRating
-                {
-                    Id = rating.Id,
-                    Category = rating.Category,
-                    Rating = rating.Rating,
-                    ContentDescriptions =
-                        GetEntities<ContentDescription>(rating.ContentDescriptions, "age_rating_content_descriptions")
-                            .Result,
-                    RatingCoverUrl = rating.RatingCoverUrl,
-                    Synopsis = rating.Synopsis
-                };
-                ratings.Add(ageRating);
-            }
-
-            return ratings;
         }
 
         private RestRequest CreateRequest(string subdomain, string requestBody = "fields *;")

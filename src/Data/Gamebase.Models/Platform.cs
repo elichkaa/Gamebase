@@ -29,6 +29,6 @@ namespace Gamebase.Models
 
         public ICollection<GamesPlatforms> Games { get; set; }
 
-        public ICollection<MultiplayerMode> MultiplayerModes { get; set; }
+        //public ICollection<MultiplayerMode> MultiplayerModes { get; set; }
     }
 }

@@ -7,15 +7,13 @@ namespace Gamebase.Models
 
     public class Game : MainEntity
     {
-        public ICollection<AgeRating> AgeRatings { get; set; }
+        //public ICollection<AgeRating> AgeRatings { get; set; }
 
         public double? AggregatedRating { get; set; }
 
         public double? TotalRating { get; set; }
 
-        public ICollection<AlternativeName> AlternativeNames { get; set; }
-
-        public ICollection<Artwork> Artworks { get; set; }
+        //public ICollection<Artwork> Artworks { get; set; }
 
         public string Bundles { get; set; }
 
@@ -34,15 +32,13 @@ namespace Gamebase.Models
 
         public string Dlcs { get; set; }
 
-        public string ExpandedGames { get; set; }
-
         public string Expansions { get; set; }
 
         public string FirstReleaseDate { get; set; }
 
-        public int? FranchiseId { get; set; }
-
-        public Franchise MainFranchise { get; set; }
+        //public int? FranchiseId { get; set; }
+        //
+        //public Franchise MainFranchise { get; set; }
 
         public ICollection<GamesGameEngines> GameEngines { get; set; }
 
@@ -54,9 +50,9 @@ namespace Gamebase.Models
 
         public ICollection<GamesKeywords> Keywords { get; set; }
 
-        public ICollection<MultiplayerMode> MultiplayerModes { get; set; }
+        //public ICollection<MultiplayerMode> MultiplayerModes { get; set; }
 
-        public ICollection<GamesPlayerPerspectives> PlayerPerspectives { get; set; }
+        //public ICollection<GamesPlayerPerspectives> PlayerPerspectives { get; set; }
 
         public ICollection<GamesPlatforms> Platforms { get; set; }
 
@@ -70,7 +66,7 @@ namespace Gamebase.Models
 
         public string Summary { get; set; }
 
-        public ICollection<GamesThemes> Themes { get; set; }
+        //public ICollection<GamesThemes> Themes { get; set; }
 
         public string Url { get; set; }
 
@@ -78,7 +74,7 @@ namespace Gamebase.Models
 
         public string VersionTitle { get; set; }
 
-        public ICollection<Video> Videos { get; set; }
+        //public ICollection<Video> Videos { get; set; }
 
         public ICollection<Website> Websites { get; set; }
 

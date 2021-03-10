@@ -1,7 +1,5 @@
-﻿namespace Gamebase.Models
+﻿namespace Gamebase.Services.Seeding.Dtos
 {
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
     using Newtonsoft.Json;
 
     public class InvolvedCompany

@@ -18,7 +18,6 @@
         //all dbsets here
         public DbSet<Game> Games { get; set; }
         public DbSet<Developer> Developers { get; set; }
-        public DbSet<Franchise> Franchises { get; set; }
         public DbSet<Cover> Covers { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Screenshot> Screenshots { get; set; }
@@ -29,16 +28,9 @@
         public DbSet<Character> Characters { get; set; }
         public DbSet<GameCharacter> GameCharacters { get; set; }
         public DbSet<CharacterImage> CharacterImages { get; set; }
-        public DbSet<AgeRating> AgeRatings { get; set; }
-        public DbSet<ContentDescription> ContentDescriptions { get; set; }
-        public DbSet<AlternativeName> AlternativeNames { get; set; }
-        public DbSet<Artwork> Artworks { get; set; }
         public DbSet<Collection> Collections { get; set; }
         public DbSet<GameMode> GameModes { get; set; }
         public DbSet<Keyword> Keywords { get; set; }
-        public DbSet<PlayerPerspective> PlayerPerspectives { get; set; }
-        public DbSet<Theme> Themes { get; set; }
-        public DbSet<Video> Videos { get; set; }
         public DbSet<Website> Websites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,11 +73,6 @@
             modelBuilder.Entity<GamesKeywords>()
                 .HasKey(x => new { x.GameId, x.KeywordId });
 
-            modelBuilder.Entity<GamesPlayerPerspectives>()
-                .HasKey(x => new { x.GameId, x.PlayerPerspectiveId });
-
-            modelBuilder.Entity<GamesThemes>()
-                .HasKey(x => new { x.GameId, x.ThemeId });
 
         }
     }
