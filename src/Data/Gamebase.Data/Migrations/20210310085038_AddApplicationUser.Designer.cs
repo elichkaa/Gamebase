@@ -4,14 +4,16 @@ using Gamebase.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Gamebase.Data.Migrations
 {
     [DbContext(typeof(GamebaseDbContext))]
-    partial class GamebaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210310085038_AddApplicationUser")]
+    partial class AddApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

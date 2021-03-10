@@ -1,0 +1,45 @@
+﻿@model Gamebase.Web.InputModels.UserRegisterInputModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section class="user-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <form class="box" asp-controller="Users" asp-action="Register" method="post">
+                        <h1>Register</h1>
+                        <p class="text-muted"> Please enter email, username and password</p>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="input">
+                            <input type="text" placeholder="Email" asp-for="@Model.Email" class="form-control" />
+                        </div>
+                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                        <div class="input">
+                            <input type="text" placeholder="Username" asp-for="@Model.Username" class="form-control" />
+                        </div>
+                        <span asp-validation-for="@Model.Username" class="text-danger"></span>
+                        <div class="input">
+                            <input type="password" asp-for="@Model.Password" class="form-control" placeholder="Password" />
+                        </div>
+                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                        <div class="input">
+                            <input type="password" asp-for="@Model.ConfirmPassword" class="form-control" placeholder="Confirm password" />
+                        </div>
+                        <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+                        <input type="submit" name="" value="Register">
+                        <div class="col-md-12">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -2,6 +2,7 @@ namespace Gamebase.Web
 {
     using Microsoft.AspNetCore.Builder;
     using Data;
+    using Gamebase.Models;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -35,7 +36,16 @@ namespace Gamebase.Web
             };
             services.AddSingleton(settings);
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireNonAlphanumeric = false;
+                })
                 .AddEntityFrameworkStores<GamebaseDbContext>();
             services.AddControllersWithViews();
 

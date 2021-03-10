@@ -21,16 +21,21 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\Gamebase.Data\Gamebase.Data.csproj" />
     <ProjectReference Include="..\..\Services\Gamebase.Services.Seeding\Gamebase.Services.Seeding.csproj" />
+    <ProjectReference Include="..\Gamebase.Web.InputModels\Gamebase.Web.InputModels.csproj" />
+    <ProjectReference Include="..\Gamebase.Web.ViewModels\Gamebase.Web.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\" />
+    <Content Update="wwwroot\img\backgrounds\Janna_0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SolutionDir)/Web/Gamebase.Web/node_modules') ">
@@ -43,5 +48,5 @@
     <Exec WorkingDirectory="$(SolutionDir)/Web/Gamebase.Web" Command="npm install" />
   </Target>
 
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings" NpmRestoreOnPackageJsonSave="True" NpmRestoreOnProjectOpen="True" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties NpmRestoreOnPackageJsonSave="True" NpmRestoreOnProjectOpen="True" /></VisualStudio></ProjectExtensions>
 </Project>

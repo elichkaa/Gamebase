@@ -1,10 +1,11 @@
 ﻿namespace Gamebase.Data
 {
     using Gamebase.Models;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class GamebaseDbContext : IdentityDbContext
+    public class GamebaseDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
         public GamebaseDbContext(DbContextOptions<GamebaseDbContext> options)
             : base(options)

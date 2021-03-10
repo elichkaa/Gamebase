@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Gamebase.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,6 +20,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/font-awesome/font-awesome.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/owlcarousel/owl.carousel.min.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/user.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/animate/animate.css" asp-append-version="true" />
 
@@ -33,9 +39,19 @@
             <a class="site-logo" asp-controller="Home" asp-action="Index">
                 <img src="/img/logo.png" alt="">
             </a>
+            @if (this.SignInManager.IsSignedIn(this.User))
+            {
             <div class="user-panel">
-                <a href="#">Login</a>  /  <a href="#">Register</a>
+                Hello, @this.User.Identity.Name! / <a asp-controller="Users" asp-action="Logout">Logout</a>
             </div>
+            }
+            else
+            {
+                <div class="user-panel">
+                    <a asp-controller="Users" asp-action="Login">Login</a> / <a asp-controller="Users" asp-action="Register">Register</a>
+                </div>
+            }
+
             <!-- responsive -->
             <div class="nav-switch">
                 <i class="fa fa-bars"></i>
@@ -48,7 +64,6 @@
                     <li><a asp-controller="Home" asp-action="Categories">Blog</a></li>
                     <li><a asp-controller="Home" asp-action="Community">Forums</a></li>
                     <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-controller="Import" asp-action="Index">Import</a></li>
                 </ul>
             </nav>
         </div>
