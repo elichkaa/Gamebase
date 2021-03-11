@@ -1,0 +1,113 @@
+﻿@model List<Gamebase.Web.ViewModels.Games.GameOnAllPageViewModel>
+@using static Gamebase.Common.Constants
+@{
+    ViewData["Title"] = "All Games - Gamebase";
+}
+
+<!-- Page info section -->
+<section class="page-info-section set-bg" data-setbg="/img/page-top-bg/3.jpg">
+    <div class="pi-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5 col-lg-6 text-white">
+                    <h2>Game reviews</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Page info section -->
+
+<!-- Page section -->
+<section class="page-section review-page spad">
+    <div class="container">
+        <div class="row">
+            @for (int i = 1; i <= 10; i += 2)
+            {
+                <div class="col-md-6">
+                    <div class="review-item">
+                        <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i].Cover">
+                            <div class="score yellow">@Model[i].AverageRating</div>
+                        </div>
+                        <div class="review-text">
+                            <h4>@Model[i].Name</h4>
+                            <p>@Model[i].Summary</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="review-item">
+                        <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i+1].Cover">
+                            <div class="score yellow">@Model[i].AverageRating</div>
+                        </div>
+                        <div class="review-text">
+                            <h4>@Model[i+1].Name</h4>
+                            <p>@Model[i+1].Summary</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="text-center pt-4">
+            <button class="site-btn btn-sm">Load More</button>
+        </div>
+    </div>
+</section>
+<!-- Page section end -->
+<!-- Review section -->
+<section class="review-section review-dark spad set-bg" data-setbg="/img/review-bg-2.jpg">
+    <div class="container">
+        <div class="section-title text-white">
+            <div class="cata new">new</div>
+            <h2>Recent Reviews</h2>
+        </div>
+        <div class="row text-white">
+            <div class="col-lg-3 col-md-6">
+                <div class="review-item">
+                    <div class="review-cover set-bg" data-setbg="/img/review/1.jpg">
+                        <div class="score yellow">9.3</div>
+                    </div>
+                    <div class="review-text">
+                        <h5>Assasin’’s Creed</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="review-item">
+                    <div class="review-cover set-bg" data-setbg="/img/review/2.jpg">
+                        <div class="score purple">9.5</div>
+                    </div>
+                    <div class="review-text">
+                        <h5>Doom</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="review-item">
+                    <div class="review-cover set-bg" data-setbg="/img/review/3.jpg">
+                        <div class="score green">9.1</div>
+                    </div>
+                    <div class="review-text">
+                        <h5>Overwatch</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="review-item">
+                    <div class="review-cover set-bg" data-setbg="/img/review/4.jpg">
+                        <div class="score pink">9.7</div>
+                    </div>
+                    <div class="review-text">
+                        <h5>GTA</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Review section end -->

@@ -39,7 +39,7 @@
                 ids.Add(i);
             }
             //character with id 114 has an invalid collection
-            ids.RemoveAt(115);
+            ids.RemoveAt(113);
 
             await seeder.SeedGames(ids);
             Console.WriteLine("All 500 games seeded.");

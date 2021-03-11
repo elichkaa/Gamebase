@@ -27,6 +27,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\Gamebase.Data\Gamebase.Data.csproj" />
+    <ProjectReference Include="..\..\Gamebase.Common\Gamebase.Common.csproj" />
+    <ProjectReference Include="..\..\Services\Gamebase.Data.Services\Gamebase.Data.Services.csproj" />
     <ProjectReference Include="..\..\Services\Gamebase.Services.Seeding\Gamebase.Services.Seeding.csproj" />
     <ProjectReference Include="..\Gamebase.Web.InputModels\Gamebase.Web.InputModels.csproj" />
     <ProjectReference Include="..\Gamebase.Web.ViewModels\Gamebase.Web.ViewModels.csproj" />
