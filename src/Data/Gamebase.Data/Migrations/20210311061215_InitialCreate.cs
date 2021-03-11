@@ -58,7 +58,6 @@ namespace Gamebase.Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -72,7 +71,6 @@ namespace Gamebase.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -89,7 +87,6 @@ namespace Gamebase.Data.Migrations
                     PublishedGames = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ParentCompanyId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -102,10 +99,7 @@ namespace Gamebase.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -119,7 +113,6 @@ namespace Gamebase.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -132,9 +125,7 @@ namespace Gamebase.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -148,7 +139,6 @@ namespace Gamebase.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -161,14 +151,11 @@ namespace Gamebase.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Abbreviation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AlternativeName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Category = table.Column<int>(type: "int", nullable: false),
                     Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -301,7 +288,6 @@ namespace Gamebase.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    AggregatedRating = table.Column<double>(type: "float", nullable: true),
                     TotalRating = table.Column<double>(type: "float", nullable: true),
                     Bundles = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Category = table.Column<int>(type: "int", nullable: false),
@@ -309,17 +295,12 @@ namespace Gamebase.Data.Migrations
                     CoverId = table.Column<int>(type: "int", nullable: true),
                     Dlcs = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Expansions = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstReleaseDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     SimilarGames = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Storyline = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VersionParent = table.Column<int>(type: "int", nullable: true),
-                    VersionTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ParentGameId = table.Column<int>(type: "int", nullable: true),
-                    GameEngineId = table.Column<int>(type: "int", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -329,12 +310,6 @@ namespace Gamebase.Data.Migrations
                         name: "FK_Games_Collections_CollectionId",
                         column: x => x.CollectionId,
                         principalTable: "Collections",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Games_GameEngines_GameEngineId",
-                        column: x => x.GameEngineId,
-                        principalTable: "GameEngines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -349,8 +324,6 @@ namespace Gamebase.Data.Migrations
                     Width = table.Column<int>(type: "int", nullable: false),
                     ImageId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsAnimated = table.Column<bool>(type: "bit", nullable: false),
-                    HasAlphaChannel = table.Column<bool>(type: "bit", nullable: false),
                     GameId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -379,8 +352,6 @@ namespace Gamebase.Data.Migrations
                     Width = table.Column<int>(type: "int", nullable: false),
                     ImageId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsAnimated = table.Column<bool>(type: "bit", nullable: false),
-                    HasAlphaChannel = table.Column<bool>(type: "bit", nullable: false),
                     GameId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -571,8 +542,6 @@ namespace Gamebase.Data.Migrations
                     Width = table.Column<int>(type: "int", nullable: false),
                     ImageId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsAnimated = table.Column<bool>(type: "bit", nullable: false),
-                    HasAlphaChannel = table.Column<bool>(type: "bit", nullable: false),
                     GameId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -694,11 +663,6 @@ namespace Gamebase.Data.Migrations
                 column: "CollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Games_GameEngineId",
-                table: "Games",
-                column: "GameEngineId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_GamesDevelopers_DeveloperId",
                 table: "GamesDevelopers",
                 column: "DeveloperId");
@@ -798,6 +762,9 @@ namespace Gamebase.Data.Migrations
                 name: "Developers");
 
             migrationBuilder.DropTable(
+                name: "GameEngines");
+
+            migrationBuilder.DropTable(
                 name: "GameModes");
 
             migrationBuilder.DropTable(
@@ -808,9 +775,6 @@ namespace Gamebase.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Collections");
-
-            migrationBuilder.DropTable(
-                name: "GameEngines");
         }
     }
 }

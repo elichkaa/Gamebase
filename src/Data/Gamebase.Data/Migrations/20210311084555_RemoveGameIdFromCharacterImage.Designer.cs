@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gamebase.Data.Migrations
 {
     [DbContext(typeof(GamebaseDbContext))]
-    [Migration("20210310192903_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210311084555_RemoveGameIdFromCharacterImage")]
+    partial class RemoveGameIdFromCharacterImage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,12 +103,6 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ImageId")
                         .HasColumnType("int");
 
@@ -131,20 +125,11 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("CharacterId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("HasAlphaChannel")
-                        .HasColumnType("bit");
-
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAnimated")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
@@ -157,8 +142,6 @@ namespace Gamebase.Data.Migrations
                     b.HasIndex("CharacterId")
                         .IsUnique();
 
-                    b.HasIndex("GameId");
-
                     b.ToTable("CharacterImages");
                 });
 
@@ -166,9 +149,6 @@ namespace Gamebase.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
-
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -189,17 +169,11 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("HasAlphaChannel")
-                        .HasColumnType("bit");
-
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAnimated")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
@@ -219,9 +193,6 @@ namespace Gamebase.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
-
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -248,9 +219,6 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<double?>("AggregatedRating")
-                        .HasColumnType("float");
-
                     b.Property<string>("Bundles")
                         .HasColumnType("nvarchar(max)");
 
@@ -263,26 +231,17 @@ namespace Gamebase.Data.Migrations
                     b.Property<int?>("CoverId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Dlcs")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Expansions")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstReleaseDate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("GameEngineId")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("FirstReleaseDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ParentGameId")
-                        .HasColumnType("int");
 
                     b.Property<string>("SimilarGames")
                         .HasColumnType("nvarchar(max)");
@@ -302,17 +261,9 @@ namespace Gamebase.Data.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("VersionParent")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VersionTitle")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CollectionId");
-
-                    b.HasIndex("GameEngineId");
 
                     b.ToTable("Games");
                 });
@@ -322,17 +273,8 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
@@ -346,9 +288,6 @@ namespace Gamebase.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
-
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -471,12 +410,6 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -492,9 +425,6 @@ namespace Gamebase.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
-
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -521,17 +451,8 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("Category")
                         .HasColumnType("int");
 
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Summary")
                         .HasColumnType("nvarchar(max)");
@@ -552,17 +473,11 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("HasAlphaChannel")
-                        .HasColumnType("bit");
-
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAnimated")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
@@ -750,15 +665,7 @@ namespace Gamebase.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Gamebase.Models.Game", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Character");
-
-                    b.Navigation("Game");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Cover", b =>
@@ -777,10 +684,6 @@ namespace Gamebase.Data.Migrations
                     b.HasOne("Gamebase.Models.Collection", "Collection")
                         .WithMany("Games")
                         .HasForeignKey("CollectionId");
-
-                    b.HasOne("Gamebase.Models.GameEngine", null)
-                        .WithMany("Games")
-                        .HasForeignKey("GameEngineId");
 
                     b.Navigation("Collection");
                 });
@@ -826,7 +729,7 @@ namespace Gamebase.Data.Migrations
             modelBuilder.Entity("Gamebase.Models.GamesGameEngines", b =>
                 {
                     b.HasOne("Gamebase.Models.GameEngine", "GameEngine")
-                        .WithMany()
+                        .WithMany("Games")
                         .HasForeignKey("GameEngineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

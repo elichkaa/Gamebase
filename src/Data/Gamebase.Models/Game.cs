@@ -1,19 +1,12 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace Gamebase.Models
+﻿namespace Gamebase.Models
 {
+    using System;
+    using System.Collections.Generic;
     using Enums;
 
     public class Game : BaseEntity
     {
-        //public ICollection<AgeRating> AgeRatings { get; set; }
-
-        public double? AggregatedRating { get; set; }
-
         public double? TotalRating { get; set; }
-
-        //public ICollection<Artwork> Artworks { get; set; }
 
         public string Bundles { get; set; }
 
@@ -31,11 +24,7 @@ namespace Gamebase.Models
 
         public string Expansions { get; set; }
 
-        public string FirstReleaseDate { get; set; }
-
-        //public int? FranchiseId { get; set; }
-        //
-        //public Franchise MainFranchise { get; set; }
+        public DateTime? FirstReleaseDate { get; set; }
 
         public ICollection<GamesGameEngines> GameEngines { get; set; }
 
@@ -46,10 +35,6 @@ namespace Gamebase.Models
         public ICollection<GamesDevelopers> Developers { get; set; }
 
         public ICollection<GamesKeywords> Keywords { get; set; }
-
-        //public ICollection<MultiplayerMode> MultiplayerModes { get; set; }
-
-        //public ICollection<GamesPlayerPerspectives> PlayerPerspectives { get; set; }
 
         public ICollection<GamesPlatforms> Platforms { get; set; }
 
@@ -63,17 +48,7 @@ namespace Gamebase.Models
 
         public string Summary { get; set; }
 
-        //public ICollection<GamesThemes> Themes { get; set; }
-
-        public int? VersionParent { get; set; }
-
-        public string VersionTitle { get; set; }
-
-        //public ICollection<Video> Videos { get; set; }
-
         public ICollection<Website> Websites { get; set; }
-
-        public int? ParentGameId { get; set; }
 
         public ICollection<GamesCharacters> Characters { get; set; }
     }

@@ -6,9 +6,6 @@
 
     public class Character : BaseEntity
     {
-        [JsonProperty("description")]
-        public string Description { get; set; }
-
         [NotMapped]
         [JsonProperty("games")]
         public ICollection<int> GameIds { get; set; }
@@ -19,6 +16,7 @@
         [JsonProperty("mug_shot")]
         public int ImageId{ get; set; }
 
+        [JsonIgnore]
         public CharacterImage Image { get; set; }
     }
 }

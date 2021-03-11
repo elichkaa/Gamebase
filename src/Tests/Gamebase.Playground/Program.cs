@@ -1,5 +1,7 @@
 ﻿namespace Gamebase.Playground
 {
+    using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using Data;
@@ -31,8 +33,18 @@
             };
 
             var seeder = new Seeder(apiConfigSettings, appDbContext);
-            //await seeder.SeedGames();
-            await seeder.SeedCharacters();
+            var ids = new List<int>();
+            for (int i = 1; i <= 500; i++)
+            {
+                ids.Add(i);
+            }
+            //character with id 114 has an invalid collection
+            ids.RemoveAt(115);
+
+            await seeder.SeedGames(ids);
+            Console.WriteLine("All 500 games seeded.");
+            await seeder.SeedCharacters(ids);
+            Console.WriteLine("All 500 characters and their corresponding games seeded.");
         }
     }
 }

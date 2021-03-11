@@ -12,7 +12,6 @@
     using Models;
     using RestSharp;
     using RestSharp.Serializers.NewtonsoftJson;
-    using Scraping.Dtos;
 
 
     public class Seeder : ISeeder
@@ -20,10 +19,6 @@
         private readonly RestClient client;
         private readonly ConfigSettings configuration;
         private readonly GamebaseDbContext context;
-
-        public Seeder()
-        {
-        }
 
         public Seeder(ConfigSettings configuration, GamebaseDbContext context)
         {
@@ -43,9 +38,6 @@
                 var game = new Game
                 {
                     Id = gameDto.Id,
-                    AggregatedRating = (gameDto.AggregatedRating != 0 && gameDto.AggregatedRating != null)
-                        ? gameDto.AggregatedRating
-                        : (double?)null,
                     TotalRating = gameDto.TotalRating,
                     Bundles = GetEntitiesOfSameTypeAsString(gameDto.Bundles),
                     Category = gameDto.Category,
@@ -53,10 +45,9 @@
                     Collection = await GetEntity<Collection>(gameDto.CollectionId, "collections"),
                     CoverId = (gameDto.CoverId != 0 && gameDto.CoverId != null) ? gameDto.CoverId : (int?)null,
                     Cover = await GetEntity<Cover>(gameDto.CoverId, "covers"),
-                    CreatedAt = gameDto.CreatedAt,
                     Dlcs = GetEntitiesOfSameTypeAsString(gameDto.DLCs),
                     Expansions = GetEntitiesOfSameTypeAsString(gameDto.Expansions),
-                    FirstReleaseDate = gameDto.FirstReleaseDate,
+                    FirstReleaseDate = ConvertFromUnixToUtc(gameDto.FirstReleaseDate),
                     GameEngines = await GetManyToMany<GamesGameEngines, GameEngine>(gameDto.GameEngines, "game_engines",
                         nameof(GameEngine), gameDto.Id, "GameId"),
                     GameModes = await GetManyToMany<GamesGameModes, GameMode>(gameDto.GameModes, "game_modes",
@@ -67,7 +58,6 @@
                     Keywords = await GetManyToMany<GamesKeywords, Keyword>(gameDto.Keywords, "keywords", nameof(Keyword),
                         gameDto.Id, "GameId"),
                     Name = gameDto.Name,
-                    ParentGameId = (gameDto.ParentGame != 0 && gameDto.ParentGame != null) ? gameDto.ParentGame : (int?)null,
                     Platforms = await GetManyToMany<GamesPlatforms, Platform>(gameDto.Platforms, "platforms",
                         nameof(Platform), gameDto.Id, "GameId"),
                     Screenshots = await GetEntities<Screenshot>(gameDto.Screenshots, "screenshots"),
@@ -76,24 +66,25 @@
                     Summary = gameDto.Summary,
                     SimilarGames = GetEntitiesOfSameTypeAsString(gameDto.SimilarGames),
                     Url = gameDto.Url,
-                    VersionParent = gameDto.VersionParent != 0 ? gameDto.VersionParent : null,
-                    VersionTitle = gameDto.VersionTitle,
                     Websites = await GetEntities<Website>(gameDto.Websites, "websites")
                 };
-                Console.WriteLine("success");
+                Console.WriteLine("Game success");
                 await context.Games.AddAsync(game);
                 await context.SaveChangesAsync();
             }
         }
 
-        public async Task SeedCharacters(int maxId = 10)
+        public async Task SeedCharacters(ICollection<int> ids)
         {
-            for (int i = 2; i <= maxId; i++)
+            foreach (var id in ids)
             {
-                RestRequest request = CreateRequest("characters", $"fields *; where id = {i};");
+                RestRequest request = CreateRequest("characters", $"fields *;where id={id}; limit 500;");
                 IRestResponse<List<Character>> response = await client.ExecuteAsync<List<Character>>(request);
+                if (response.Data == null || response.Data.Count == 0)
+                {
+                    continue;
+                }
                 var character = response.Data[0];
-
                 if (character == null || context.Characters.Any(x => x.Id == character.Id)) continue;
 
                 await this.SeedGames(character.GameIds);
@@ -109,11 +100,22 @@
                 }
 
                 character.Image = await GetEntity<CharacterImage>(character.ImageId, "character_mug_shots");
+                if (character.Image != null)
+                {
+                    character.Image.CharacterId = character.Id;
+                }
 
-                Console.WriteLine("success");
+                Console.WriteLine("Character success");
                 await context.Characters.AddAsync(character);
                 await context.SaveChangesAsync();
             }
+        }
+
+        public DateTime ConvertFromUnixToUtc(long unixDate)
+        {
+            System.DateTime dtDateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+            dtDateTime = dtDateTime.AddSeconds(unixDate);
+            return dtDateTime;
         }
 
         private string GetEntitiesOfSameTypeAsString(ICollection<int> dtoIds)
@@ -155,7 +157,13 @@
                 return null;
             }
 
-            return response.Data?[0];
+            if (response.Data.Count != 0 && response.Data != null)
+            {
+                return response.Data[0];
+            }
+
+            return null;
+
         }
 
         private async Task<ICollection<T>> GetEntities<T>(ICollection<int> dtoIds, string subdomain) where T : new()

@@ -4,14 +4,16 @@ using Gamebase.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Gamebase.Data.Migrations
 {
     [DbContext(typeof(GamebaseDbContext))]
-    partial class GamebaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210311061215_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,6 +103,9 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ImageId")
                         .HasColumnType("int");
 
@@ -123,6 +128,9 @@ namespace Gamebase.Data.Migrations
                     b.Property<int>("CharacterId")
                         .HasColumnType("int");
 
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
@@ -139,6 +147,8 @@ namespace Gamebase.Data.Migrations
 
                     b.HasIndex("CharacterId")
                         .IsUnique();
+
+                    b.HasIndex("GameId");
 
                     b.ToTable("CharacterImages");
                 });
@@ -663,7 +673,15 @@ namespace Gamebase.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Gamebase.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Character");
+
+                    b.Navigation("Game");
                 });
 
             modelBuilder.Entity("Gamebase.Models.Cover", b =>

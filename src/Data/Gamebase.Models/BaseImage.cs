@@ -16,12 +16,6 @@
         [JsonProperty("url")]
         public string Url { get; set; }
 
-        [JsonProperty("animated")]
-        public bool IsAnimated { get; set; }
-
-        [JsonProperty("alpha_channel")]
-        public bool HasAlphaChannel { get; set; }
-
         [JsonProperty("game")]
         public int GameId { get; set; }
 
