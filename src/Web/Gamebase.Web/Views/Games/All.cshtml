@@ -1,8 +1,8 @@
 ﻿@model List<Gamebase.Web.ViewModels.Games.GameOnAllPageViewModel>
 @using static Gamebase.Common.Constants
-@{
-    ViewData["Title"] = "All Games - Gamebase";
-}
+@{ ViewData["Title"] = "All Games - Gamebase";
+                var currentPage = Model[0].CurrentPage;
+                var pageCount = Model[0].PageCount; }
 
 <!-- Page info section -->
 <section class="page-info-section set-bg" data-setbg="/img/page-top-bg/3.jpg">
@@ -18,41 +18,49 @@
     </div>
 </section>
 <!-- Page info section -->
-
 <!-- Page section -->
 <section class="page-section review-page spad">
     <div class="container">
         <div class="row">
-            @for (int i = 1; i <= 10; i += 2)
+            @for (int i = 0; i < 10; i += 2)
             {
-                <div class="col-md-6">
-                    <div class="review-item">
-                        <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i].Cover">
-                            <div class="score yellow">@Model[i].AverageRating</div>
-                        </div>
-                        <div class="review-text">
-                            <h4>@Model[i].Name</h4>
-                            <p>@Model[i].Summary</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="review-item">
-                        <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i+1].Cover">
-                            <div class="score yellow">@Model[i].AverageRating</div>
-                        </div>
-                        <div class="review-text">
-                            <h4>@Model[i+1].Name</h4>
-                            <p>@Model[i+1].Summary</p>
-                        </div>
-                    </div>
-                </div>
-            }
+<div class="col-md-6">
+    <div class="review-item">
+        <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i].Cover">
+            <div class="score yellow">@Model[i].AverageRating</div>
         </div>
-        <div class="text-center pt-4">
-            <button class="site-btn btn-sm">Load More</button>
+        <div class="review-text">
+            <h4>@Model[i].Name</h4>
+            <p>@Model[i].Summary</p>
         </div>
     </div>
+</div>
+                <div class="col-md-6">
+                    <div class="review-item">
+                        <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i + 1].Cover">
+                            <div class="score yellow">@Model[i + 1].AverageRating</div>
+                        </div>
+                        <div class="review-text">
+                            <h4>@Model[i + 1].Name</h4>
+                            <p>@Model[i + 1].Summary</p>
+                        </div>
+                    </div>
+                </div>            }
+            <nav aria-label="Page navigation example" class="text-center pt-4">
+                <ul class="pagination justify-content-end">
+                    @if (currentPage > 1)
+                    {
+                        <li class="page-item"><a class="page-link" asp-controller="Games" asp-action="All" asp-route-id="@(currentPage - 1)">Previous</a></li>
+                        <li class="page-item"><a class="page-link" asp-controller="Games" asp-action="All" asp-route-id="@(currentPage - 1)">@(currentPage - 1)</a></li>
+                    }
+                    <li class="page-item"><a class="page-link" href="#">@currentPage</a></li>
+                    <li class="page-item"><a class="page-link" asp-controller="Games" asp-action="All" asp-route-id="@(currentPage + 1)">@(currentPage + 1)</a></li>
+                    <li class="page-item"><a class="page-link" asp-controller="Games" asp-action="All" asp-route-id="@(currentPage + 1)">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
 </section>
 <!-- Page section end -->
 <!-- Review section -->

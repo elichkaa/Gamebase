@@ -5,7 +5,7 @@
 
     public interface IGamesService
     {
-        public List<GameOnAllPageViewModel> GetAll();
+        public List<GameOnAllPageViewModel> GetAll(int currentPage);
         public GameOnDetailsPageViewModel GetSingle(int id);
     }
 }

@@ -12,9 +12,9 @@
             this.gamesService = gamesService;
         }
 
-        public IActionResult All()
+        public IActionResult All(int id)
         {
-            var games = this.gamesService.GetAll();
+            var games = this.gamesService.GetAll(id);
             return this.View(games);
         }
 

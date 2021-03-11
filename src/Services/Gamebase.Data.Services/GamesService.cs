@@ -14,8 +14,10 @@
             this.context = context;
         }
 
-        public List<GameOnAllPageViewModel> GetAll()
+        public List<GameOnAllPageViewModel> GetAll(int currentPage)
         {
+            const int gamesOnPage = 10;
+            var pageCount = Math.Ceiling((decimal)context.Games.Count() / gamesOnPage);
             var games = context
                 .Games
                 .OrderByDescending(x => x.FirstReleaseDate)
@@ -25,9 +27,14 @@
                     Summary = x.Summary,
                     Cover = x.Cover.ImageId + ".jpg",
                     DeveloperName = x.Developers.Select(d => d.Developer.Name).FirstOrDefault(),
-                    AverageRating = $"{x.TotalRating:f2}"
+                    AverageRating = $"{x.TotalRating:f2}",
+                    PageCount = (int)pageCount,
+                    CurrentPage = currentPage
                 })
+                .Skip((currentPage - 1) * gamesOnPage)
+                .Take(gamesOnPage)
                 .ToList();
+
             return games;
         }
 
