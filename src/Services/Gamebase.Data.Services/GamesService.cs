@@ -23,10 +23,10 @@
                 .OrderByDescending(x => x.FirstReleaseDate)
                 .Select(x => new GameOnAllPageViewModel
                 {
+                    Id = x.Id,
                     Name = x.Name,
                     Summary = x.Summary,
                     Cover = x.Cover.ImageId + ".jpg",
-                    DeveloperName = x.Developers.Select(d => d.Developer.Name).FirstOrDefault(),
                     AverageRating = $"{x.TotalRating:f2}",
                     PageCount = (int)pageCount,
                     CurrentPage = currentPage
@@ -40,7 +40,23 @@
 
         public GameOnDetailsPageViewModel GetSingle(int id)
         {
-            throw new NotImplementedException();
+            var game=context.
+                Games.
+                Where(x=>x.Id==id).
+                Select(x=>new GameOnDetailsPageViewModel
+                {
+                    Developers=x.Developers.Select(y=>y.Developer).ToList(),
+                    Genres=x.Genres.Select(y=>y.Genre.Name).ToList()
+                }).
+                FirstOrDefault();
+            if (game != null)
+            {
+                return game;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

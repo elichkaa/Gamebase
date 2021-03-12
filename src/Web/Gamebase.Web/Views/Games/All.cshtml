@@ -24,28 +24,31 @@
         <div class="row">
             @for (int i = 0; i < 10; i += 2)
             {
-                    <div class="col-md-6">
-                        <div class="review-item">
+                <div class="col-md-6">
+                    <div class="review-item">
+                        <a asp-controller="Games" asp-action="Details" asp-route-id="@Model[i].Id" >
                             <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i].Cover">
                                 <div class="score yellow">@Model[i].AverageRating</div>
                             </div>
-                            <div class="review-text">
-                                <h4>@Model[i].Name</h4>
-                                <p>@Model[i].Summary</p>
-                            </div>
+                        </a>
+
+                        <div class="review-text">
+                            <h4>@Model[i].Name</h4>
+                            <p>@Model[i].Summary</p>
                         </div>
                     </div>
-                     <div class="col-md-6">
-                         <div class="review-item">
-                             <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i + 1].Cover">
-                                 <div class="score yellow">@Model[i + 1].AverageRating</div>
-                             </div>
-                             <div class="review-text">
-                                 <h4>@Model[i + 1].Name</h4>
-                                 <p>@Model[i + 1].Summary</p>
-                             </div>
-                         </div>
-                     </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="review-item">
+                        <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i + 1].Cover">
+                            <div class="score yellow">@Model[i + 1].AverageRating</div>
+                        </div>
+                        <div class="review-text">
+                            <h4>@Model[i + 1].Name</h4>
+                            <p>@Model[i + 1].Summary</p>
+                        </div>
+                    </div>
+                </div>
             }
             <div class="col-md-12">
                 <nav class="pagination-outer" aria-label="Page navigation">
@@ -57,25 +60,25 @@
                         {
                             if (i > 0)
                             {
-            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
-}
-    }
+                                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
+                            }
+                        }
                         <li class="page-item active"><a class="page-link" href="#">@currentPage</a></li>
                         @for (int i = currentPage + 1; i <= currentPage + 4; i++)
                         {
                             if (i <= pageCount)
                             {
-            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
-}
-    }
+                                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
+                            }
+                        }
                         <li class="page-item @if (!(currentPage + 1 < pageCount)) { <text>disabled</text> }">
                             <a class="page-link" asp-action="All" asp-route-id="@(currentPage+1)">»</a>
                         </li>
                     </ul>
                 </nav>
-                </div>
             </div>
         </div>
+    </div>
 
 </section>
 <!-- Page section end -->

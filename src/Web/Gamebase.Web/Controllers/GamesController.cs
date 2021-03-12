@@ -18,9 +18,10 @@
             return this.View(games);
         }
 
-        public IActionResult Details()
+        public IActionResult Details(int id)
         {
-            return this.View();
+            var game = this.gamesService.GetSingle(id);
+            return this.View(game);
         }
     }
 }
