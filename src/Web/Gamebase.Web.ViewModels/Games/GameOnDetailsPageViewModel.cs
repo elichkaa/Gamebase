@@ -7,18 +7,18 @@ namespace Gamebase.Web.ViewModels.Games
 {
     public class GameOnDetailsPageViewModel
     {
+        public string Name { get; set; } 
         public ICollection<Developer> Developers { get; set; }
         public double? TotalRating { get; set; }
-
-        public string Bundles { get; set; }
-
+        public string AverageRating { get; set; }
+        public string Bundles { get; set; } 
         public GameCategoryEnum Category { get; set; }
 
-        public Collection Collection { get; set; }
+        public Collection Collection { get; set; } 
 
         public Cover Cover { get; set; }
 
-        public string Dlcs { get; set; }
+        public string Dlcs { get; set; } 
 
         public string Expansions { get; set; }
 
@@ -28,7 +28,7 @@ namespace Gamebase.Web.ViewModels.Games
 
         public ICollection<GameMode> GameModes { get; set; }
 
-        public ICollection<string> Genres { get; set; }
+        public ICollection<Genre> Genres { get; set; }
 
         public ICollection<Keyword> Keywords { get; set; }
 
