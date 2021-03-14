@@ -169,6 +169,6 @@
             }
         }
 
-        public decimal GetMaxPages() => Math.Ceiling((decimal)context.Games.Count() / gamesOnPage);
+
     }
 }
