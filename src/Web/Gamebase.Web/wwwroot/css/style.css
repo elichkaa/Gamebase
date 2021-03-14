@@ -1508,3 +1508,15 @@ ol {
 		font-size: 40px;
 	}
 }
+
+.descriptions {
+    margin: 30px;
+}
+
+.card-header {
+    font-size: x-large;
+}
+
+p.descriptions {
+    font-size: larger;
+}

@@ -16,7 +16,7 @@ namespace Gamebase.Web.ViewModels.Games
 
         public Collection Collection { get; set; } 
 
-        public Cover Cover { get; set; }
+        public string Cover { get; set; }
 
         public string Dlcs { get; set; } 
 
@@ -34,7 +34,7 @@ namespace Gamebase.Web.ViewModels.Games
 
         public ICollection<Platform> Platforms { get; set; }
 
-        public ICollection<Screenshot> Screenshots { get; set; }
+        public ICollection<string> Screenshots { get; set; }
 
         public string SimilarGames { get; set; }
 

@@ -1,1 +1,161 @@
-﻿
+﻿@model Gamebase.Web.ViewModels.Games.GameOnDetailsPageViewModel
+@using static Gamebase.Common.Constants
+@{
+    ViewData["Title"] = $"{@Model.Name} - Gamebase";
+    var screenshots = @Model.Screenshots;
+}
+
+<section class="page-info-section set-bg" data-setbg="@BaseUrl@ScreenshotHuge/@screenshots.ToList()[0]">
+    <div class="pi-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 text-white">
+                    <h1>@Model.Name</h1>
+                </div>
+                <div class="justify-content-xl-end">
+                    <img src="@BaseUrl@CoverBig/@Model.Cover" alt="Game Cover" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container">
+    @if (@Model.Summary != null)
+    {
+        <h2 class="descriptions">Summary</h2>
+        <div class="descriptions">
+            @Model.Summary
+        </div>
+    }
+    @if (@Model.Storyline != null)
+    {
+        <h2 class="descriptions">Storyline</h2>
+        <div class="descriptions">
+            @Model.Storyline
+        </div>
+    }
+</section>
+<section class="container">
+    <table class="table descriptions">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Category</th>
+                <th scope="col">Satus</th>
+                @if (Model.FirstReleaseDate != null)
+                {
+                    <th scope="col">Release Date</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">@Model.Name</th>
+                <td>@Model.Category</td>
+                <td>@Model.Status</td>
+                @if (Model.FirstReleaseDate != null)
+                {
+                    <td>@(((DateTime)Model.FirstReleaseDate).ToString("MM/dd/yyyy"))</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="container">
+    <div class="row">
+        @if (@Model.Developers != null && @Model.Developers.Count != 0)
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    Developers
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var developer in @Model.Developers)
+                    {
+                        <li class="list-group-item">@developer.Name</li>
+                    }
+                </ul>
+            </div>
+        }
+        @if (@Model.GameEngines != null && @Model.GameEngines.Count != 0)
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    Game engines
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var gameEngine in @Model.GameEngines)
+                    {
+                        <li class="list-group-item">@gameEngine.Name</li>
+                    }
+                </ul>
+            </div>
+        }
+        @if (@Model.Genres != null && @Model.Genres.Count != 0)
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    Genres
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var genre in @Model.Genres)
+                    {
+                        <li class="list-group-item">@genre.Name</li>
+                    }
+                </ul>
+            </div>
+        }
+        @if (@Model.Platforms != null && @Model.Platforms.Count != 0)
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    Platforms
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var platform in @Model.Platforms)
+                    {
+                        <li class="list-group-item">@platform.Name</li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+    @if (@Model.Keywords != null && @Model.Keywords.Count != 0)
+    {
+        <h2 class="descriptions">Keywords</h2>
+        <p class="descriptions">
+            @string.Join(", ", Model.Keywords.Select(x => x.Name))
+        </p>
+    }
+</section>
+<!--https://codepen.io/edgarlnx/pen/MBjrMK-->
+<section class="container">
+    <h2 class="descriptions"> Screenshots</h2>
+    <div class="carousel slide" id="main-carousel" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#main-carousel" data-slide-to="0" class="active"></li>
+            @for (int i = 1; i <= screenshots.Count; i++)
+            {
+                <li data-target="#main-carousel" data-slide-to="@i"></li>
+            }
+        </ol>
+        <div class="carousel-inner">
+            @foreach (var screenshot in Model.Screenshots)
+            {
+                <div class="carousel-item @(screenshot == Model.Screenshots.First() ? "active" : "")">
+                    <img src="@BaseUrl@ScreenshotHuge/@screenshot" alt="@Model.Name">
+                </div>
+            }
+        </div>
+        <a href="#main-carousel" class="carousel-control-prev" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+            <span class="sr-only" aria-hidden="true">Prev</span>
+        </a>
+        <a href="#main-carousel" class="carousel-control-next" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+            <span class="sr-only" aria-hidden="true">Next</span>
+        </a>
+    </div>
+</section>
+<div class="descriptions"></div>

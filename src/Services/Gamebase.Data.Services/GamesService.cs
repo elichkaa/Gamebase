@@ -49,7 +49,7 @@
                 {
                     Name = x.Name,
                     Summary = x.Summary,
-                    Cover = x.Cover,
+                    Cover = x.Cover.ImageId + ".jpg",
                     Bundles = x.Bundles,
                     Category = x.Category,
                     Collection = x.Collection,
@@ -63,7 +63,7 @@
                     GameModes = x.GameModes.Select(y => y.GameMode).ToList(),
                     Keywords = x.Keywords.Select(y => y.Keyword).ToList(),
                     Platforms = x.Platforms.Select(y => y.Platform).ToList(),
-                    Screenshots = x.Screenshots,
+                    Screenshots = x.Screenshots.Select(x => x.ImageId + ".jpg").ToList(),
                     SimilarGames = x.SimilarGames,
                     Status = x.Status,
                     Storyline = x.Storyline,
