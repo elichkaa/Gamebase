@@ -117,6 +117,8 @@
             return games;
         }
 
+        public decimal GetMaxPages() => Math.Ceiling((decimal)context.Games.Count() / gamesOnPage);
+
         public void AddGame(AddGameInputModel input)
         {
             var existingGame = context.Games.FirstOrDefault(x => x.Name == input.Name);
