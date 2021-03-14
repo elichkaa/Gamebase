@@ -10,5 +10,7 @@
         public GameOnDetailsPageViewModel GetSingle(int id);
 
         public ICollection<SearchGameViewModel> GetGameByName(string name, string developerName);
+
+        public decimal GetMaxPages();
     }
 }

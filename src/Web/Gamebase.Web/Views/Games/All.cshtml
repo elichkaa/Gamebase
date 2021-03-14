@@ -22,35 +22,39 @@
 <section class="page-section review-page spad">
     <div class="container">
         <div class="row">
-            @for (int i = 0; i < 10; i += 2)
+            @for (int i = 0; i < @Model.Count; i += 2)
             {
-                <div class="col-md-6">
-                    <div class="review-item">
-                        <a asp-controller="Games" asp-action="Details" asp-route-id="@Model[i].Id" >
-                            <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i].Cover">
-                                <div class="score yellow">@Model[i].AverageRating</div>
-                            </div>
-                        </a>
+                @if (@Model != null)
+                {
+                    <div class="col-md-6">
+                        <div class="review-item">
+                            <a asp-controller="Games" asp-action="Details" asp-route-id="@Model[i].Id" >
+                                <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i].Cover">
+                                    <div class="score yellow">@Model[i].AverageRating</div>
+                                </div>
+                            </a>
 
-                        <div class="review-text">
-                            <h4>@Model[i].Name</h4>
-                            <p>@Model[i].Summary</p>
+                            <div class="review-text">
+                                <h4>@Model[i].Name</h4>
+                                <p>@Model[i].Summary</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="review-item">
-                        <a asp-controller="Games" asp-action="Details" asp-route-id="@Model[i+1].Id">
-                        <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i + 1].Cover">
-                            <div class="score yellow">@Model[i + 1].AverageRating</div>
-                        </div>
-                        </a>
+                    <div class="col-md-6">
+                        <div class="review-item">
+                            <a asp-controller="Games" asp-action="Details" asp-route-id="@Model[i+1].Id)">
+                                <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i + 1].Cover">
+                                    <div class="score yellow">@Model[i + 1].AverageRating</div>
+                                </div>
+                            </a>
                             <div class="review-text">
                                 <h4>@Model[i + 1].Name</h4>
                                 <p>@Model[i + 1].Summary</p>
                             </div>
+                        </div>
                     </div>
-                </div>
+                }
+                
             }
             <div class="col-md-12">
                 <nav class="pagination-outer" aria-label="Page navigation">

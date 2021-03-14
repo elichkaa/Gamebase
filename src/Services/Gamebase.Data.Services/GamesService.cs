@@ -10,6 +10,7 @@
     public class GamesService : IGamesService
     {
         private readonly GamebaseDbContext context;
+        private const int gamesOnPage = 10;
 
         public GamesService(GamebaseDbContext context)
         {
@@ -18,8 +19,7 @@
 
         public List<GameOnAllPageViewModel> GetAll(int currentPage)
         {
-            const int gamesOnPage = 10;
-            var pageCount = Math.Ceiling((decimal)context.Games.Count() / gamesOnPage);
+            var pageCount = this.GetMaxPages();
             var games = context
                 .Games
                 .OrderByDescending(x => x.FirstReleaseDate)
@@ -113,5 +113,7 @@
 
             return games;
         }
+
+        public decimal GetMaxPages() => Math.Ceiling((decimal)context.Games.Count() / gamesOnPage);
     }
 }
