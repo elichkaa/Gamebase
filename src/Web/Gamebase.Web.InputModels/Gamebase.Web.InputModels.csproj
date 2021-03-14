@@ -8,4 +8,8 @@
     <Folder Include="Games\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\Gamebase.Models\Gamebase.Models.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
 ﻿namespace Gamebase.Data.Services
 {
     using Gamebase.Models;
+    using Gamebase.Web.InputModels.AddDelete;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -82,9 +83,11 @@
         }
         public ICollection<Game> GetGamesFromString(string numbers)
         {
+            
             if (numbers != null)
             {
                 List<int> ids = numbers.Trim().Split(",").Select(int.Parse).ToList();
+                
                 return null;
             }
             else
@@ -112,6 +115,56 @@
             }
 
             return games;
+        }
+
+        public void AddGame(AddGameInputModel input)
+        {
+            var existingGame = context.Games.FirstOrDefault(x => x.Name == input.Name);
+            var existingDeveloper = context.Developers.FirstOrDefault(x => x.Name == input.DeveloperName);
+            if (existingDeveloper == null)
+                {
+                context.Add(new Developer { 
+                Name=input.DeveloperName,
+                Url=input.DeveloperUrl,
+                Description=input.DeveloperDescription
+                });
+                context.SaveChanges();
+                existingDeveloper = context.Developers.FirstOrDefault(x => x.Name == input.DeveloperName);
+            }
+            if (existingGame == null)
+            {
+                context.Add(new Game
+                {
+                    Name = input.Name,
+                    Url = input.Url,
+                    Storyline = input.Storyline,
+                    Summary = input.Summary,
+                    Status = input.Status,
+                    Category = input.Category,
+                    FirstReleaseDate = input.FirstReleaseDate,
+                    Developers=null,
+                    
+
+                }); ;
+                existingGame = context.Games.FirstOrDefault(x => x.Name == input.Name);
+                //existingGame.Developers.Add(existingDeveloper.Id);
+                context.SaveChanges();
+                    
+            }
+        }
+
+        public void DeleteGame(DeleteGameInputModel input)
+        {
+            var existingGame = context.Games.FirstOrDefault(x => x.Name == input.Name);
+            if (existingGame != null)
+            {
+                context.Games.Remove(existingGame);
+                context.SaveChanges();
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
