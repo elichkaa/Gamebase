@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\Gamebase.Models\Gamebase.Models.csproj" />
+    <ProjectReference Include="..\Gamebase.Web.InputModels\Gamebase.Web.InputModels.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,9 @@
+﻿@model ICollection<Gamebase.Web.ViewModels.Search.SearchGameViewModel>
+
+@if (Model.Any())
+{
+    foreach (var result in Model)
+    {
+        <h2>@result.Name + @result.ReleaseDate + @result.DeveloperName</h2>
+    }
+}

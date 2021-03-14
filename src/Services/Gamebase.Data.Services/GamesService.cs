@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Web.ViewModels.Games;
+    using Web.ViewModels.Search;
 
     public class GamesService : IGamesService
     {
@@ -79,15 +80,38 @@
                 return null;
             }
         }
-        public  ICollection<Game> GetGamesFromString(string numbers){
-            if (numbers != null) {
+        public ICollection<Game> GetGamesFromString(string numbers)
+        {
+            if (numbers != null)
+            {
                 List<int> ids = numbers.Trim().Split(",").Select(int.Parse).ToList();
-                return null; 
+                return null;
             }
             else
             {
                 return null;
             }
+        }
+
+        public ICollection<SearchGameViewModel> GetGameByName(string name, string developerName)
+        {
+            var games = context
+                .Games
+                .Select(x => new SearchGameViewModel
+                {
+                    Name = x.Name,
+                    DeveloperName = x.Developers.Count >= 1 ? x.Developers.Select(d => d.Developer.Name).FirstOrDefault() : null,
+                    ReleaseDate = x.FirstReleaseDate
+                })
+                .Where(x => x.Name.ToLower().Contains(name.ToLower()))
+                .ToList();
+
+            if (developerName != null)
+            {
+                return games.Where(x => x.DeveloperName.ToLower().Contains(developerName.ToLower())).ToList();
+            }
+
+            return games;
         }
     }
 }

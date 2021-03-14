@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Search menu - Gamebase";
+}
+<section class="page-info-section set-bg" style="margin-bottom: 75px" data-setbg="../img/backgrounds/Lux_2.jpg">
+    <div class="pi-content">
+        <div class="container">
+            <div class="row">
+                <h1 class="text-white">Choose a category to search in:</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section style="margin-bottom: 75px">
+    <div class="container">
+        <div class="row">
+            <a asp-controller="Search" asp-action="Game">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Games</h5>
+                        <p class="card-text">Filter and search the games.</p>
+                    </div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Developers</h5>
+                        <p class="card-text">Filter and search the developers.</p>
+                    </div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Characters</h5>
+                        <p class="card-text">Filter and search the characters.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
