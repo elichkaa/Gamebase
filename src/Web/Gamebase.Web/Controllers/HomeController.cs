@@ -27,21 +27,6 @@ namespace Gamebase.Web.Controllers
             return View(hpViewModel);
         }
 
-        public IActionResult Categories()
-        {
-            return View();
-        }
-
-        public IActionResult Community()
-        {
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            return View();
-        }
-
         public IActionResult Privacy()
         {
             return View();
