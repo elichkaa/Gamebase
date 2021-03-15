@@ -5,19 +5,26 @@ using System.Diagnostics;
 
 namespace Gamebase.Web.Controllers
 {
+    using Data.Services;
+    using ViewModels.Home;
 
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> logger;
+        private readonly IGamesService gamesService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IGamesService gamesService)
         {
-            this.logger = logger;
+            this.gamesService = gamesService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var hpViewModel = new HomePageViewModel
+            {
+                RandomGames = this.gamesService.GetFourRandomGames(),
+                RecentGames = this.gamesService.GetThreeMostRecentGames()
+            };
+            return View(hpViewModel);
         }
 
         public IActionResult Categories()

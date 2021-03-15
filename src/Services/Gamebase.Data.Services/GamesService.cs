@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Web.ViewModels.Games;
+    using Web.ViewModels.Home;
     using Web.ViewModels.Search;
 
     public class GamesService : IGamesService
@@ -118,6 +119,40 @@
         }
 
         public decimal GetMaxPages() => Math.Ceiling((decimal)context.Games.Count() / gamesOnPage);
+
+        public List<GameOnHomePageViewModel> GetThreeMostRecentGames()
+        {
+            return context
+                .Games
+                .OrderByDescending(x => x.FirstReleaseDate)
+                .Select(x => new GameOnHomePageViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Cover = x.Cover.ImageId + ".jpg",
+                    ShortSummary = string.Join(" ", x.Summary.Split(' ', StringSplitOptions.None).ToList().Take(10).ToList()) + "..." ,
+                    MainGenreName = x.Genres.Select(g => g.Genre.Name).FirstOrDefault()
+                })
+                .Take(3)
+                .ToList();
+        }
+
+        public List<GameOnHomePageViewModel> GetFourRandomGames()
+        {
+            return context
+                .Games
+                .OrderBy(x => Guid.NewGuid())
+                .Select(x => new GameOnHomePageViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Cover = x.Cover.ImageId + ".jpg",
+                    ShortSummary = string.Join(" ", x.Summary.Split(' ', StringSplitOptions.None).ToList().Take(10).ToList()) + "...",
+                    MainGenreName = x.Genres.Select(g => g.Genre.Name).FirstOrDefault()
+                })
+                .Take(4)
+                .ToList();
+        }
 
         public void AddGame(AddGameInputModel input)
         {
