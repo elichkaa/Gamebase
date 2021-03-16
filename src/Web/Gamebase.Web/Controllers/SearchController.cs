@@ -27,7 +27,7 @@
 
         public IActionResult GameResults(string name, string developerName)
         {
-            var games = gamesService.GetGameByName(name, developerName);
+            var games = gamesService.GetGame(name, developerName);
             return this.View(games);
         }
     }

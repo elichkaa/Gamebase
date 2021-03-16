@@ -11,7 +11,7 @@
     {
         public List<GameOnAllPageViewModel> GetAll(int currentPage);
         public GameOnDetailsPageViewModel GetSingle(int id);
-        public ICollection<SearchGameViewModel> GetGameByName(string name, string developerName);
+        public ICollection<SearchGameViewModel> GetGame(string name, string developerName);
         public void AddGame(AddGameInputModel input);
         public void DeleteGame(DeleteGameInputModel input);
         public decimal GetMaxPages();

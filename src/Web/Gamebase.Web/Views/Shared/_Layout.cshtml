@@ -74,12 +74,16 @@ else
     </header>
     <!-- Header section end -->
     <!-- Page Preloder -->
+
     <div id="preloder">
         <div class="loader"></div>
     </div>
-    <div>
-        @RenderBody()
+    <div class="content">
+        <div>
+            @RenderBody()
+        </div>
     </div>
+
 
     <footer class="footer-section">
         <div class="container">
@@ -97,7 +101,7 @@ else
         </div>
     </footer>
 
-<!--====== Javascripts & Jquery ======-->
+    <!--====== Javascripts & Jquery ======-->
     <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>

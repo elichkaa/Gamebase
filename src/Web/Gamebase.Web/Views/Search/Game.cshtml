@@ -2,22 +2,21 @@
 @{
     ViewData["Title"] = "Search games";
 }
-
 <section class="container">
+    <h1>Search for a game</h1>
     <div class="input-group">
         <form asp-action="GameResults" method="get">
-            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Game name</span>
+                <span class="input-group-text">Game name</span>
                 <input type="text" class="form-control" aria-label="Game name" placeholder="Game name" asp-for="@Model.Name" aria-describedby="basic-addon1" />
             </div>
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Developer name</span>
+                <span class="input-group-text">Developer name</span>
                 <input type="text" class="form-control" aria-label="Developer Name" placeholder="Developer Name" asp-for="@Model.DeveloperName" aria-describedby="basic-addon1" />
             </div>
-            <input type="submit" value="Search">
+            <span asp-validation-for="@Model.DeveloperName" class="text-danger"></span>
+            <input type="submit" class="btn btn-dark mt-4 mb-4" value="Search">
         </form>
     </div>
 </section>
-
-

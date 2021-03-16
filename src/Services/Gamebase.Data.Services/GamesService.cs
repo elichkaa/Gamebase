@@ -97,12 +97,13 @@
             }
         }
 
-        public ICollection<SearchGameViewModel> GetGameByName(string name, string developerName)
+        public ICollection<SearchGameViewModel> GetGame(string name, string developerName)
         {
             var games = context
                 .Games
                 .Select(x => new SearchGameViewModel
                 {
+                    Id = x.Id,
                     Name = x.Name,
                     DeveloperName = x.Developers.Count >= 1 ? x.Developers.Select(d => d.Developer.Name).FirstOrDefault() : null,
                     ReleaseDate = x.FirstReleaseDate
