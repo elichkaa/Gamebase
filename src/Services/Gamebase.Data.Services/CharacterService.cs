@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace Gamebase.Data.Services
 {
-    class CharacterService : ICharacterService
+    using Web.InputModels.Search;
+    using Web.ViewModels.Search;
+
+    public class CharacterService : ICharacterService
     {
         private readonly GamebaseDbContext context;
         private const int charactersOnPage = 10;
@@ -21,22 +24,42 @@ namespace Gamebase.Data.Services
         public List<CharacterOnAllPageViewModel> GetAll(int currentPage)
         {
 
-                var pageCount = this.GetMaxPages();
-                var characters = context
-                    .Characters
-                    .OrderByDescending(x => x.ImageId)
-                    .Select(x => new CharacterOnAllPageViewModel
-                    {
-                        Name = x.Name,
-                        Image = x.Image.ImageId + ".jpg",
-                        PageCount = (int)pageCount,
-                        CurrentPage = currentPage
-                    })
-                    .Skip((currentPage - 1) * charactersOnPage)
-                    .Take(charactersOnPage)
-                    .ToList();
+            var pageCount = this.GetMaxPages();
+            var characters = context
+                .Characters
+                .OrderByDescending(x => x.ImageId)
+                .Select(x => new CharacterOnAllPageViewModel
+                {
+                    Name = x.Name,
+                    Image = x.Image.ImageId + ".jpg",
+                    PageCount = (int)pageCount,
+                    CurrentPage = currentPage
+                })
+                .Skip((currentPage - 1) * charactersOnPage)
+                .Take(charactersOnPage)
+                .ToList();
             return characters;
         }
-        
+
+        public ICollection<SearchCharacterViewModel> GetCharacterByName(SearchCharacterInputModel input)
+        {
+            var characters = context
+                .Characters
+                .Where(x => x.Name.ToLower().Contains(input.Name.ToLower()))
+                .Select(x => new SearchCharacterViewModel
+                {
+                    Name = x.Name,
+                    Image = x.Image.ImageId + ".jpg",
+                    Games = x.Games.Select(g => new SearchGameViewModel
+                    {
+                        Id = g.Game.Id,
+                        Name = g.Game.Name,
+                        Cover = g.Game.Cover.ImageId + ".jpg",
+                    }).ToList()
+                })
+                .ToList();
+
+            return characters;
+        }
     }
 }

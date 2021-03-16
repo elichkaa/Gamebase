@@ -66,12 +66,11 @@
                     GameModes = x.GameModes.Select(y => y.GameMode).ToList(),
                     Keywords = x.Keywords.Select(y => y.Keyword).ToList(),
                     Platforms = x.Platforms.Select(y => y.Platform).ToList(),
-                    Screenshots = x.Screenshots.Select(x => x.ImageId + ".jpg").ToList(),
+                    Screenshots = x.Screenshots.Select(y => y.ImageId + ".jpg").ToList(),
                     SimilarGames = x.SimilarGames,
                     Status = x.Status,
                     Storyline = x.Storyline,
                     Websites = x.Websites,
-                    Characters = x.Characters.Select(y => y.Character).ToList(),
                 }).
                 FirstOrDefault();
             if (game != null)

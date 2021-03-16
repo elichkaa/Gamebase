@@ -11,11 +11,13 @@
     {
         private readonly IGamesService gamesService;
         private readonly IDeveloperService developerService;
+        private readonly ICharacterService characterService;
 
-        public SearchController(IGamesService gamesService, IDeveloperService developerService)
+        public SearchController(IGamesService gamesService, IDeveloperService developerService, ICharacterService characterService)
         {
             this.gamesService = gamesService;
             this.developerService = developerService;
+            this.characterService = characterService;
         }
 
         public IActionResult Index()
@@ -41,8 +43,19 @@
 
         public IActionResult DeveloperResults(SearchDeveloperInputModel input)
         {
-            var games = this.developerService.GetDeveloperByName(input);
-            return this.View(games);
+            var developers = this.developerService.GetDeveloperByName(input);
+            return this.View(developers);
+        }
+
+        public IActionResult Character()
+        {
+            return this.View();
+        }
+
+        public IActionResult CharacterResults(SearchCharacterInputModel input)
+        {
+            var characters = this.characterService.GetCharacterByName(input);
+            return this.View(characters);
         }
     }
 }

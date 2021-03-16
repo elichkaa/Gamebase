@@ -1,5 +1,5 @@
 ﻿@using static Gamebase.Common.Constants
-@model ICollection<Gamebase.Web.ViewModels.Search.SearchDeveloperViewModel>
+@model ICollection<Gamebase.Web.ViewModels.Search.SearchCharacterViewModel>
 @{
     ViewData["Title"] = "Search results";
 }
@@ -22,7 +22,7 @@
                         <td>@Model.ToList()[i].Name</td>
                         <td>
                             <div class="row">
-                                @foreach (var game in @Model.ToList()[i].GamesByDeveloper)
+                                @foreach (var game in @Model.ToList()[i].Games)
                                 {
                                     <a asp-controller="Games" asp-action="Details" asp-route-id="@game.Id">
                                         <div class="card" style="width: 10rem;">

@@ -1,0 +1,17 @@
+﻿@model Gamebase.Web.InputModels.Search.SearchCharacterInputModel
+@{
+    ViewData["Title"] = "Search characters";
+}
+<section class="container">
+    <h1>Search for a character</h1>
+    <div class="input-group">
+        <form asp-action="CharacterResults" method="get">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Character Name</span>
+                <input type="text" class="form-control" aria-label="Character Name" placeholder="Character Name" asp-for="@Model.Name" aria-describedby="basic-addon1" />
+            </div>
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            <input type="submit" class="btn btn-dark mt-4 mb-4" value="Search">
+        </form>
+    </div>
+</section>

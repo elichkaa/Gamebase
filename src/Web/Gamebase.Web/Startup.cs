@@ -53,6 +53,7 @@ namespace Gamebase.Web
 
             services.AddTransient<IGamesService, GamesService>();
             services.AddTransient<IDeveloperService, DeveloperService>();
+            services.AddTransient<ICharacterService, CharacterService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

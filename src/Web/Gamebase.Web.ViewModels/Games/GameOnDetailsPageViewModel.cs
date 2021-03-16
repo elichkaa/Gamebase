@@ -46,6 +46,6 @@ namespace Gamebase.Web.ViewModels.Games
 
         public ICollection<Website> Websites { get; set; }
 
-        public ICollection<Character> Characters { get; set; }
+        public ICollection<string> Characters { get; set; }
     }
 }
