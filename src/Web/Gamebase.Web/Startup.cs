@@ -3,6 +3,7 @@ namespace Gamebase.Web
     using Microsoft.AspNetCore.Builder;
     using Data;
     using Data.Services;
+    using Data.Services.Contracts;
     using Gamebase.Models;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -51,6 +52,7 @@ namespace Gamebase.Web
             services.AddControllersWithViews();
 
             services.AddTransient<IGamesService, GamesService>();
+            services.AddTransient<IDeveloperService, DeveloperService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

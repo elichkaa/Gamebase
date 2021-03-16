@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Web.InputModels.Search;
     using Web.ViewModels.Games;
     using Web.ViewModels.Home;
     using Web.ViewModels.Search;
@@ -97,10 +98,11 @@
             }
         }
 
-        public ICollection<SearchGameViewModel> GetGame(string name, string developerName)
+        public ICollection<SearchGameViewModel> GetGame(SearchGameInputModel input)
         {
             var games = context
                 .Games
+                .Where(x => x.Name.ToLower().Contains(input.Name.ToLower()))
                 .Select(x => new SearchGameViewModel
                 {
                     Id = x.Id,
@@ -108,12 +110,11 @@
                     DeveloperName = x.Developers.Count >= 1 ? x.Developers.Select(d => d.Developer.Name).FirstOrDefault() : null,
                     ReleaseDate = x.FirstReleaseDate
                 })
-                .Where(x => x.Name.ToLower().Contains(name.ToLower()))
                 .ToList();
 
-            if (developerName != null)
+            if (input.DeveloperName != null)
             {
-                return games.Where(x => x.DeveloperName.ToLower().Contains(developerName.ToLower())).ToList();
+                return games.Where(x => x.DeveloperName.ToLower().Contains(input.DeveloperName.ToLower())).ToList();
             }
 
             return games;

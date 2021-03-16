@@ -1,14 +1,12 @@
-﻿using Gamebase.Models;
-using Gamebase.Web.ViewModels.Games;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Gamebase.Web.ViewModels.Developers;
-
-namespace Gamebase.Data.Services.Contracts
+﻿namespace Gamebase.Data.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Contracts;
+    using Web.InputModels.Search;
+    using Web.ViewModels.Developers;
+    using Web.ViewModels.Search;
+
     public class DeveloperService : IDeveloperService
     {
         private readonly GamebaseDbContext context;
@@ -17,7 +15,7 @@ namespace Gamebase.Data.Services.Contracts
         {
             this.context = context;
         }
-        public DeveloperOnSinglePageViewModel GetDeveloper(string name)
+        public DeveloperOnSinglePageViewModel GetSingleDeveloper(string name)
         {
             var developer = context.
                  Developers.
@@ -40,6 +38,26 @@ namespace Gamebase.Data.Services.Contracts
             {
                 return null;
             }
+        }
+
+        public ICollection<SearchDeveloperViewModel> GetDeveloperByName(SearchDeveloperInputModel input)
+        {
+            var developers = context
+                .Developers
+                .Where(x => x.Name.ToLower().Contains(input.Name.ToLower()))
+                .Select(x => new SearchDeveloperViewModel
+                {
+                    Name = x.Name,
+                    GamesByDeveloper = x.Games.Select(g => new SearchGameViewModel
+                    {
+                        Id = g.GameId,
+                        Name = g.Game.Name,
+                        Cover = g.Game.Cover.ImageId + ".jpg",
+                    }).ToList()
+                })
+                .ToList();
+
+            return developers;
         }
     }
 }
