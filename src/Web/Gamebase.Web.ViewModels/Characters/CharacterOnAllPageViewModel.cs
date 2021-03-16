@@ -12,5 +12,6 @@ namespace Gamebase.Web.ViewModels.Characters
         public string Image { get; set; }
         public int PageCount { get; set; }
         public int CurrentPage { get; set; }
+        public string GameNames { get; set; }
     }
 }

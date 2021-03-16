@@ -21,19 +21,21 @@ namespace Gamebase.Data.Services
             this.context = context;
         }
         public decimal GetMaxPages() => Math.Ceiling((decimal)context.Characters.Count() / charactersOnPage);
+
         public List<CharacterOnAllPageViewModel> GetAll(int currentPage)
         {
-
             var pageCount = this.GetMaxPages();
             var characters = context
                 .Characters
-                .OrderByDescending(x => x.ImageId)
+                .OrderByDescending(x => x.Image)
+                .ThenByDescending(x => x.ImageId)
                 .Select(x => new CharacterOnAllPageViewModel
                 {
                     Name = x.Name,
                     Image = x.Image.ImageId + ".jpg",
                     PageCount = (int)pageCount,
-                    CurrentPage = currentPage
+                    CurrentPage = currentPage,
+                    GameNames = string.Join(", ", x.Games.Select(g => g.Game.Name).ToList())
                 })
                 .Skip((currentPage - 1) * charactersOnPage)
                 .Take(charactersOnPage)

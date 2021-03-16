@@ -10,5 +10,7 @@
         public List<CharacterOnAllPageViewModel> GetAll(int currentPage);
 
         public ICollection<SearchCharacterViewModel> GetCharacterByName(SearchCharacterInputModel input);
+
+        public decimal GetMaxPages();
     }
 }
