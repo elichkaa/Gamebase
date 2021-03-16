@@ -1,15 +1,15 @@
-﻿using Gamebase.Models;
-using Gamebase.Web.ViewModels.Developers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gamebase.Data.Services.Contracts
+﻿namespace Gamebase.Data.Services.Contracts
 {
+    using Web.ViewModels.Developers;
+    using System.Collections.Generic;
+
+    using Web.InputModels.Search;
+    using Web.ViewModels.Search;
+
     public interface IDeveloperService
     {
-        public DeveloperOnSinglePageViewModel GetDeveloper(string name);
+        public DeveloperOnSinglePageViewModel GetSingleDeveloper(string name);
+
+        public ICollection<SearchDeveloperViewModel> GetDeveloperByName(SearchDeveloperInputModel input);
     }
 }
