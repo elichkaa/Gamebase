@@ -14,21 +14,25 @@
 
         public IActionResult All(int id)
         {
-            if (id < 0 || id > gamesService.GetMaxPages())
-            {
-                return this.NotFound();
-            }
             var games = this.gamesService.GetAll(id);
+
+            if (games == null)
+            {
+               return this.Redirect("/Home/Error");
+            }
+
             return this.View(games);
         }
 
         public IActionResult Details(int id)
         {
-            if (id < 0)
-            {
-                return this.NotFound();
-            }
             var game = this.gamesService.GetSingle(id);
+
+            if (game == null)
+            {
+                return this.Redirect("/Home/Error");
+            }
+
             return this.View(game);
         }
     }
