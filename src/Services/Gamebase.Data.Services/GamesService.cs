@@ -23,6 +23,10 @@
         public List<GameOnAllPageViewModel> GetAll(int currentPage)
         {
             var pageCount = this.GetMaxPages();
+            if (currentPage <= 0 || currentPage > pageCount)
+            {
+                return null;
+            }
             var games = context
                 .Games
                 .OrderByDescending(x => x.FirstReleaseDate)
@@ -45,6 +49,10 @@
 
         public GameOnDetailsPageViewModel GetSingle(int id)
         {
+            if (id <= 0)
+            {
+                return null;
+            }
             var game = context.
                 Games.
                 Where(x => x.Id == id).
@@ -84,7 +92,6 @@
         }
         public ICollection<Game> GetGamesFromString(string numbers)
         {
-            
             if (numbers != null)
             {
                 List<int> ids = numbers.Trim().Split(",").Select(int.Parse).ToList();
