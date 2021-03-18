@@ -6,13 +6,13 @@
 <section class="background-form">
     <div>
         <form class="container-form user-form" asp-action="CharacterResults" method="get">
-            <span class="input">
+            <span class="form-input">
                 <input type="text" class="input__field" id="input-1" asp-for="@Model.Name" />
                 <label for="input-1" class="input__label">
                     <span class="input__label-content">Character Name</span>
                 </label>
             </span>
-            <span class="input message">
+            <span class="form-input message">
                 @if (this.TempData["ModelState"] != null)
                 {
                     <span class="text-danger">@this.TempData["ModelState"]</span>

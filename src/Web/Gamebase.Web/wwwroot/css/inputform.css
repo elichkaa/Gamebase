@@ -37,7 +37,7 @@ body {
     align-content: center;
 }
 
-.input {
+.form-input {
     position: relative;
     margin: 1em;
     width: calc(50% - 2em);

@@ -29,8 +29,14 @@
         {
             if (this.ModelState.IsValid)
             {
-                await this.signInManager.PasswordSignInAsync(input.Username, input.Password, input.RememberMe, lockoutOnFailure: false);
+                var login = await this.signInManager.PasswordSignInAsync(input.Username, input.Password, input.RememberMe, lockoutOnFailure: false);
+                if (!login.Succeeded)
+                {
+                    this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return this.View();
+                }
                 this.TempData["Message"] = "You logged in successfully.";
+
             }
             else
             {
@@ -63,22 +69,22 @@
             if (!this.ModelState.IsValid) return this.View();
             var user = new ApplicationUser
             {
-                UserName = input.Username, 
-                Email = input.Email, 
+                UserName = input.Username,
+                Email = input.Email,
                 CreatedOn = DateTime.UtcNow
             };
             var result = await this.userManager.CreateAsync(user, input.Password);
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                await this.signInManager.SignInAsync(user, isPersistent: false);
-                this.TempData["Message"] = "You registered successfully.";
-                return this.Redirect("/");
+                foreach (var error in result.Errors)
+                {
+                    this.ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return this.View();
             }
-            foreach (var error in result.Errors)
-            {
-                this.ModelState.AddModelError(string.Empty, error.Description);
-            }
-            return this.View();
+            await this.signInManager.SignInAsync(user, isPersistent: false);
+            this.TempData["Message"] = "You registered successfully.";
+            return this.Redirect("/");
         }
     }
 }
