@@ -8,6 +8,14 @@ namespace Gamebase.Models
 {
     public class GamesPlatforms
     {
+        public GamesPlatforms()
+        {
+
+        }
+        public GamesPlatforms(Game game, Platform platform)
+        {
+
+        }
         public int GameId { get; set; }
         public Game Game { get; set; }
         public int PlatformId { get; set; }

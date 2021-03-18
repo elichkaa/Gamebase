@@ -8,6 +8,15 @@ namespace Gamebase.Models
 {
     public class GamesGenres
     {
+        public GamesGenres()
+        {
+
+        }
+        public GamesGenres(Game game, Genre genre)
+        {
+            Game = game;
+            Genre = genre;
+        }
         public int GameId { get; set; }
         public Game Game { get; set; }
         public int GenreId { get; set; }

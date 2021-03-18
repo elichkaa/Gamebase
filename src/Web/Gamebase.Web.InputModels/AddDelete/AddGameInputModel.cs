@@ -29,44 +29,41 @@ namespace Gamebase.Web.InputModels.AddDelete
         public DateTime? FirstReleaseDate { get; set; }
         
         //Developer
-        [Display(Name = "Developer name")]
+        [Display(Name = "Developer names")]
         public string DeveloperName { get; set; }
-
-        [Display(Name = "Developer description")]
-        public string DeveloperDescription { get; set; }
 
         // Collection
         [Display(Name = "Collection name")]
         public string CollectionName { get; set; }
 
         // GameEngines
-        [Display(Name = "Game engine")]
+        [Display(Name = "Game engines")]
         public string GameEngineName { get; set; }
 
         // GameModes
-        [Display(Name = "Game mode")]
+        [Display(Name = "Game modes")]
         public string GameModeName { get; set; }
 
         // Genres
-        [Display(Name = "Game genre")]
+        [Display(Name = "Game genres")]
         public string GenreName { get; set; }
 
         // Keywords
 
-        [Display(Name = "Game keyword")]
+        [Display(Name = "Game keywords")]
         public string KeywordName { get; set; }
 
         // Platforms
 
-        [Display(Name = "Game platform")]
+        [Display(Name = "Game platforms")]
         public string PlatformName { get; set; }
 
         // Screenshots
-        [Display(Name = "Screenshot Url")]
+        [Display(Name = "Screenshot Urls")]
         public string ScreenshotUrl { get; set; }
 
         // Characters
-        [Display(Name = "Character name")]
+        [Display(Name = "Character names")]
         public string CharacterName { get; set; }
     }
 }

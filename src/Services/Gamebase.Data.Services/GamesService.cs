@@ -94,16 +94,15 @@
         {
             if (numbers != null)
             {
-                List<int> ids = numbers.Trim().Split(",").Select(int.Parse).ToList();
-                
-                return null;
+                List<int> ids = numbers.Trim().Split(", ").Select(int.Parse).ToList();
+
+                return context.Games.Where(x => ids.Contains(x.Id)).ToList();
             }
             else
             {
                 return null;
             }
         }
-
         public ICollection<SearchGameViewModel> GetGame(SearchGameInputModel input)
         {
             var games = context
@@ -138,7 +137,7 @@
                     Id = x.Id,
                     Name = x.Name,
                     Cover = x.Cover.ImageId + ".jpg",
-                    ShortSummary = string.Join(" ", x.Summary.Split(' ', StringSplitOptions.None).ToList().Take(10).ToList()) + "..." ,
+                    ShortSummary = string.Join(" ", x.Summary.Split(' ', StringSplitOptions.None).ToList().Take(10).ToList()) + "...",
                     MainGenreName = x.Genres.Select(g => g.Genre.Name).FirstOrDefault()
                 })
                 .Take(3)
@@ -166,16 +165,18 @@
         {
             //Check if entities exist, if they dont add them
 
-            if (!CheckIfEntityExists<Developer>(input.DeveloperName))
+            List<string> developerNames = input.DeveloperName.Split(" ").ToList();
+            foreach (string developerName in developerNames)
             {
-                context.Add(new Developer
+                if (!CheckIfEntityExists<Developer>(developerName))
                 {
-                    Name = input.DeveloperName,
-                    Description = input.DeveloperDescription
-                });
-                context.SaveChanges();
+                    context.Add(new Developer
+                    {
+                        Name = developerName
+                    });
+                    context.SaveChanges();
+                }
             }
-
             if (!CheckIfEntityExists<Collection>(input.CollectionName))
             {
                 context.Add(new Collection
@@ -185,91 +186,154 @@
                 context.SaveChanges();
             }
 
-            if (!CheckIfEntityExists<GameEngine>(input.GameEngineName))
+            List<string> gameEngineNames = input.GameEngineName.Split(" ").ToList();
+            foreach (string gameEngineName in gameEngineNames)
             {
-                context.Add(new Collection
+                if (!CheckIfEntityExists<GameEngine>(gameEngineName))
                 {
-                    Name = input.CollectionName
+                    context.Add(new Collection
+                    {
+                        Name = input.CollectionName
+                    });
+                    context.SaveChanges();
+                }
+            }
+            List<string> gameModeNames = input.GameModeName.Split(" ").ToList();
+            foreach (string gameModeName in gameModeNames)
+            {
+                if (!CheckIfEntityExists<GameMode>(gameModeName))
+                {
+                    context.Add(new GameMode
+                    {
+                        Name = gameModeName
+                    });
+                    context.SaveChanges();
+                }
+            }
+
+            List<string> genreNames = input.GenreName.Split(" ").ToList();
+            foreach (string genreName in genreNames)
+            {
+                if (!CheckIfEntityExists<Genre>(genreName))
+                {
+                    context.Add(new GameMode
+                    {
+                        Name = genreName
+                    });
+                    context.SaveChanges();
+                }
+            }
+
+            List<string> keywordNames = input.KeywordName.Split(" ").ToList();
+            foreach (string keyword in keywordNames)
+            {
+                if (!CheckIfEntityExists<Keyword>(keyword))
+                {
+                    context.Add(new Keyword
+                    {
+                        Name = keyword
+                    });
+                    context.SaveChanges();
+                }
+            }
+            List<string> platformNames = input.PlatformName.Split(" ").ToList();
+            foreach (string platformName in platformNames)
+            {
+                if (!CheckIfEntityExists<Platform>(platformName))
+                {
+                    context.Add(new Platform
+                    {
+                        Name = platformName
+                    });
+                    context.SaveChanges();
+                }
+            }
+
+            List<string> characterNames = input.CharacterName.Split(" ").ToList();
+            foreach (string characterName in characterNames)
+            {
+                if (!CheckIfEntityExists<Character>(characterName))
+                {
+                    context.Add(new Character
+                    {
+                        Name = characterName
+                    });
+                    context.SaveChanges();
+                }
+            }
+            List<string> screenshotsUrls = input.ScreenshotUrl.Split(" ").ToList();
+            foreach (string screenshotUrl in screenshotsUrls)
+            {
+                context.Add(new Screenshot
+                {
+                    Url = screenshotUrl
                 });
                 context.SaveChanges();
             }
 
-            if (!CheckIfEntityExists<GameMode>(input.GameModeName))
-            {
-                context.Add(new GameMode
-                {
-                    Name = input.GameModeName
-                });
-                context.SaveChanges();
-            }
+            //var Developer = context.Developers.FirstOrDefault(x => x.Name == input.DeveloperName);
+            var collection = context.Collections.FirstOrDefault(x => x.Name == input.CollectionName);
+            //var GameEnginge = context.GameEngines.FirstOrDefault(x => x.Name == input.GameEngineName);
+            //var GameMode = context.GameModes.FirstOrDefault(x => x.Name == input.GameModeName);
+            //var GenreName = context.Genres.FirstOrDefault(x => x.Name == input.GenreName);
+            //var Keyword = context.Keywords.FirstOrDefault(x => x.Name == input.KeywordName);
+            //var Platform = context.Platforms.FirstOrDefault(x => x.Name == input.PlatformName);
+            //var Character = context.Characters.FirstOrDefault(x => x.Name == input.CharacterName);
+            //var Screenshot = context.Screenshots.FirstOrDefault(x => x.Url == input.ScreenshotUrl);
+            List<Developer> developers = context.Developers.Where(x => developerNames.Contains(x.Name)).ToList();
+            List<GameEngine> gameEngines = context.GameEngines.Where(x => gameEngineNames.Contains(x.Name)).ToList();
+            List<GameMode> gameModes = context.GameModes.Where(x => gameModeNames.Contains(x.Name)).ToList();
+            List<Genre> genres = context.Genres.Where(x => genreNames.Contains(x.Name)).ToList();
+            List<Keyword> keywords = context.Keywords.Where(x => keywordNames.Contains(x.Name)).ToList();
+            List<Platform> platforms = context.Platforms.Where(x => platformNames.Contains(x.Name)).ToList();
+            List<Character> characters = context.Characters.Where(x => characterNames.Contains(x.Name)).ToList();
+            List<Screenshot> screenshots= context.Screenshots.Where(x => screenshotsUrls.Contains(x.Url)).ToList();
+            var newGame = new Game();
 
-            if (!CheckIfEntityExists<Genre>(input.GenreName))
-            {
-                context.Add(new GameMode
-                {
-                    Name = input.GameModeName
-                });
-                context.SaveChanges();
-            }
-
-            if (!CheckIfEntityExists<Keyword>(input.KeywordName))
-            {
-                context.Add(new Keyword
-                {
-                    Name = input.KeywordName
-                });
-                context.SaveChanges();
-            }
-
-            if (!CheckIfEntityExists<Platform>(input.PlatformName))
-            {
-                context.Add(new Platform
-                {
-                    Name = input.PlatformName
-                });
-                context.SaveChanges();
-            }
-            if (!CheckIfEntityExists<Character>(input.CharacterName))
-            {
-                context.Add(new Character
-                {
-                    Name = input.CharacterName
-                });
-                context.SaveChanges();
-            }
-
-            // no check for screenshot 
-            context.Add(new Screenshot
-            {
-                Url = input.ScreenshotUrl
-            });
-            context.SaveChanges();
-
-
-            var Developer= context.Developers.FirstOrDefault(x => x.Name == input.DeveloperName);
-            var Collection = context.Collections.FirstOrDefault(x => x.Name == input.CollectionName);
-            var GameEnginge= context.GameEngines.FirstOrDefault(x => x.Name == input.GameEngineName);
-            var GameMode= context.GameModes.FirstOrDefault(x => x.Name == input.GameModeName);
-            var GenreName= context.Genres.FirstOrDefault(x => x.Name == input.GenreName);
-            var Keyword= context.Keywords.FirstOrDefault(x => x.Name == input.KeywordName);
-            var Platform= context.Platforms.FirstOrDefault(x => x.Name == input.PlatformName);
-            var Character = context.Characters.FirstOrDefault(x => x.Name == input.CharacterName);
-            var Screenshot= context.Screenshots.FirstOrDefault(x => x.Url == input.ScreenshotUrl);
             if (!CheckIfEntityExists<Game>(input.Name))
             {
-                var newGame = new Game();
+
                 newGame.Name = input.Name;
                 //newGame.Cover = input.Cover; IMAGE
                 newGame.Storyline = input.Storyline;
                 newGame.Summary = input.Summary;
-                //newGame.Developers
-                newGame.Collection.Id = Collection.Id;
-                //newGame.GameEngines 
-                //newGame.GameMode 
-                //newGame.Keywords
-                //newGame.Platforms
-                //newGame.Character
-                newGame.Screenshots.Add(Screenshot);  //IMAGE
+                newGame.Collection = collection;
+                foreach(Screenshot screenshot in screenshots)
+                {
+                    newGame.Screenshots.Add(screenshot);
+                }
+                context.Games.Add(newGame);
+                context.SaveChanges();
+            }
+
+            newGame = context.Games.FirstOrDefault(x => x.Name == input.Name);
+            foreach (Developer developer in developers)
+            {
+                context.GamesDevelopers.Add(new GamesDevelopers(newGame, developer));
+            }
+            foreach (GameEngine gameEngine in gameEngines)
+            {
+                context.GamesEngines.Add(new GamesGameEngines(newGame, gameEngine));
+            }
+            foreach (GameMode gameMode in gameModes)
+            {
+                context.GamesModes.Add(new GamesGameModes(newGame, gameMode));
+            }
+            foreach (Genre genre in genres)
+            {
+                context.GameGenres.Add(new GamesGenres(newGame, genre));
+            }
+            foreach (Keyword keyword in keywords)
+            {
+                context.GamesKeywords.Add(new GamesKeywords(newGame, keyword));
+            }
+            foreach(Platform platform in platforms)
+            {
+                context.GamePlatforms.Add(new GamesPlatforms(newGame, platform));
+            }
+            foreach (Character character in characters)
+            {
+                context.GameCharacters.Add(new GamesCharacters(newGame, character));
             }
         }
 
