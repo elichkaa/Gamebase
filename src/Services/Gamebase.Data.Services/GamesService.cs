@@ -153,19 +153,106 @@
 
         public void AddGame(AddGameInputModel input)
         {
-            var existingGame = context.Games.FirstOrDefault(x => x.Name == input.Name);
-            var existingDeveloper = context.Developers.FirstOrDefault(x => x.Name == input.DeveloperName);
-            if (existingDeveloper == null)
+            //Check if entities exist, if they dont add them
+
+            List<string> developerNames = input.DeveloperName.Split(" ").ToList();
+            foreach (string developerName in developerNames)
+            {
+                if (!CheckIfEntityExists<Developer>(developerName))
                 {
-                context.Add(new Developer { 
-                Name=input.DeveloperName,
-                Url=input.DeveloperUrl,
-                Description=input.DeveloperDescription
+                    context.Add(new Developer
+                    {
+                        Name = developerName
+                    });
+                    context.SaveChanges();
+                }
+            }
+            if (!CheckIfEntityExists<Collection>(input.CollectionName))
+            {
+                context.Add(new Collection
+                {
+                    Name = input.CollectionName
                 });
                 context.SaveChanges();
-                existingDeveloper = context.Developers.FirstOrDefault(x => x.Name == input.DeveloperName);
             }
-            if (existingGame == null)
+
+            List<string> gameEngineNames = input.GameEngineName.Split(" ").ToList();
+            foreach (string gameEngineName in gameEngineNames)
+            {
+                if (!CheckIfEntityExists<GameEngine>(gameEngineName))
+                {
+                    context.Add(new Collection
+                    {
+                        Name = input.CollectionName
+                    });
+                    context.SaveChanges();
+                }
+            }
+            List<string> gameModeNames = input.GameModeName.Split(" ").ToList();
+            foreach (string gameModeName in gameModeNames)
+            {
+                if (!CheckIfEntityExists<GameMode>(gameModeName))
+                {
+                    context.Add(new GameMode
+                    {
+                        Name = gameModeName
+                    });
+                    context.SaveChanges();
+                }
+            }
+
+            List<string> genreNames = input.GenreName.Split(" ").ToList();
+            foreach (string genreName in genreNames)
+            {
+                if (!CheckIfEntityExists<Genre>(genreName))
+                {
+                    context.Add(new GameMode
+                    {
+                        Name = genreName
+                    });
+                    context.SaveChanges();
+                }
+            }
+
+            List<string> keywordNames = input.KeywordName.Split(" ").ToList();
+            foreach (string keyword in keywordNames)
+            {
+                if (!CheckIfEntityExists<Keyword>(keyword))
+                {
+                    context.Add(new Keyword
+                    {
+                        Name = keyword
+                    });
+                    context.SaveChanges();
+                }
+            }
+            List<string> platformNames = input.PlatformName.Split(" ").ToList();
+            foreach (string platformName in platformNames)
+            {
+                if (!CheckIfEntityExists<Platform>(platformName))
+                {
+                    context.Add(new Platform
+                    {
+                        Name = platformName
+                    });
+                    context.SaveChanges();
+                }
+            }
+
+            List<string> characterNames = input.CharacterName.Split(" ").ToList();
+            foreach (string characterName in characterNames)
+            {
+                if (!CheckIfEntityExists<Character>(characterName))
+                {
+                    context.Add(new Character
+                    {
+                        Name = characterName
+                    });
+                    context.SaveChanges();
+                }
+            }
+            List<string> screenshotsUrls = input.ScreenshotUrl.Split(" ").ToList();
+            foreach (string screenshotUrl in screenshotsUrls)
             {
                 context.Add(new Screenshot
                 {
@@ -190,7 +277,7 @@
             List<Keyword> keywords = context.Keywords.Where(x => keywordNames.Contains(x.Name)).ToList();
             List<Platform> platforms = context.Platforms.Where(x => platformNames.Contains(x.Name)).ToList();
             List<Character> characters = context.Characters.Where(x => characterNames.Contains(x.Name)).ToList();
-            List<Screenshot> screenshots= context.Screenshots.Where(x => screenshotsUrls.Contains(x.Url)).ToList();
+            List<Screenshot> screenshots = context.Screenshots.Where(x => screenshotsUrls.Contains(x.Url)).ToList();
             var newGame = new Game();
 
             if (!CheckIfEntityExists<Game>(input.Name))
@@ -201,7 +288,7 @@
                 newGame.Storyline = input.Storyline;
                 newGame.Summary = input.Summary;
                 newGame.Collection = collection;
-                foreach(Screenshot screenshot in screenshots)
+                foreach (Screenshot screenshot in screenshots)
                 {
                     newGame.Screenshots.Add(screenshot);
                 }
@@ -230,7 +317,7 @@
             {
                 context.GamesKeywords.Add(new GamesKeywords(newGame, keyword));
             }
-            foreach(Platform platform in platforms)
+            foreach (Platform platform in platforms)
             {
                 context.GamePlatforms.Add(new GamesPlatforms(newGame, platform));
             }
