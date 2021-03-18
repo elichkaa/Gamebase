@@ -10,7 +10,7 @@
 
         public string DeveloperName { get; set; }
         
-        public DateTime? ReleaseDate { get; set; }
+        public string ReleaseDate { get; set; }
 
         public string Cover { get; set; }
     }

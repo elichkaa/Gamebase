@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.EntityFrameworkCore;
     using Web.InputModels.Search;
     using Web.ViewModels.Games;
     using Web.ViewModels.Home;
@@ -53,42 +54,31 @@
             {
                 return null;
             }
+
+            this.context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
             var game = context.
                 Games.
+                AsNoTracking().
                 Where(x => x.Id == id).
                 Select(x => new GameOnDetailsPageViewModel
                 {
                     Name = x.Name,
                     Summary = x.Summary,
                     Cover = x.Cover.ImageId + ".jpg",
-                    Bundles = x.Bundles,
-                    Category = x.Category,
-                    Collection = x.Collection,
-                    Dlcs = x.Dlcs,
-                    Expansions = x.Expansions,
                     FirstReleaseDate = x.FirstReleaseDate,
                     AverageRating = $"{Math.Floor((decimal)x.TotalRating)}",
-                    GameEngines = x.GameEngines.Select(y => y.GameEngine).ToList(),
-                    Developers = x.Developers.Select(y => y.Developer).ToList(),
+                    GameEngines = x.GameEngines.Select(y => y.GameEngine.Name).ToList(),
+                    Developers = x.Developers.Select(y => y.Developer.Name).ToList(),
                     Genres = x.Genres.Select(y => y.Genre).ToList(),
-                    GameModes = x.GameModes.Select(y => y.GameMode).ToList(),
-                    Keywords = x.Keywords.Select(y => y.Keyword).ToList(),
-                    Platforms = x.Platforms.Select(y => y.Platform).ToList(),
+                    Keywords = x.Keywords.Select(y => y.Keyword.Name).ToList(),
+                    Platforms = x.Platforms.Select(y => y.Platform.Name).ToList(),
                     Screenshots = x.Screenshots.Select(y => y.ImageId + ".jpg").ToList(),
-                    SimilarGames = x.SimilarGames,
                     Status = x.Status,
                     Storyline = x.Storyline,
-                    Websites = x.Websites,
                 }).
                 FirstOrDefault();
-            if (game != null)
-            {
-                return game;
-            }
-            else
-            {
-                return null;
-            }
+            return game;
         }
         public ICollection<Game> GetGamesFromString(string numbers)
         {
@@ -114,7 +104,7 @@
                     Id = x.Id,
                     Name = x.Name,
                     DeveloperName = x.Developers.Count >= 1 ? x.Developers.Select(d => d.Developer.Name).FirstOrDefault() : null,
-                    ReleaseDate = x.FirstReleaseDate
+                    ReleaseDate = ((DateTime)x.FirstReleaseDate).ToString("MM/dd/yyyy")
                 })
                 .ToList();
 
@@ -167,11 +157,11 @@
             var existingGame = context.Games.FirstOrDefault(x => x.Name == input.Name);
             var existingDeveloper = context.Developers.FirstOrDefault(x => x.Name == input.DeveloperName);
             if (existingDeveloper == null)
-                {
+            {
                 context.Add(new Developer { 
-                Name=input.DeveloperName,
-                Url=input.DeveloperUrl,
-                Description=input.DeveloperDescription
+                    Name=input.DeveloperName,
+                    Url=input.DeveloperUrl,
+                    Description=input.DeveloperDescription
                 });
                 context.SaveChanges();
                 existingDeveloper = context.Developers.FirstOrDefault(x => x.Name == input.DeveloperName);

@@ -35,7 +35,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\img\backgrounds\Gangplank_14.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\img\backgrounds\Janna_0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\img\backgrounds\Jhin_2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\img\backgrounds\Nidalee_7.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\img\backgrounds\Rakan_1.jpg">

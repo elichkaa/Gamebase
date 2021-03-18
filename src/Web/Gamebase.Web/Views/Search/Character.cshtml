@@ -2,16 +2,24 @@
 @{
     ViewData["Title"] = "Search characters";
 }
-<section class="container">
-    <h1>Search for a character</h1>
-    <div class="input-group">
-        <form asp-action="CharacterResults" method="get">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Character Name</span>
-                <input type="text" class="form-control" aria-label="Character Name" placeholder="Character Name" asp-for="@Model.Name" aria-describedby="basic-addon1" />
-            </div>
-            <span asp-validation-for="@Model.Name" class="text-danger"></span>
-            <input type="submit" class="btn btn-dark mt-4 mb-4" value="Search">
+
+<section class="background-form">
+    <div>
+        <form class="container-form user-form" asp-action="CharacterResults" method="get">
+            <span class="input">
+                <input type="text" class="input__field" id="input-1" asp-for="@Model.Name" />
+                <label for="input-1" class="input__label">
+                    <span class="input__label-content">Character Name</span>
+                </label>
+            </span>
+            <span class="input message">
+                @if (this.TempData["ModelState"] != null)
+                {
+                    <span class="text-danger">@this.TempData["ModelState"]</span>
+                }
+            </span>
+            <input type="submit" id="send-button" value="Search">
+
         </form>
     </div>
 </section>

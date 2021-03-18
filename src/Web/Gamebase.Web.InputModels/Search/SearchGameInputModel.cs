@@ -5,6 +5,7 @@
     public class SearchGameInputModel
     {
         [Required]
+        [StringLength(30, MinimumLength = 2)]
         [Display(Name = "Game name")]
         public string Name { get; set; }
 

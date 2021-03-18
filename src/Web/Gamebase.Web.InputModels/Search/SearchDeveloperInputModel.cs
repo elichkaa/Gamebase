@@ -5,6 +5,7 @@
     public class SearchDeveloperInputModel
     {
         [Required]
+        [StringLength(30, MinimumLength = 2)]
         [Display(Name = "Developer name")]
         public string Name { get; set; }
     }

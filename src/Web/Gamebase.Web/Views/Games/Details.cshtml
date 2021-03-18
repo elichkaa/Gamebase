@@ -73,7 +73,7 @@
                 <ul class="list-group list-group-flush">
                     @foreach (var developer in @Model.Developers)
                     {
-                        <li class="list-group-item">@developer.Name</li>
+                        <li class="list-group-item">@developer</li>
                     }
                 </ul>
             </div>
@@ -87,7 +87,7 @@
                 <ul class="list-group list-group-flush">
                     @foreach (var gameEngine in @Model.GameEngines)
                     {
-                        <li class="list-group-item">@gameEngine.Name</li>
+                        <li class="list-group-item">@gameEngine</li>
                     }
                 </ul>
             </div>
@@ -115,7 +115,7 @@
                 <ul class="list-group list-group-flush">
                     @foreach (var platform in @Model.Platforms)
                     {
-                        <li class="list-group-item">@platform.Name</li>
+                        <li class="list-group-item">@platform</li>
                     }
                 </ul>
             </div>
@@ -125,7 +125,7 @@
     {
         <h2 class="descriptions">Keywords</h2>
         <p class="descriptions">
-            @string.Join(", ", Model.Keywords.Select(x => x.Name))
+            @string.Join(", ", Model.Keywords)
         </p>
     }
 </section>

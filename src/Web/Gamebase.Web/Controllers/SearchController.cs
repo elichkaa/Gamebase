@@ -32,6 +32,12 @@
 
         public IActionResult GameResults(SearchGameInputModel input)
         {
+            if (!ModelState.IsValid)
+            {
+                this.ModelState.AddModelError(string.Empty, "Game name should be minimum 2 symbols.");
+                this.TempData["ModelState"] = this.ModelState.Root.Errors[0].ErrorMessage;
+                return this.Redirect("/Search/Game/");
+            }
             var games = gamesService.GetGame(input);
             return this.View(games);
         }
@@ -43,6 +49,12 @@
 
         public IActionResult DeveloperResults(SearchDeveloperInputModel input)
         {
+            if (!ModelState.IsValid)
+            {
+                this.ModelState.AddModelError(string.Empty, "Developer name should be minimum 2 symbols.");
+                this.TempData["ModelState"] = this.ModelState.Root.Errors[0].ErrorMessage;
+                return this.Redirect("/Search/Developer/");
+            }
             var developers = this.developerService.GetDeveloperByName(input);
             return this.View(developers);
         }
@@ -54,6 +66,12 @@
 
         public IActionResult CharacterResults(SearchCharacterInputModel input)
         {
+            if (!ModelState.IsValid)
+            {
+                this.ModelState.AddModelError(string.Empty, "Character name should be minimum 2 symbols.");
+                this.TempData["ModelState"] = this.ModelState.Root.Errors[0].ErrorMessage;
+                return this.Redirect("/Search/Character/");
+            }
             var characters = this.characterService.GetCharacterByName(input);
             return this.View(characters);
         }
