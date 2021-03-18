@@ -342,7 +342,7 @@ namespace Gamebase.Data.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("GamesGameEngines");
+                    b.ToTable("GamesEngines");
                 });
 
             modelBuilder.Entity("Gamebase.Models.GamesGameModes", b =>
@@ -357,7 +357,7 @@ namespace Gamebase.Data.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("GamesGameModes");
+                    b.ToTable("GamesModes");
                 });
 
             modelBuilder.Entity("Gamebase.Models.GamesGenres", b =>

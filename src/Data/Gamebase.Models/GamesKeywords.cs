@@ -2,6 +2,15 @@
 {
     public class GamesKeywords
     {
+        public GamesKeywords()
+        {
+
+        }
+        public GamesKeywords(Game game, Keyword keyword)
+        {
+            Game = game;
+            Keyword = keyword;
+        }
         public int GameId { get; set; }
 
         public Game Game { get; set; }

@@ -22,6 +22,10 @@
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Screenshot> Screenshots { get; set; }
         public DbSet<GameEngine> GameEngines { get; set; }
+        public DbSet<GamesDevelopers> GamesDevelopers { get; set; }
+        public DbSet<GamesGameEngines> GamesEngines { get; set; }
+        public DbSet<GamesGameModes> GamesModes { get; set; }
+        public DbSet<GamesKeywords> GamesKeywords { get; set; }
         public DbSet<GamesGenres> GameGenres { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<GamesPlatforms> GamePlatforms { get; set; }
