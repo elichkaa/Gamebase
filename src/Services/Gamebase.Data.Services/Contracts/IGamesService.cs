@@ -28,7 +28,5 @@
         public List<GameOnHomePageViewModel> GetFourRandomGames();
 
         public ICollection<GameMode> GetGameModes();
-
-        public int CreateGame(AddGameInputModel input, string userId, string basePath);
     }
 }

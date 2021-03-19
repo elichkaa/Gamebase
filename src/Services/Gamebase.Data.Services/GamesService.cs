@@ -407,60 +407,6 @@
             return this.context.Set<T>().AsNoTracking().OrderByDescending(x => x.Id).FirstOrDefault().Id;
         }
 
-        public int CreateGame(AddGameInputModel input, string userId, string basePath)
-        {
-            var game = new Game
-            {
-                Id = this.GetBiggestId<Game>() + 1,
-                Name = input.Name,
-                Category = GameCategoryEnum.main_game,
-                FirstReleaseDate = input.FirstReleaseDate,
-                Status = StatusEnum.released,
-                Storyline = input.Storyline,
-                Summary = input.Summary,
-            };
-            game.GameModes = new List<GamesGameModes>()
-            {
-                new GamesGameModes()
-                {
-                    GameId = game.Id,
-                    GameModeId = input.GameModeId
-                }
-            };
-            Directory.CreateDirectory(basePath);
-            if (input.Cover != null)
-            {
-                game.Cover = new Cover
-                {
-                    Id = this.GetBiggestId<Cover>() + 1,
-                    ImageId = input.Cover.FileName,
-                    Url = $"{basePath}{input.Cover.FileName}",
-                    GameId = game.Id,
-                    ApplicationUserId = userId,
-                };
-            }
-            for (int i = 0; i < input.Screenshots.Count; i++)
-            {
-                var screenshot = input.Screenshots.ToList()[i];
-                var dbScreenshot = new Screenshot
-                {
-                    Id = this.GetBiggestId<Screenshot>() + i + 1,
-                    Url = $"{basePath}{screenshot.FileName}",
-                    ApplicationUserId = userId,
-                    GameId = game.Id,
-                    ImageId = screenshot.FileName
-                };
-                game.Screenshots.Add(dbScreenshot);
-
-                using Stream fileStream = new FileStream(dbScreenshot.Url, FileMode.Create);
-                screenshot.CopyTo(fileStream);
-            }
-
-            this.context.Games.Add(game);
-            this.context.SaveChanges();
-            return game.Id;
-        }
-
         private bool InputFieldIsNull(string field)
         {
             return field == null;
