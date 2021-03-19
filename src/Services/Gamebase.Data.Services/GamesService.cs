@@ -1,21 +1,18 @@
 ﻿namespace Gamebase.Data.Services
 {
-    using Gamebase.Models;
-    using Gamebase.Web.InputModels.AddDelete;
+    using Models;
+    using Web.InputModels.AddDelete;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Web.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.VisualBasic;
     using Models.Enums;
     using Web.InputModels.Search;
     using Web.ViewModels.Games;
     using Web.ViewModels.Home;
     using Web.ViewModels.Search;
     using Collection = Models.Collection;
-    using static Gamebase.Common.Constants;
 
     public class GamesService : IGamesService
     {
@@ -287,44 +284,36 @@
                 }
             }
 
-            //var Developer = context.Developers.FirstOrDefault(x => x.Name == input.DeveloperName);
             var collection = context.Collections.FirstOrDefault(x => x.Name == input.CollectionName);
-            //var GameEnginge = context.GameEngines.FirstOrDefault(x => x.Name == input.GameEngineName);
-            //var GameMode = context.GameModes.FirstOrDefault(x => x.Name == input.GameModeName);
-            //var GenreName = context.Genres.FirstOrDefault(x => x.Name == input.GenreName);
-            //var Keyword = context.Keywords.FirstOrDefault(x => x.Name == input.KeywordName);
-            //var Platform = context.Platforms.FirstOrDefault(x => x.Name == input.PlatformName);
-            //var Character = context.Characters.FirstOrDefault(x => x.Name == input.CharacterName);
-            //var Screenshot = context.Screenshots.FirstOrDefault(x => x.Url == input.ScreenshotUrl);
-            List<Developer> developers = context.Developers.Where(x => developerNames.Contains(x.Name)).ToList();
-            List<GameEngine> gameEngines = context.GameEngines.Where(x => gameEngineNames.Contains(x.Name)).ToList();
-            //List<GameMode> gameModes = context.GameModes.Where(x => gameModeNames.Contains(x.Name)).ToList();
-            List<Genre> genres = context.Genres.Where(x => genreNames.Contains(x.Name)).ToList();
-            List<Keyword> keywords = context.Keywords.Where(x => keywordNames.Contains(x.Name)).ToList();
-            List<Platform> platforms = context.Platforms.Where(x => platformNames.Contains(x.Name)).ToList();
-            List<Character> characters = context.Characters.Where(x => characterNames.Contains(x.Name)).ToList();
-            var newGame = new Game();
+            var developers = context.Developers.Where(x => developerNames.Contains(x.Name)).ToList();
+            var gameEngines = context.GameEngines.Where(x => gameEngineNames.Contains(x.Name)).ToList();
+            var genres = context.Genres.Where(x => genreNames.Contains(x.Name)).ToList();
+            var keywords = context.Keywords.Where(x => keywordNames.Contains(x.Name)).ToList();
+            var platforms = context.Platforms.Where(x => platformNames.Contains(x.Name)).ToList();
+            var characters = context.Characters.Where(x => characterNames.Contains(x.Name)).ToList();
 
-            if (!CheckIfEntityExists<Game>(input.Name))
+            if (CheckIfEntityExists<Game>(input.Name))
             {
-                newGame.Id = this.GetBiggestId<Game>() + 1;
-                newGame.Name = input.Name;
-                newGame.Storyline = input.Storyline;
-                newGame.Summary = input.Summary;
-                newGame.Collection = collection;
-                newGame.Category = GameCategoryEnum.main_game;
-                newGame.Status = StatusEnum.released;
-                newGame.FirstReleaseDate = input.FirstReleaseDate;
+                return;
             }
 
-            newGame.GameModes = new List<GamesGameModes>()
+            var gameId = this.GetBiggestId<Game>() + 1;
+            var newGame = new Game
             {
-                new GamesGameModes()
-                {
-                    GameId = newGame.Id,
-                    GameModeId = input.GameModeId
-                }
+                Id = gameId,
+                Name = input.Name,
+                Category = GameCategoryEnum.main_game,
+                Collection = collection,
+                FirstReleaseDate = input.FirstReleaseDate,
+                Status = StatusEnum.released,
+                Storyline = input.Storyline,
+                Summary = input.Summary,
             };
+            newGame.GameModes.Add(new GamesGameModes()
+            {
+                GameId = gameId,
+                GameModeId = input.GameModeId
+            });
 
             Directory.CreateDirectory(basePath);
             if (input.Cover != null)
@@ -361,27 +350,57 @@
             newGame = context.Games.FirstOrDefault(x => x.Name == input.Name);
             foreach (Developer developer in developers)
             {
-                context.GamesDevelopers.Add(new GamesDevelopers(newGame, developer));
+                context.GamesDevelopers.Add(new GamesDevelopers
+                {
+                    GameId = gameId,
+                    DeveloperId = developer.Id,
+                    Developer = developer
+                });
             }
             foreach (GameEngine gameEngine in gameEngines)
             {
-                context.GamesEngines.Add(new GamesGameEngines(newGame, gameEngine));
+                context.GamesEngines.Add(new GamesGameEngines()
+                {
+                    GameId = gameId,
+                    GameEngineId = gameEngine.Id,
+                    GameEngine = gameEngine
+                });
             }
             foreach (Genre genre in genres)
             {
-                context.GameGenres.Add(new GamesGenres(newGame, genre));
+                context.GameGenres.Add(new GamesGenres()
+                {
+                    GameId = gameId,
+                    Genre = genre,
+                    GenreId = genre.Id
+                });
             }
             foreach (Keyword keyword in keywords)
             {
-                context.GamesKeywords.Add(new GamesKeywords(newGame, keyword));
+                context.GamesKeywords.Add(new GamesKeywords()
+                {
+                    GameId = gameId,
+                    Keyword = keyword,
+                    KeywordId = keyword.Id
+                });
             }
             foreach (Platform platform in platforms)
             {
-                context.GamePlatforms.Add(new GamesPlatforms(newGame, platform));
+                context.GamePlatforms.Add(new GamesPlatforms()
+                {
+                    GameId = gameId,
+                    Platform = platform,
+                    PlatformId = platform.Id
+                });
             }
             foreach (Character character in characters)
             {
-                context.GameCharacters.Add(new GamesCharacters(newGame, character));
+                context.GameCharacters.Add(new GamesCharacters()
+                {
+                    GameId = gameId,
+                    Character = character,
+                    CharacterId = character.Id
+                });
             }
 
             context.SaveChanges();
