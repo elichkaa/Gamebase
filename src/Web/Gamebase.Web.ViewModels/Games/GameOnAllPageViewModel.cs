@@ -16,5 +16,7 @@
         public int PageCount { get; set; }
 
         public int CurrentPage { get; set; }
+
+        public string ApplicationUserId { get; set; }
     }
 }

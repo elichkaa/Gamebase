@@ -351,6 +351,7 @@ MigrationBackup/
 
 #Custom ignores
 **/wwwroot/lib/
+**/wwwroot/img/user-images/
 appsettings
 appsettings.Production.json
 appsettings.Development.json

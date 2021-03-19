@@ -24,28 +24,42 @@
         <div class="row">
             @for (int i = 0; i < @Model.Count; i += 2)
             {
-                @if (@Model != null)
-                {
-                    <div class="col-md-6">
-                        <div class="review-item">
-                            <a asp-controller="Games" asp-action="Details" asp-route-id="@Model[i].Id" >
-                                <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i].Cover">
-                                    <div class="score yellow">@Model[i].AverageRating</div>
-                                </div>
-                            </a>
+@if (@Model != null)
+{
+<div class="col-md-6">
+    <div class="review-item">
+        <a asp-controller="Games" asp-action="Details" asp-route-id="@Model[i].Id">
+            @if (@Model[i].ApplicationUserId != null)
+            {
+<div class="review-cover set-bg" data-setbg="@UserImageUrl@Model[i].Cover">
+    <div class="score yellow">@Model[i].AverageRating</div>
+</div> }
+                    else
+                    {
+<div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i].Cover">
+    <div class="score yellow">@Model[i].AverageRating</div>
+</div>}
+        </a>
 
-                            <div class="review-text">
-                                <h4>@Model[i].Name</h4>
-                                <p>@Model[i].Summary</p>
-                            </div>
-                        </div>
-                    </div>
+        <div class="review-text">
+            <h4>@Model[i].Name</h4>
+            <p>@Model[i].Summary</p>
+        </div>
+    </div>
+</div>
                     <div class="col-md-6">
                         <div class="review-item">
                             <a asp-controller="Games" asp-action="Details" asp-route-id="@Model[i + 1].Id">
-                                <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i + 1].Cover">
-                                    <div class="score yellow">@Model[i + 1].AverageRating</div>
-                                </div>
+                                @if (@Model[i + 1].ApplicationUserId != null)
+                                {
+            <div class="review-cover set-bg" data-setbg="@UserImageUrl@Model[i + 1].Cover">
+                <div class="score yellow">@Model[i + 1].AverageRating</div>
+            </div> }
+        else
+        {
+<div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i + 1].Cover">
+    <div class="score yellow">@Model[i + 1].AverageRating</div>
+</div>}
                             </a>
                             <div class="review-text">
                                 <h4>@Model[i + 1].Name</h4>
@@ -53,9 +67,7 @@
                             </div>
                         </div>
                     </div>
-                }
-                
-            }
+                }            }
             <div class="col-md-12">
                 <nav class="pagination-outer" aria-label="Page navigation">
                     <ul class="pagination">
@@ -66,16 +78,14 @@
                         {
                             if (i > 0)
                             {
-                                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
-                            }
+            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>}
                         }
                         <li class="page-item active"><a class="page-link" href="#">@currentPage</a></li>
                         @for (int i = currentPage + 1; i <= currentPage + 4; i++)
                         {
                             if (i <= pageCount)
                             {
-                                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
-                            }
+            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>}
                         }
                         <li class="page-item @if (!(currentPage + 1 < pageCount)) { <text>disabled</text> }">
                             <a class="page-link" asp-action="All" asp-route-id="@(currentPage+1)">»</a>
@@ -88,59 +98,3 @@
 
 </section>
 <!-- Page section end -->
-<!-- Review section -->
-<section class="review-section review-dark spad set-bg" data-setbg="/img/review-bg-2.jpg">
-    <div class="container">
-        <div class="section-title text-white">
-            <div class="cata new">new</div>
-            <h2>Recent Reviews</h2>
-        </div>
-        <div class="row text-white">
-            <div class="col-lg-3 col-md-6">
-                <div class="review-item">
-                    <div class="review-cover set-bg" data-setbg="/img/review/1.jpg">
-                        <div class="score yellow">9.3</div>
-                    </div>
-                    <div class="review-text">
-                        <h5>Assasin’’s Creed</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="review-item">
-                    <div class="review-cover set-bg" data-setbg="/img/review/2.jpg">
-                        <div class="score purple">9.5</div>
-                    </div>
-                    <div class="review-text">
-                        <h5>Doom</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="review-item">
-                    <div class="review-cover set-bg" data-setbg="/img/review/3.jpg">
-                        <div class="score green">9.1</div>
-                    </div>
-                    <div class="review-text">
-                        <h5>Overwatch</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="review-item">
-                    <div class="review-cover set-bg" data-setbg="/img/review/4.jpg">
-                        <div class="score pink">9.7</div>
-                    </div>
-                    <div class="review-text">
-                        <h5>GTA</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Review section end -->

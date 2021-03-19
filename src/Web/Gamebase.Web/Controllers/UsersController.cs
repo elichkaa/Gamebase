@@ -1,21 +1,30 @@
 ﻿namespace Gamebase.Web.Controllers
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
+    using Data.Services;
     using Gamebase.Models;
     using InputModels;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using ViewModels.Games;
+    using ViewModels.Users;
 
     public class UsersController : Controller
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IGamesService gamesService;
 
-        public UsersController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public UsersController(
+            SignInManager<ApplicationUser> signInManager, 
+            UserManager<ApplicationUser> userManager,
+            IGamesService gamesService)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.gamesService = gamesService;
         }
 
         [HttpGet]
@@ -50,17 +59,17 @@
         }
 
         [HttpGet]
-        public IActionResult Register()
-        {
-            return this.View();
-        }
-
-        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
             this.TempData["Message"] = "You logged out successfully.";
             return this.Redirect("/");
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return this.View();
         }
 
         [HttpPost]
@@ -85,6 +94,18 @@
             await this.signInManager.SignInAsync(user, isPersistent: false);
             this.TempData["Message"] = "You registered successfully.";
             return this.Redirect("/");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Account()
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            var userVm = new UserAccountViewModel()
+            {
+               Username = currentUser.UserName,
+               GamesByUser = this.gamesService.GetGamesByUser(currentUser.Id).ToList()
+            };
+            return this.View(userVm);
         }
     }
 }

@@ -33,13 +33,26 @@
             {
 <div class="col-lg-3 col-md-6 p-0">
     <a asp-controller="Games" asp-action="Details" asp-route-id="@randomGame.Id">
-        <div class="feature-item set-bg" data-setbg="@BaseUrl@CoverBig/@randomGame.Cover">
-            <span class="cata new">@randomGame.MainGenreName</span>
-            <div class="fi-content text-white">
-                <h5>@randomGame.Name</h5>
-                <p>@randomGame.ShortSummary</p>
+        @if (!randomGame.IsFromUser)
+        {
+            <div class="feature-item set-bg" data-setbg="@BaseUrl@CoverBig/@randomGame.Cover">
+                <span class="cata new">@randomGame.MainGenreName</span>
+                <div class="fi-content text-white">
+                    <h5>@randomGame.Name</h5>
+                    <p>@randomGame.ShortSummary</p>
+                </div>
             </div>
+        }
+        else
+        {
+    <div class="feature-item set-bg" data-setbg="@UserImageUrl/@randomGame.Cover">
+        <span class="cata new">@randomGame.MainGenreName</span>
+        <div class="fi-content text-white">
+            <h5>@randomGame.Name</h5>
+            <p>@randomGame.ShortSummary</p>
         </div>
+    </div>
+        }
     </a>
 </div>}
         </div>
@@ -56,20 +69,31 @@
         <div class="row">
             @foreach (var recentGame in @Model.RecentGames)
             {
-                <div class="col-lg-4 col-md-6">
-                    <a asp-controller="Games" asp-action="Details" asp-route-id="@recentGame.Id">
-                        <div class="recent-game-item">
-                            <div class="rgi-thumb set-bg" data-setbg="@BaseUrl@ScreenshotMed/@recentGame.Cover">
-                                <div class="cata new">@recentGame.MainGenreName</div>
-                            </div>
+<div class="col-lg-4 col-md-6">
+    <a asp-controller="Games" asp-action="Details" asp-route-id="@recentGame.Id">
+        <div class="recent-game-item">
+            @if (!recentGame.IsFromUser)
+            {
+        <div class="rgi-thumb set-bg" data-setbg="@BaseUrl@ScreenshotMed/@recentGame.Cover">
+            <div class="cata new">@recentGame.MainGenreName</div>
+        </div>
                             <div class="rgi-content">
                                 <h5>@recentGame.Name</h5>
                                 <p>@recentGame.ShortSummary</p>
+                            </div> }
+                                            else
+                                            {
+                            <div class="rgi-thumb set-bg" data-setbg="@UserImageUrl@recentGame.Cover">
+                                <div class="cata new">@recentGame.MainGenreName</div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-            }
+                                                <div class="rgi-content">
+                                                    <h5>@recentGame.Name</h5>
+                                                    <p>@recentGame.ShortSummary</p>
+                                                </div>}
+
+        </div>
+    </a>
+</div>            }
 
         </div>
     </div>

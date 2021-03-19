@@ -56,7 +56,7 @@ namespace Gamebase.Data.Services
                     {
                         Id = g.Game.Id,
                         Name = g.Game.Name,
-                        Cover = g.Game.Cover.ImageId + ".jpg",
+                        Cover = g.Game.ApplicationUserId == null ? g.Game.Cover.ImageId + ".jpg" : g.Game.Cover.ImageId,
                     }).ToList()
                 })
                 .ToList();

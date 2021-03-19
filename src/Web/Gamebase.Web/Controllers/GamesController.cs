@@ -52,6 +52,14 @@
         }
 
         [Authorize]
+        public IActionResult Delete(int id)
+        {
+            this.gamesService.DeleteGame(id);
+            this.TempData["Message"] = "Game deleted successfully.";
+            return this.Redirect("/Users/Account");
+        }
+
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
@@ -76,7 +84,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             try
             {
-                this.gamesService.AddGame(input, user.Id, $"{this.environment.WebRootPath}/img/user-images/");
+                this.gamesService.AddGame(input, user, $"{this.environment.WebRootPath}/img/user-images/");
             }
             catch (Exception ex)
             {

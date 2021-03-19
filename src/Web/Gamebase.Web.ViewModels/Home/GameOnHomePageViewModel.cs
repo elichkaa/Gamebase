@@ -11,5 +11,7 @@
         public string ShortSummary { get; set; }
 
         public string MainGenreName { get; set; }
+
+        public bool IsFromUser { get; set; }
     }
 }

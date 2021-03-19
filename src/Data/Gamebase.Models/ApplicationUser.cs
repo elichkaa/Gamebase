@@ -12,6 +12,7 @@
             this.Id = Guid.NewGuid().ToString();
             this.Roles = new List<IdentityUserRole<string>>();
             this.Logins = new List<IdentityUserLogin<string>>();
+            this.Games = new List<Game>();
         }
 
         public DateTime CreatedOn { get; set; }
@@ -25,5 +26,7 @@
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public virtual ICollection<Game> Games { get; set; }
     }
 }

@@ -47,7 +47,7 @@
             @if (this.SignInManager.IsSignedIn(this.User))
             {
 <div class="user-panel">
-    Hello, @this.User.Identity.Name! / <a asp-controller="Users" asp-action="Logout">Logout</a>
+    <a asp-controller="Users" asp-action="Account">Hello, @this.User.Identity.Name!</a> / <a asp-controller="Users" asp-action="Logout">Logout</a>
 </div> }
 else
 {

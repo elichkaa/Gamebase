@@ -3,7 +3,6 @@
     using Gamebase.Models;
     using Gamebase.Web.InputModels.AddDelete;
     using System.Collections.Generic;
-    using System.Web.Mvc;
     using Web.InputModels.Search;
     using Web.ViewModels.Games;
     using Web.ViewModels.Home;
@@ -17,9 +16,9 @@
 
         public ICollection<SearchGameViewModel> GetGame(SearchGameInputModel input);
 
-        public void AddGame(AddGameInputModel input, string userId, string basePath);
+        public void AddGame(AddGameInputModel input, ApplicationUser user, string basePath);
 
-        public void DeleteGame(DeleteGameInputModel input);
+        public void DeleteGame(int gameId);
 
         public decimal GetMaxPages();
 
@@ -28,5 +27,7 @@
         public List<GameOnHomePageViewModel> GetFourRandomGames();
 
         public ICollection<GameMode> GetGameModes();
+
+        public ICollection<GameOnAllPageViewModel> GetGamesByUser(string userId);
     }
 }

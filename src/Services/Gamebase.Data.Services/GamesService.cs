@@ -39,10 +39,11 @@
                     Id = x.Id,
                     Name = x.Name,
                     Summary = x.Summary,
-                    Cover = x.Cover.ImageId + ".jpg",
+                    Cover = x.ApplicationUser.Id == null ? x.Cover.ImageId + ".jpg" : x.Cover.ImageId,
                     AverageRating = $"{Math.Floor((decimal)x.TotalRating)}",
                     PageCount = (int)pageCount,
-                    CurrentPage = currentPage
+                    CurrentPage = currentPage,
+                    ApplicationUserId = x.ApplicationUserId
                 })
                 .Skip((currentPage - 1) * gamesOnPage)
                 .Take(gamesOnPage)
@@ -68,7 +69,7 @@
                 {
                     Name = x.Name,
                     Summary = x.Summary,
-                    Cover = x.Cover.ImageId + ".jpg",
+                    Cover = x.ApplicationUser.Id == null ? x.Cover.ImageId + ".jpg" : x.Cover.ImageId,
                     FirstReleaseDate = x.FirstReleaseDate,
                     AverageRating = $"{Math.Floor((decimal)x.TotalRating)}",
                     GameEngines = x.GameEngines.Select(y => y.GameEngine.Name).ToList(),
@@ -76,9 +77,10 @@
                     Genres = x.Genres.Select(y => y.Genre).ToList(),
                     Keywords = x.Keywords.Select(y => y.Keyword.Name).ToList(),
                     Platforms = x.Platforms.Select(y => y.Platform.Name).ToList(),
-                    Screenshots = x.Screenshots.Select(y => y.ImageId + ".jpg").ToList(),
+                    Screenshots = x.Screenshots.Select(y => (x.ApplicationUser.Id == null ? y.ImageId + ".jpg" : y.ImageId)).ToList(),
                     Status = x.Status,
                     Storyline = x.Storyline,
+                    IsFromUser = x.ApplicationUserId != null
                 }).
                 FirstOrDefault();
             return game;
@@ -106,7 +108,8 @@
                     Id = x.Id,
                     Name = x.Name,
                     DeveloperName = x.Developers.Count >= 1 ? x.Developers.Select(d => d.Developer.Name).FirstOrDefault() : null,
-                    ReleaseDate = ((DateTime)x.FirstReleaseDate).ToString("MM/dd/yyyy")
+                    ReleaseDate = ((DateTime)x.FirstReleaseDate).ToString("MM/dd/yyyy"),
+                    IsFromUser = x.ApplicationUserId != null
                 })
                 .ToList();
 
@@ -129,9 +132,10 @@
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    Cover = x.Cover != null ? x.Cover.ImageId + ".jpg" : null,
+                    Cover = x.ApplicationUserId == null ? (x.Cover != null ? x.Cover.ImageId + ".jpg" : null) : x.Cover.ImageId,
                     ShortSummary = x.Summary != null ? string.Join(" ", x.Summary.Split(' ', StringSplitOptions.None).ToList().Take(10).ToList()) + "..." : null,
-                    MainGenreName = x.Genres.Count != 0 ? x.Genres.Select(g => g.Genre.Name).FirstOrDefault() : null
+                    MainGenreName = x.Genres.Count != 0 ? x.Genres.Select(g => g.Genre.Name).FirstOrDefault() : null,
+                    IsFromUser = x.ApplicationUserId != null
                 })
                 .Take(3)
                 .ToList();
@@ -146,9 +150,10 @@
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    Cover = x.Cover != null ? x.Cover.ImageId + ".jpg" : null,
+                    Cover = x.ApplicationUserId == null ? (x.Cover != null ? x.Cover.ImageId + ".jpg" : null) : x.Cover.ImageId,
                     ShortSummary = x.Summary != null ? string.Join(" ", x.Summary.Split(' ', StringSplitOptions.None).ToList().Take(10).ToList()) + "..." : null,
-                    MainGenreName = x.Genres.Count != 0 ? x.Genres.Select(g => g.Genre.Name).FirstOrDefault() : null
+                    MainGenreName = x.Genres.Count != 0 ? x.Genres.Select(g => g.Genre.Name).FirstOrDefault() : null,
+                    IsFromUser = x.ApplicationUserId != null
                 })
                 .Take(4)
                 .ToList();
@@ -162,7 +167,23 @@
                 .ToList();
         }
 
-        public void AddGame(AddGameInputModel input, string userId, string basePath)
+        public ICollection<GameOnAllPageViewModel> GetGamesByUser(string userId)
+        {
+            return this.context
+                .Games
+                .Where(x => x.ApplicationUserId == userId)
+                .Select(x => new GameOnAllPageViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Summary = x.Summary,
+                    Cover = x.Cover.ImageId,
+                    ApplicationUserId = x.ApplicationUserId
+                })
+                .ToList();
+        }
+
+        public void AddGame(AddGameInputModel input, ApplicationUser user, string basePath)
         {
             //Check if entities exist, if they dont add them
             var developerNames = new List<string>();
@@ -310,6 +331,7 @@
                 Status = StatusEnum.released,
                 Storyline = input.Storyline,
                 Summary = input.Summary,
+                ApplicationUser = user
             };
             newGame.GameModes.Add(new GamesGameModes()
             {
@@ -326,8 +348,10 @@
                     ImageId = input.Cover.FileName,
                     Url = $"{basePath}{input.Cover.FileName}",
                     GameId = newGame.Id,
-                    ApplicationUserId = userId,
+                    ApplicationUserId = user.Id,
                 };
+                using Stream fileStream = new FileStream(newGame.Cover.Url, FileMode.Create);
+                input.Cover.CopyTo(fileStream);
             }
             for (int i = 0; i < input.Screenshots.Count; i++)
             {
@@ -336,7 +360,7 @@
                 {
                     Id = this.GetBiggestId<Screenshot>() + i + 1,
                     Url = $"{basePath}{screenshot.FileName}",
-                    ApplicationUserId = userId,
+                    ApplicationUserId = user.Id,
                     GameId = newGame.Id,
                     ImageId = screenshot.FileName
                 };
@@ -378,9 +402,9 @@
             context.SaveChanges();
         }
 
-        public void DeleteGame(DeleteGameInputModel input)
+        public void DeleteGame(int id)
         {
-            var existingGame = context.Games.FirstOrDefault(x => x.Name == input.Name);
+            var existingGame = context.Games.FirstOrDefault(x => x.Id == id);
             if (existingGame != null)
             {
                 context.Games.Remove(existingGame);

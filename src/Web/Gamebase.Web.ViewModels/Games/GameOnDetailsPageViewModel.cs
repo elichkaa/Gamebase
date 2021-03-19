@@ -48,5 +48,7 @@ namespace Gamebase.Web.ViewModels.Games
         public string Summary { get; set; }
 
         public ICollection<Website> Websites { get; set; }
+
+        public bool IsFromUser { get; set; }
     }
 }

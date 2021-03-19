@@ -63,5 +63,9 @@
         public ICollection<Website> Websites { get; set; }
 
         public ICollection<GamesCharacters> Characters { get; set; }
+
+        public string ApplicationUserId { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

@@ -13,5 +13,7 @@
         public string ReleaseDate { get; set; }
 
         public string Cover { get; set; }
+
+        public bool IsFromUser { get; set; }
     }
 }
