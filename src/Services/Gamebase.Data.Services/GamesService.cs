@@ -168,7 +168,7 @@
             var developerNames = new List<string>();
             if (!this.InputFieldIsNull(input.DeveloperNames))
             {
-                developerNames = input.DeveloperNames.Split(" ").ToList();
+                developerNames = input.DeveloperNames.Split(",").ToList();
                 foreach (string developerName in developerNames)
                 {
                     if (!CheckIfEntityExists<Developer>(developerName))
@@ -183,21 +183,23 @@
                 }
             }
 
-
-            if (!CheckIfEntityExists<Collection>(input.CollectionName))
+            if (input.CollectionName != null)
             {
-                context.Collections.Add(new Collection
+                if (!CheckIfEntityExists<Collection>(input.CollectionName))
                 {
-                    Id = GetBiggestId<Collection>() + 1,
-                    Name = input.CollectionName
-                });
-                context.SaveChanges();
+                    context.Collections.Add(new Collection
+                    {
+                        Id = GetBiggestId<Collection>() + 1,
+                        Name = input.CollectionName
+                    });
+                    context.SaveChanges();
+                }
             }
 
             var gameEngineNames = new List<string>();
             if (!this.InputFieldIsNull(input.GameEngineNames))
             {
-                gameEngineNames = input.GameEngineNames.Split(" ").ToList();
+                gameEngineNames = input.GameEngineNames.Split(",").ToList();
                 foreach (string gameEngineName in gameEngineNames)
                 {
                     if (!CheckIfEntityExists<GameEngine>(gameEngineName))
@@ -215,7 +217,7 @@
             var genreNames = new List<string>();
             if (!this.InputFieldIsNull(input.GenreNames))
             {
-                genreNames = input.GenreNames.Split(" ").ToList();
+                genreNames = input.GenreNames.Split(",").ToList();
                 foreach (string genreName in genreNames)
                 {
                     if (!CheckIfEntityExists<Genre>(genreName))
@@ -233,7 +235,7 @@
             var keywordNames = new List<string>();
             if (!this.InputFieldIsNull(input.KeywordNames))
             {
-                keywordNames = input.KeywordNames.Split(" ").ToList();
+                keywordNames = input.KeywordNames.Split(",").ToList();
                 foreach (string keyword in keywordNames)
                 {
                     if (!CheckIfEntityExists<Keyword>(keyword))
@@ -251,7 +253,7 @@
             var platformNames = new List<string>();
             if (!this.InputFieldIsNull(input.PlatformNames))
             {
-                platformNames = input.PlatformNames.Split(" ").ToList();
+                platformNames = input.PlatformNames.Split(",").ToList();
                 foreach (string platformName in platformNames)
                 {
                     if (!CheckIfEntityExists<Platform>(platformName))
@@ -269,7 +271,7 @@
             var characterNames = new List<string>();
             if (!this.InputFieldIsNull(input.CharacterNames))
             {
-                characterNames = input.CharacterNames.Split(" ").ToList();
+                characterNames = input.CharacterNames.Split(",").ToList();
                 foreach (string characterName in characterNames)
                 {
                     if (!CheckIfEntityExists<Character>(characterName))

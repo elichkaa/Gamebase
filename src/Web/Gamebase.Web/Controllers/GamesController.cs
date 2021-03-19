@@ -65,9 +65,10 @@
         [HttpPost]
         public async Task<IActionResult> Create(AddGameInputModel input)
         {
+            input.GameModes = this.gamesService.GetGameModes();
             if (!ModelState.IsValid)
             {
-                return this.View();
+                return this.View(input);
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
@@ -78,12 +79,7 @@
             catch (Exception ex)
             {
                 this.ModelState.AddModelError(string.Empty, ex.Message);
-                //todo
-                var addGameViewModel = new AddGameInputModel
-                {
-                    GameModes = this.gamesService.GetGameModes()
-                };
-                return this.View(addGameViewModel);
+                return this.View(input);
             }
 
             this.TempData["Message"] = "Game added successfully.";
