@@ -45,9 +45,6 @@
                .WithOne(b => b.Game)
                .HasForeignKey<Cover>(b => b.GameId);
 
-            modelBuilder.Entity<Game>()
-                .HasIndex(x => x.Id);
-
             modelBuilder.Entity<Character>()
                 .HasOne(a => a.Image)
                 .WithOne(b => b.Character)

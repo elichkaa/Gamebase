@@ -21,5 +21,11 @@
 
         [JsonIgnore]
         public Game Game { get; set; }
+
+        [JsonIgnore]
+        public string ApplicationUserId { get; set; }
+
+        [JsonIgnore]
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

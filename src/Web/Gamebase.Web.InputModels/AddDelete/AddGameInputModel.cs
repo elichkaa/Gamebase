@@ -1,22 +1,25 @@
-﻿using Gamebase.Models;
-using Gamebase.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gamebase.Web.InputModels.AddDelete
+﻿namespace Gamebase.Web.InputModels.AddDelete
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Http;
+    using Models;
+
     public class AddGameInputModel
     {
+        public AddGameInputModel()
+        {
+            this.Screenshots = new List<IFormFile>();
+        }
         [Required]
         [Display(Name = "Game name")]
         public string Name { get; set; }
 
-        [Display(Name = "Game cover/ optional")]
-        public string Cover { get; set; }
+        [Display(Name = "Game cover")]
+        [DataType(DataType.Upload)]
+        public IFormFile Cover { get; set; }
 
         [Display(Name = "Game Storyline /optional")]
         public string Storyline { get; set; }
@@ -30,7 +33,7 @@ namespace Gamebase.Web.InputModels.AddDelete
         
         //Developer
         [Display(Name = "Developer names")]
-        public string DeveloperName { get; set; }
+        public string DeveloperNames { get; set; }
 
         // Collection
         [Display(Name = "Collection name")]
@@ -38,32 +41,35 @@ namespace Gamebase.Web.InputModels.AddDelete
 
         // GameEngines
         [Display(Name = "Game engines")]
-        public string GameEngineName { get; set; }
+        public string GameEngineNames { get; set; }
 
         // GameModes
+        public int GameModeId { get; set; }
+
         [Display(Name = "Game modes")]
-        public string GameModeName { get; set; }
+        public ICollection<GameMode> GameModes { get; set; }
 
         // Genres
         [Display(Name = "Game genres")]
-        public string GenreName { get; set; }
+        public string GenreNames { get; set; }
 
         // Keywords
 
         [Display(Name = "Game keywords")]
-        public string KeywordName { get; set; }
+        public string KeywordNames { get; set; }
 
         // Platforms
 
         [Display(Name = "Game platforms")]
-        public string PlatformName { get; set; }
+        public string PlatformNames { get; set; }
 
         // Screenshots
-        [Display(Name = "Screenshot Urls")]
-        public string ScreenshotUrl { get; set; }
+        [Display(Name = "Add screenshots")]
+        [DataType(DataType.Upload)]
+        public ICollection<IFormFile> Screenshots { get; set; }
 
         // Characters
         [Display(Name = "Character names")]
-        public string CharacterName { get; set; }
+        public string CharacterNames { get; set; }
     }
 }

@@ -6,6 +6,18 @@
 
     public class Game : BaseEntity
     {
+        public Game()
+        {
+            this.Screenshots = new List<Screenshot>();
+            this.GameModes = new List<GamesGameModes>();
+            this.GameEngines = new List<GamesGameEngines>();
+            this.Developers = new List<GamesDevelopers>();
+            this.Keywords = new List<GamesKeywords>();
+            this.Genres = new List<GamesGenres>();
+            this.Platforms = new List<GamesPlatforms>();
+            this.Websites = new List<Website>();
+            this.Characters = new List<GamesCharacters>();
+        }
         public double? TotalRating { get; set; }
 
         public string Bundles { get; set; }

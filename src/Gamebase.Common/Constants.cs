@@ -3,6 +3,8 @@
     public static class Constants
     {
         public const string BaseUrl = "https://images.igdb.com/igdb/image/upload/t_";
+
+        public const string UserImageUrl = "~/img/user-images/";
         
         public const string CoverSmall = "cover_small";
         

@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="~/lib/owlcarousel/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
 
     <link rel="stylesheet" href="~/css/pagination.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/user.css" asp-append-version="true" />
@@ -64,6 +65,10 @@ else
                     <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-controller="Games" asp-action="All" asp-route-id="1">Games</a></li>
                     <li><a asp-controller="Characters" asp-action="All" asp-route-id="1">Characters</a></li>
+                    @if (this.SignInManager.IsSignedIn(this.User))
+                    {
+        <li><a asp-controller="Games" asp-action="Create">Create game</a></li>
+}
                     <li>
                         <a asp-controller="Search" asp-action="Index">
                             <ion-icon name="search"></ion-icon>
@@ -109,6 +114,7 @@ else
     <script src="~/lib/owlcarousel/owl.carousel.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery.marquee/jquery.marquee.min.js" asp-append-version="true"></script>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <script src="~/js/main.js" asp-append-version="true"></script>
     <script src="~/js/map.js" asp-append-version="true"></script>
     <script src="~/js/inputform.js" asp-append-version="true"></script>
