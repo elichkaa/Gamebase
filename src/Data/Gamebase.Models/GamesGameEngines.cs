@@ -6,10 +6,10 @@
         {
 
         }
-        public GamesGameEngines(Game game, GameEngine gameEngine)
+        public GamesGameEngines(int gameId, int gameEngineId)
         {
-            Game = game;
-            GameEngine = gameEngine;
+            GameId=gameId;
+            GameEngineId = gameEngineId;
         }
         public int GameId { get; set; }
 

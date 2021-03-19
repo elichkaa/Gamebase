@@ -6,10 +6,10 @@
         {
 
         }
-        public GamesKeywords(Game game, Keyword keyword)
+        public GamesKeywords(int gameId, int keywordId)
         {
-            Game = game;
-            Keyword = keyword;
+            GameId = gameId;
+            KeywordId = keywordId;
         }
         public int GameId { get; set; }
 

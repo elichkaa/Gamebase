@@ -207,7 +207,7 @@
                         context.GameEngines.Add(new GameEngine
                         {
                             Id = GetBiggestId<GameEngine>() + 1,
-                            Name = input.GameEngineNames
+                            Name =gameEngineName
                         });
                         context.SaveChanges();
                     }
@@ -352,57 +352,27 @@
             newGame = context.Games.FirstOrDefault(x => x.Name == input.Name);
             foreach (Developer developer in developers)
             {
-                context.GamesDevelopers.Add(new GamesDevelopers
-                {
-                    GameId = gameId,
-                    DeveloperId = developer.Id,
-                    Developer = developer
-                });
+                context.GamesDevelopers.Add(new GamesDevelopers(newGame.Id, developer.Id));
             }
             foreach (GameEngine gameEngine in gameEngines)
             {
-                context.GamesEngines.Add(new GamesGameEngines()
-                {
-                    GameId = gameId,
-                    GameEngineId = gameEngine.Id,
-                    GameEngine = gameEngine
-                });
+                context.GamesEngines.Add(new GamesGameEngines(newGame.Id, gameEngine.Id));
             }
             foreach (Genre genre in genres)
             {
-                context.GameGenres.Add(new GamesGenres()
-                {
-                    GameId = gameId,
-                    Genre = genre,
-                    GenreId = genre.Id
-                });
+                context.GameGenres.Add(new GamesGenres(newGame.Id, genre.Id));
             }
             foreach (Keyword keyword in keywords)
             {
-                context.GamesKeywords.Add(new GamesKeywords()
-                {
-                    GameId = gameId,
-                    Keyword = keyword,
-                    KeywordId = keyword.Id
-                });
+                context.GamesKeywords.Add(new GamesKeywords(newGame.Id, keyword.Id));
             }
             foreach (Platform platform in platforms)
             {
-                context.GamePlatforms.Add(new GamesPlatforms()
-                {
-                    GameId = gameId,
-                    Platform = platform,
-                    PlatformId = platform.Id
-                });
+                context.GamePlatforms.Add(new GamesPlatforms(newGame.Id, platform.Id));
             }
             foreach (Character character in characters)
             {
-                context.GameCharacters.Add(new GamesCharacters()
-                {
-                    GameId = gameId,
-                    Character = character,
-                    CharacterId = character.Id
-                });
+                context.GameCharacters.Add(new GamesCharacters(newGame.Id, character.Id));
             }
 
             context.SaveChanges();

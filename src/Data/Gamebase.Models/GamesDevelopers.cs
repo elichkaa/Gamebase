@@ -8,10 +8,10 @@
         {
 
         }
-        public GamesDevelopers(Game game, Developer developer)
+        public GamesDevelopers(int gameId, int developerId)
         {
-            Game = game;
-            Developer = developer;
+            GameId = gameId;
+            DeveloperId = developerId;
         }
         public int GameId { get; set; }
 

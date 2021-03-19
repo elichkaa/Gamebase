@@ -12,10 +12,10 @@ namespace Gamebase.Models
         {
 
         }
-        public GamesGenres(Game game, Genre genre)
+        public GamesGenres(int gameId, int genreId)
         {
-            Game = game;
-            Genre = genre;
+            GameId = gameId;
+            GenreId = genreId;
         }
         public int GameId { get; set; }
         public Game Game { get; set; }

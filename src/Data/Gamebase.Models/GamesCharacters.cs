@@ -6,10 +6,10 @@
         {
 
         }
-        public GamesCharacters(Game game, Character character)
+        public GamesCharacters(int gameId, int characterId)
         {
-            Game = game;
-            Character = character;
+            GameId = gameId;
+            CharacterId = characterId;
         }
         public int GameId { get; set; }
 
