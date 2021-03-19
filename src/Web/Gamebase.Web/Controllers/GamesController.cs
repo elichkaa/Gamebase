@@ -1,6 +1,7 @@
 ﻿namespace Gamebase.Web.Controllers
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using Data.Services;
     using Gamebase.Models;
@@ -68,6 +69,7 @@
             input.GameModes = this.gamesService.GetGameModes();
             if (!ModelState.IsValid)
             {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
                 return this.View(input);
             }
 

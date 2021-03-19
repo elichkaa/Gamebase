@@ -29,7 +29,7 @@
 
         [Required]
         [Display(Name = "Game release date")]
-        public DateTime? FirstReleaseDate { get; set; }
+        public DateTime FirstReleaseDate { get; set; }
         
         //Developer
         [Display(Name = "Developer names")]
