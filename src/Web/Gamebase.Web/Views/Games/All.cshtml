@@ -10,8 +10,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-5 col-lg-6 text-white">
-                    <h2>Game reviews</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum.</p>
+                    <h1>All games</h1>
                 </div>
             </div>
         </div>
@@ -34,8 +33,8 @@
 <div class="review-cover set-bg" data-setbg="@UserImageUrl@Model[i].Cover">
     <div class="score yellow">@Model[i].AverageRating</div>
 </div> }
-                    else
-                    {
+else
+{
 <div class="review-cover set-bg" data-setbg="@BaseUrl@ScreenshotBig/@Model[i].Cover">
     <div class="score yellow">@Model[i].AverageRating</div>
 </div>}
@@ -66,8 +65,7 @@
                                 <p>@Model[i + 1].Summary</p>
                             </div>
                         </div>
-                    </div>
-                }            }
+                    </div>                }}
             <div class="col-md-12">
                 <nav class="pagination-outer" aria-label="Page navigation">
                     <ul class="pagination">
@@ -78,15 +76,17 @@
                         {
                             if (i > 0)
                             {
-            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>}
-                        }
+            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
+}
+    }
                         <li class="page-item active"><a class="page-link" href="#">@currentPage</a></li>
                         @for (int i = currentPage + 1; i <= currentPage + 4; i++)
                         {
                             if (i <= pageCount)
                             {
-            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>}
-                        }
+            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
+}
+    }
                         <li class="page-item @if (!(currentPage + 1 < pageCount)) { <text>disabled</text> }">
                             <a class="page-link" asp-action="All" asp-route-id="@(currentPage+1)">»</a>
                         </li>

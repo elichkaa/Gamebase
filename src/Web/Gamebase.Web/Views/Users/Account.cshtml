@@ -4,39 +4,48 @@
     this.ViewData["Title"] = "Account";
 }
 
-<h1 style="margin: 10px">Hello, @Model.Username</h1>
-<div class="container">
-@if (this.TempData.ContainsKey("Message"))
-{
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        @this.TempData["Message"]
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>}
-</div>
-@if (@Model.GamesByUser != null)
-{
-    <h2 style="margin:25px">These are your games: </h2>
-    <section class="container">
-        <div class="card-group">
-            @for (int i = 0; i < @Model.GamesByUser.Count; i++)
-            {
-                <div class="card">
-                    @if (@Model.GamesByUser[i].Cover != null)
+<section class="page-info-section set-bg" style="margin-bottom: 75px" data-setbg="../img/backgrounds/Jhin_2.jpg">
+    <div class="pi-content">
+        <div class="container">
+            <div class="row">
+                <div class="container">
+                    @if (this.TempData.ContainsKey("Message"))
                     {
-                        <img class="card-img-top" src="@UserImageUrl@Model.GamesByUser[i].Cover" alt="Card image cap">
-                    }
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.GamesByUser[i].Name</h5>
-                        <p class="card-text">@Model.GamesByUser[i].Summary</p>
-                        <a asp-controller="Games" asp-action="Details" asp-route-id="@Model.GamesByUser[i].Id" class="btn btn-primary">View</a>
-                        <a asp-controller="Games" asp-action="Delete" asp-route-id="@Model.GamesByUser[i].Id" class="btn btn-danger">Delete game</a>
-                    </div>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            @this.TempData["Message"]
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>}
                 </div>
-            }
+                <h1 class="text-white">Hello, @Model.Username</h1>
+            </div>
 
         </div>
-    </section>
+    </div>
+</section>
+<section class="container">
+    @if (@Model.GamesByUser != null)
+    {
+        <h2 style="margin:25px">Your games</h2>
+        <div class="card-group">
+            <div class="row">
+                @for (int i = 0; i < @Model.GamesByUser.Count; i++)
+                {
+                    <div class="card col-md-4">
+                        <img class="card-img-top" src="@UserImageUrl@Model.GamesByUser[i].Cover" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.GamesByUser[i].Name</h5>
+                            <p class="card-text">@Model.GamesByUser[i].Summary</p>
+                            <a asp-controller="Games" asp-action="Details" asp-route-id="@Model.GamesByUser[i].Id" class="btn btn-primary">View</a>
+                            <a asp-controller="Games" asp-action="Delete" asp-route-id="@Model.GamesByUser[i].Id" class="btn btn-danger">Delete game</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</section>
 
-}
+
+
