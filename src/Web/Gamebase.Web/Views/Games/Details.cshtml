@@ -1,5 +1,6 @@
 ﻿@model Gamebase.Web.ViewModels.Games.GameOnDetailsPageViewModel
 @using static Gamebase.Common.Constants
+@using System.Security.Cryptography
 @{
     ViewData["Title"] = $"{@Model.Name} - Gamebase";
     var screenshots = @Model.Screenshots;
@@ -51,12 +52,18 @@ else
                             <h1>@Model.Name</h1>
                         </div>
                         <div class="justify-content-xl-end">
-                            <img src="@UserImageUrl@Model.Cover" width="280px" height="350px" alt="Game Cover" />
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="@UserImageUrl@Model.Cover" alt="@Model.Name">
+                                <div class="card-body">
+                                    <h5 class="card-title">@Model.Name</h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+        
     }
     else
     {
@@ -67,7 +74,12 @@ else
                         <h1>@Model.Name</h1>
                     </div>
                     <div class="justify-content-xl-end">
-                        <img src="@UserImageUrl@Model.Cover" alt="Game Cover" />
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="@UserImageUrl@Model.Cover" alt="@Model.Name">
+                            <div class="card-body">
+                                <h5 class="card-title">@Model.Name</h5>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

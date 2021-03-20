@@ -29,6 +29,7 @@
         public string Summary { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         [Display(Name = "Game release date")]
         public DateTime FirstReleaseDate { get; set; }
         

@@ -86,20 +86,6 @@
             return game;
         }
 
-        public ICollection<Game> GetGamesFromString(string numbers)
-        {
-            if (numbers != null)
-            {
-                List<int> ids = numbers.Trim().Split(", ").Select(int.Parse).ToList();
-
-                return context.Games.Where(x => ids.Contains(x.Id)).ToList();
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         public ICollection<SearchGameViewModel> GetGame(SearchGameInputModel input)
         {
             var games = context
@@ -171,6 +157,11 @@
 
         public ICollection<GameOnAllPageViewModel> GetGamesByUser(string userId)
         {
+            if (!this.context.Users.Any(x => x.Id == userId))
+            {
+                throw new ArgumentException("Invalid UserId");
+            }
+
             return this.context
                 .Games
                 .Where(x => x.ApplicationUserId == userId)
@@ -187,6 +178,10 @@
 
         public int AddGame(AddGameInputModel input, ApplicationUser user, string basePath)
         {
+            if (input.Name == null || input.Cover == null || input.GameModeIds == null || input.GameModeIds.Count == 0)
+            {
+                throw new ArgumentException("Invalid input. Game name, cover and at least one game mode are required.");
+            }
             //Check if entities exist, if they dont add them
             var developerNames = new List<string>();
             if (!this.InputFieldIsNull(input.DeveloperNames))
@@ -406,13 +401,17 @@
             return gameId;
         }
 
-        public void DeleteGame(int id)
+        public void DeleteGame(int gameId)
         {
-            var existingGame = context.Games.FirstOrDefault(x => x.Id == id);
+            var existingGame = context.Games.FirstOrDefault(x => x.Id == gameId);
             if (existingGame != null)
             {
                 context.Games.Remove(existingGame);
                 context.SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentException("Invalid Game Id", nameof(gameId));
             }
         }
 

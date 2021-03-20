@@ -74,11 +74,10 @@
         [HttpPost]
         public async Task<IActionResult> Create(AddGameInputModel input)
         {
-
             if (!ModelState.IsValid)
             {
                 input.GameModes = this.gamesService.GetGameModes();
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                this.ModelState.AddModelError(string.Empty, "Invalid arguments.");
                 return this.View(input);
             }
 

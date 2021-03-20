@@ -26,7 +26,7 @@
                                 {
                                     <a asp-controller="Games" asp-action="Details" asp-route-id="@game.Id">
                                         <div class="card" style="width: 10rem;">
-                                            @if (game.IsFromUser)
+                                            @if (!game.IsFromUser)
                                             {
                                                 <img class="card-img-top" src="@BaseUrl@CoverBig/@game.Cover" alt="@game.Name">
                                             }
