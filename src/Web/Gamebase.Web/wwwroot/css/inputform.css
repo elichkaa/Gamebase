@@ -13,7 +13,31 @@ body {
     font-family: 'Raleway', Arial, sans-serif;
 }
 
+.separated {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.input {
+    position: relative;
+    margin: 1em;
+    width: calc(50% - 2em);
+    height: 80px;
+}
+
+.createform {
+    background: rgb(255,179,33);
+    background: linear-gradient(149deg, rgba(255,179,33,1) 28%, rgba(136,5,5,1) 100%);
+}
+
 .background-form {
+    height: 87vh;
+    background-image: url("../img/backgrounds/Nidalee_7.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.create-a-game-form {
     height: 87vh;
     background-image: url("../img/backgrounds/Nidalee_7.jpg");
     background-repeat: no-repeat;

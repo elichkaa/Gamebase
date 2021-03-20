@@ -4,19 +4,13 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Runtime.CompilerServices;
-    using System.Threading.Tasks;
     using Data;
     using Data.Services;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
-    using Microsoft.Data.Sqlite;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Diagnostics;
     using Models;
     using Settings;
     using Web.InputModels.AddDelete;
-    using Web.ViewModels.Games;
     using Xunit;
 
     public class GamesServiceTest

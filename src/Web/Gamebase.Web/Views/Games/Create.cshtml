@@ -8,93 +8,108 @@
         Value = x.Id.ToString()
     }).ToList();
 }
+<div class="createform">
+    <section class="container">
+        <h1>@this.ViewData["Title"]</h1>
+        <form asp-controller="Games" asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="input-group separated">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><ion-icon name="game-controller-outline"></ion-icon></span>
+                </div>
+                <input type="text" class="form-control" placeholder="Name" asp-for="Name" aria-label="Name" aria-describedby="basic-addon1">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="input-group separated">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Storyline</span>
+                </div>
+                <textarea class="form-control" placeholder="Storyline" asp-for="Storyline"></textarea>
+                <span asp-validation-for="Storyline" class="text-danger"></span>
+            </div>
+            <div class="input-group separated">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Summary</span>
+                </div>
+                <textarea class="form-control" placeholder="Summary" asp-for="Summary"></textarea>
+                <span asp-validation-for="Summary" class="text-danger"></span>
+            </div>
+            <div id="datepicker" class="input-group date separated" data-date-format="mm-dd-yyyy">
+                <input class="form-control" type="text" asp-for="FirstReleaseDate" readonly />
+                <div class="input-group-text">
+                    <span class="input-group-addon"><ion-icon name="calendar-outline"></ion-icon> Select the date the game was released</span>
+                </div>
+            </div>
+            <div class="input-group separated">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" style="margin-right: 0.5rem">Game mode</span>
+                </div>
+                <div class="form-check">
+                    @for (var i = 0; i < this.ViewBag.GameModes.Count; i++)
+                    {
+                        @if (i == 0)
+                        {
+                            <input class="form-check-input" name="GameModeIds" type="checkbox" checked="checked" value="@this.ViewBag.GameModes[i].Value" id="flexCheckDefault" />@this.ViewBag.GameModes[i].Text<br />
+                        }
+                        else
+                        {
+                            <input class="form-check-input" name="GameModeIds" type="checkbox" value="@this.ViewBag.GameModes[i].Value" id="flexCheckDefault" />@this.ViewBag.GameModes[i].Text<br />
+                        }
 
-<section class="container">
-    <h1>@this.ViewData["Title"]</h1>
-    <form asp-controller="Games" asp-action="Create" method="post" enctype="multipart/form-data">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><ion-icon name="game-controller-outline"></ion-icon></span>
+                    }
+                </div>
+                @*<select multiple="multiple" asp-for="@Model.GameModeIds" asp-items=@(new MultiSelectList(@ViewBag.GameModes, "Value", "Text"))></select>*@
+                <span asp-validation-for="GameModes" class="text-danger"></span>
             </div>
-            <input type="text" class="form-control" placeholder="Name" asp-for="Name" aria-label="Name" aria-describedby="basic-addon1">
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Storyline</span>
+            <div class="form-group">
+                <label asp-for="Screenshots"></label>
+                <input asp-for="Screenshots" class="form-control" />
+                <span asp-validation-for="Screenshots" class="text-danger"></span>
             </div>
-            <textarea class="form-control" placeholder="Storyline" asp-for="Storyline"></textarea>
-            <span asp-validation-for="Storyline" class="text-danger"></span>
-        </div>
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Summary</span>
+            <div class="form-group">
+                <label asp-for="Cover"></label>
+                <input asp-for="Cover" class="form-control" type="file" />
+                <span asp-validation-for="Cover" class="text-danger"></span>
             </div>
-            <textarea class="form-control" placeholder="Summary" asp-for="Summary"></textarea>
-            <span asp-validation-for="Summary" class="text-danger"></span>
-        </div>
-        <div id="datepicker" class="input-group date" data-date-format="mm-dd-yyyy">
-            <input class="form-control" type="text" asp-for="FirstReleaseDate" readonly />
-            <div class="input-group-text">
-                <span class="input-group-addon"><ion-icon name="calendar-outline"></ion-icon> Select the date the game was released</span>
+            <div class="form-group">
+                <label asp-for="DeveloperNames"></label>
+                <input asp-for="DeveloperNames" class="form-control" placeholder="Separate your entries with a comma i.e. Ubisoft,Rockstar Games"/>
+                <span asp-validation-for="DeveloperNames" class="text-danger"></span>
             </div>
-        </div>
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Game mode</span>
+            <div class="form-group">
+                <label asp-for="PlatformNames"></label>
+                <input asp-for="PlatformNames" class="form-control" placeholder="Separate your entries with a comma i.e. PC,PS4"/>
+                <span asp-validation-for="PlatformNames" class="text-danger"></span>
             </div>
-            <select multiple="multiple" asp-for="@Model.GameModeIds" asp-items=@(new MultiSelectList(@ViewBag.GameModes, "Value", "Text"))></select>
-            <span asp-validation-for="GameModes" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Screenshots"></label>
-            <input asp-for="Screenshots" class="form-control" />
-            <span asp-validation-for="Screenshots" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Cover"></label>
-            <input asp-for="Cover" class="form-control" type="file" />
-            <span asp-validation-for="Cover" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="DeveloperNames"></label>
-            <input asp-for="DeveloperNames" class="form-control" />
-            <span asp-validation-for="DeveloperNames" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="PlatformNames"></label>
-            <input asp-for="PlatformNames" class="form-control" />
-            <span asp-validation-for="PlatformNames" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="KeywordNames"></label>
-            <input asp-for="KeywordNames" class="form-control" />
-            <span asp-validation-for="KeywordNames" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="GenreNames"></label>
-            <input asp-for="GenreNames" class="form-control" />
-            <span asp-validation-for="GenreNames" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="GameEngineNames"></label>
-            <input asp-for="GameEngineNames" class="form-control" />
-            <span asp-validation-for="GameEngineNames" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CollectionName"></label>
-            <input asp-for="CollectionName" class="form-control" />
-            <span asp-validation-for="CollectionName" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CharacterNames"></label>
-            <input asp-for="CharacterNames" class="form-control" />
-            <span asp-validation-for="CharacterNames" class="text-danger"></span>
-        </div>
-        <p style="margin: 2rem"></p>
-        <input class="btn btn-primary" type="submit" value="Create game">
-    </form>
-</section>
+            <div class="form-group">
+                <label asp-for="KeywordNames"></label>
+                <input asp-for="KeywordNames" class="form-control" placeholder="Separate your entries with a comma i.e. Magic,Pirates"/>
+                <span asp-validation-for="KeywordNames" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GenreNames"></label>
+                <input asp-for="GenreNames" class="form-control" placeholder="Separate your entries with a comma i.e. Adventure,Shooter"/>
+                <span asp-validation-for="GenreNames" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GameEngineNames"></label>
+                <input asp-for="GameEngineNames" class="form-control" placeholder="Separate your entries with a comma i.e. Frostbite,Rage"/>
+                <span asp-validation-for="GameEngineNames" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CollectionName"></label>
+                <input asp-for="CollectionName" class="form-control" placeholder="Separate your entries with a comma i.e. Star Wars,Dark Souls"/>
+                <span asp-validation-for="CollectionName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CharacterNames"></label>
+                <input asp-for="CharacterNames" class="form-control" placeholder="Separate your entries with a comma i.e. Jack,Michael"/>
+                <span asp-validation-for="CharacterNames" class="text-danger"></span>
+            </div>
+            <input class="btn btn-primary separated" type="submit" value="Create game">
+        </form>
+    </section>
+
+</div>
 
 @section Scripts{
     <script>

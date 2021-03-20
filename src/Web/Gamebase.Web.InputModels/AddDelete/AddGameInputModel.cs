@@ -46,6 +46,7 @@
         public string GameEngineNames { get; set; }
 
         // GameModes
+        [Required]
         public List<int> GameModeIds { get; set; }
 
         [Display(Name = "Game modes")]
