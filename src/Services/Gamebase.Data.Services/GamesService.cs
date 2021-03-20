@@ -131,10 +131,13 @@
 
         public List<GameOnHomePageViewModel> GetFourRandomGames()
         {
-            return context
-                .Games
-                .OrderBy(x => Guid.NewGuid())
-                .Select(x => new GameOnHomePageViewModel
+            var randomGames = new List<GameOnHomePageViewModel>();
+
+            for (int i = 1; i <= 4; i++)
+            {
+                Random rand = new Random();
+                int toSkip = rand.Next(0, this.context.Games.Count());
+                var game = context.Games.Skip(toSkip).Take(1).Select(x => new GameOnHomePageViewModel
                 {
                     Id = x.Id,
                     Name = x.Name,
@@ -142,9 +145,11 @@
                     ShortSummary = x.Summary != null ? string.Join(" ", x.Summary.Split(' ', StringSplitOptions.None).ToList().Take(10).ToList()) + "..." : null,
                     MainGenreName = x.Genres.Count != 0 ? x.Genres.Select(g => g.Genre.Name).FirstOrDefault() : null,
                     IsFromUser = x.ApplicationUserId != null
-                })
-                .Take(4)
-                .ToList();
+                }).FirstOrDefault();
+                randomGames.Add(game);
+            }
+
+            return randomGames;
         }
 
         public ICollection<GameMode> GetGameModes()

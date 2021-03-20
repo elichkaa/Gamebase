@@ -36,10 +36,12 @@
             var games = new List<Game>();
             for (int i = 1; i <= count; i++)
             {
+                DateTime? dateTime = new DateTime(2020, 12, i);
                 games.Add(new Game()
                 {
                     Id = i,
-                    Name = $"Game{i}"
+                    Name = $"Game{i}",
+                    FirstReleaseDate=dateTime
                 });
             }
 

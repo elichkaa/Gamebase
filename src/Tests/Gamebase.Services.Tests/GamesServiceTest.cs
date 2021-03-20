@@ -62,6 +62,29 @@
         }
 
         [Fact]
+        public void GetAllRetunsAllGames()
+        {
+            var gamesOnFirstPage = this.gamesService.GetAll(1);
+            Assert.Equal(10, gamesOnFirstPage.Count);
+
+            var gamesOnSecondPage = this.gamesService.GetAll(2);
+            Assert.Equal(5, gamesOnSecondPage.Count);
+
+            var counter = 1;
+            foreach (var game in gamesOnFirstPage)
+            {
+                Assert.Equal($"Game{counter}", gamesOnFirstPage.ToList()[counter - 1].Name);
+                counter++;
+            }
+            foreach (var game in gamesOnSecondPage)
+            {
+                Assert.Equal($"Game{counter}", gamesOnSecondPage.ToList()[counter - 11].Name);
+                counter++;
+            }
+
+        }
+
+        [Fact]
         public void AddGameTest()
         {
             //Arrange
@@ -341,5 +364,63 @@
             //Assert
             Assert.False(check);
         }
+
+        [Fact]
+        public void GetMaxPagesReturnsMaxPages()
+        {
+            var pages = this.gamesService.GetMaxPages();
+            Assert.Equal(2, pages);
+        }
+
+        [Fact]
+        public void GetThreeMostRecentGamesReturnsThreeMostRecentGames()
+        {
+            
+            var recentGames = this.gamesService.GetThreeMostRecentGames();
+            Assert.Equal(15, recentGames[0].Id);
+            Assert.Equal(14, recentGames[1].Id);
+            Assert.Equal(13, recentGames[2].Id);
+        }
+
+        [Fact]
+        public void GetFourRandomGamesReturnsFourRandomGames()
+        {
+            var fourRandomGames = this.gamesService.GetFourRandomGames();
+            Assert.Equal(4, fourRandomGames.Count);
+        }
+
+        [Fact]
+        public void GetSingleReturnsCorrectData()
+        {
+            using var stream = new MemoryStream(File.ReadAllBytes(imgPath).ToArray());
+            var formFile = new FormFile(stream, 0, stream.Length, "streamFile", imgPath.Split(@"\").Last());
+            var gameInput = new AddGameInputModel
+            {
+                Name = "GTA",
+                Cover = formFile,
+                Storyline = "The biggest, most dynamic and most diverse open world ever created, Grand Theft Auto V blends storytelling...",
+                Summary = "The biggest, most dynamic and most diverse open world ever created, Grand Theft Auto V blends storytelling...",
+                FirstReleaseDate = new DateTime(2013, 9, 17),
+                DeveloperNames = "Rockstar Games",
+                CollectionName = "GTA",
+                GameEngineNames = "RAGE",
+                GameModeIds = new List<int> { 1, 2 },
+                GenreNames = "Adventure,Racing,Shooter",
+                KeywordNames = "shooter,multiplayer",
+                PlatformNames = "PC,PS4",
+                Screenshots = new List<IFormFile>()
+                {
+                    formFile,formFile
+                },
+                CharacterNames = "Michael,Trevor"
+            };
+
+            this.gamesService.AddGame(gameInput, new ApplicationUser(),
+                $"{Directory.GetCurrentDirectory()}/img/");
+            var game = this.gamesService.GetSingle(16);
+            Assert.Equal("GTA", game.Name);
+        }
+
+
     }
 }

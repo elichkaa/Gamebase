@@ -14,7 +14,7 @@ namespace Gamebase.Data.Services
     public class CharacterService : ICharacterService
     {
         private readonly GamebaseDbContext context;
-        private const int charactersOnPage = 10;
+        private const int charactersOnPage = 9;
 
         public CharacterService(GamebaseDbContext context)
         {
@@ -25,6 +25,10 @@ namespace Gamebase.Data.Services
         public List<CharacterOnAllPageViewModel> GetAll(int currentPage)
         {
             var pageCount = this.GetMaxPages();
+            if (currentPage <= 0 || currentPage > pageCount)
+            {
+                return null;
+            }
             var characters = context
                 .Characters
                 .OrderByDescending(x => x.Image)
@@ -45,6 +49,7 @@ namespace Gamebase.Data.Services
 
         public ICollection<SearchCharacterViewModel> GetCharacterByName(SearchCharacterInputModel input)
         {
+
             var characters = context
                 .Characters
                 .Where(x => x.Name.ToLower().Contains(input.Name.ToLower()))
