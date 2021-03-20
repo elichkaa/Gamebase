@@ -19,6 +19,7 @@
 
         [Display(Name = "Game cover")]
         [DataType(DataType.Upload)]
+        [Required]
         public IFormFile Cover { get; set; }
 
         [Display(Name = "Game Storyline /optional")]
@@ -44,7 +45,7 @@
         public string GameEngineNames { get; set; }
 
         // GameModes
-        public int GameModeId { get; set; }
+        public List<int> GameModeIds { get; set; }
 
         [Display(Name = "Game modes")]
         public ICollection<GameMode> GameModes { get; set; }

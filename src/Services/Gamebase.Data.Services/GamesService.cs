@@ -85,6 +85,7 @@
                 FirstOrDefault();
             return game;
         }
+
         public ICollection<Game> GetGamesFromString(string numbers)
         {
             if (numbers != null)
@@ -98,6 +99,7 @@
                 return null;
             }
         }
+
         public ICollection<SearchGameViewModel> GetGame(SearchGameInputModel input)
         {
             var games = context
@@ -183,7 +185,7 @@
                 .ToList();
         }
 
-        public void AddGame(AddGameInputModel input, ApplicationUser user, string basePath)
+        public int AddGame(AddGameInputModel input, ApplicationUser user, string basePath)
         {
             //Check if entities exist, if they dont add them
             var developerNames = new List<string>();
@@ -228,7 +230,7 @@
                         context.GameEngines.Add(new GameEngine
                         {
                             Id = GetBiggestId<GameEngine>() + 1,
-                            Name =gameEngineName
+                            Name = gameEngineName
                         });
                         context.SaveChanges();
                     }
@@ -261,7 +263,7 @@
                 {
                     if (!CheckIfEntityExists<Keyword>(keyword))
                     {
-                        context.Add(new Keyword
+                        context.Keywords.Add(new Keyword
                         {
                             Id = GetBiggestId<Keyword>() + 1,
                             Name = keyword
@@ -279,7 +281,7 @@
                 {
                     if (!CheckIfEntityExists<Platform>(platformName))
                     {
-                        context.Add(new Platform
+                        context.Platforms.Add(new Platform
                         {
                             Id = GetBiggestId<Platform>() + 1,
                             Name = platformName
@@ -297,7 +299,7 @@
                 {
                     if (!CheckIfEntityExists<Character>(characterName))
                     {
-                        context.Add(new Character
+                        context.Characters.Add(new Character
                         {
                             Id = GetBiggestId<Character>() + 1,
                             Name = characterName
@@ -317,7 +319,7 @@
 
             if (CheckIfEntityExists<Game>(input.Name))
             {
-                return;
+                throw new InvalidOperationException("Game with this name already exists");
             }
 
             var gameId = this.GetBiggestId<Game>() + 1;
@@ -333,11 +335,6 @@
                 Summary = input.Summary,
                 ApplicationUser = user
             };
-            newGame.GameModes.Add(new GamesGameModes()
-            {
-                GameId = gameId,
-                GameModeId = input.GameModeId
-            });
 
             Directory.CreateDirectory(basePath);
             if (input.Cover != null)
@@ -350,6 +347,7 @@
                     GameId = newGame.Id,
                     ApplicationUserId = user.Id,
                 };
+                newGame.CoverId = newGame.Cover.Id;
                 using Stream fileStream = new FileStream(newGame.Cover.Url, FileMode.Create);
                 input.Cover.CopyTo(fileStream);
             }
@@ -374,6 +372,11 @@
             context.SaveChanges();
 
             newGame = context.Games.FirstOrDefault(x => x.Name == input.Name);
+
+            foreach (int gameModeId in input.GameModeIds)
+            {
+                context.GamesModes.Add(new GamesGameModes(newGame.Id, gameModeId));
+            }
             foreach (Developer developer in developers)
             {
                 context.GamesDevelopers.Add(new GamesDevelopers(newGame.Id, developer.Id));
@@ -400,6 +403,7 @@
             }
 
             context.SaveChanges();
+            return gameId;
         }
 
         public void DeleteGame(int id)
@@ -419,7 +423,12 @@
 
         private int GetBiggestId<T>() where T : MainEntity
         {
-            return this.context.Set<T>().AsNoTracking().OrderByDescending(x => x.Id).FirstOrDefault().Id;
+            if (this.context.Set<T>().Any())
+            {
+                return this.context.Set<T>().AsNoTracking().OrderByDescending(x => x.Id).FirstOrDefault().Id;
+            }
+
+            return 0;
         }
 
         private bool InputFieldIsNull(string field)

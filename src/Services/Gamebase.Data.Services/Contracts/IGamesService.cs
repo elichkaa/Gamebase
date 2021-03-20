@@ -16,7 +16,7 @@
 
         public ICollection<SearchGameViewModel> GetGame(SearchGameInputModel input);
 
-        public void AddGame(AddGameInputModel input, ApplicationUser user, string basePath);
+        public int AddGame(AddGameInputModel input, ApplicationUser user, string basePath);
 
         public void DeleteGame(int gameId);
 

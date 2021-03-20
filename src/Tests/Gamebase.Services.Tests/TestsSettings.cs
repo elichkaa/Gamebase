@@ -47,6 +47,40 @@
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task SeedGameModes()
+        {
+            var gameModes = new List<GameMode>();
+
+            gameModes.Add(new GameMode()
+            {
+                Id = 1,
+                Name = $"Single player"
+            });
+            gameModes.Add(new GameMode()
+            {
+                Id = 2,
+                Name = $"Multiplayer"
+            });
+            gameModes.Add(new GameMode()
+            {
+                Id = 3,
+                Name = $"Coop"
+            });
+            gameModes.Add(new GameMode()
+            {
+                Id = 4,
+                Name = $"Split screen"
+            });
+            gameModes.Add(new GameMode()
+            {
+                Id = 5,
+                Name = $"Massively Multiplayer"
+            });
+
+            await dbContext.GameModes.AddRangeAsync(gameModes);
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task SeedCharacters(int count)
         {
             var characters = new List<Character>();

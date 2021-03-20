@@ -1,17 +1,18 @@
-﻿@model Gamebase.Web.InputModels.AddDelete.AddGameInputModel
+﻿@using System.Linq
+@model Gamebase.Web.InputModels.AddDelete.AddGameInputModel
 @{
     this.ViewData["Title"] = "Create a game";
-    var gameModes = Model.GameModes.Select(x => new SelectListItem
+    this.ViewBag.GameModes = Model.GameModes.Select(x => new SelectListItem
     {
         Text = x.Name,
         Value = x.Id.ToString()
-    });
+    }).ToList();
 }
 
 <section class="container">
     <h1>@this.ViewData["Title"]</h1>
     <form asp-controller="Games" asp-action="Create" method="post" enctype="multipart/form-data">
-        <div class="input-group mb-3">
+        <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><ion-icon name="game-controller-outline"></ion-icon></span>
             </div>
@@ -42,7 +43,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Game mode</span>
             </div>
-            <select asp-for="GameModeId" class="form-control" asp-items="gameModes"></select>
+            <select multiple="multiple" asp-for="@Model.GameModeIds" asp-items=@(new MultiSelectList(@ViewBag.GameModes, "Value", "Text"))></select>
             <span asp-validation-for="GameModes" class="text-danger"></span>
         </div>
         <div class="form-group">

@@ -74,17 +74,19 @@
         [HttpPost]
         public async Task<IActionResult> Create(AddGameInputModel input)
         {
-            input.GameModes = this.gamesService.GetGameModes();
+
             if (!ModelState.IsValid)
             {
+                input.GameModes = this.gamesService.GetGameModes();
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
                 return this.View(input);
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
+            var gameId = 0;
             try
             {
-                this.gamesService.AddGame(input, user, $"{this.environment.WebRootPath}/img/user-images/");
+                gameId = this.gamesService.AddGame(input, user, $"{this.environment.WebRootPath}/img/user-images/");
             }
             catch (Exception ex)
             {
@@ -93,7 +95,7 @@
             }
 
             this.TempData["Message"] = "Game added successfully.";
-            return this.Redirect("/");
+            return this.Redirect($"/Games/Details/{gameId}");
         }
     }
 }

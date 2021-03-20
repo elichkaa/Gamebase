@@ -6,7 +6,25 @@
 }
 @if (!@Model.IsFromUser)
 {
-    <section class="page-info-section set-bg" data-setbg="@BaseUrl@ScreenshotHuge/@screenshots.ToList()[0]">
+    @if (screenshots.Any())
+    {
+        <section class="page-info-section set-bg" data-setbg="@BaseUrl@ScreenshotHuge/@screenshots.ToList()[0]">
+            <div class="pi-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-9 text-white">
+                            <h1>@Model.Name</h1>
+                        </div>
+                        <div class="justify-content-xl-end">
+                            <img src="@BaseUrl@CoverBig/@Model.Cover" alt="Game Cover" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
         <div class="pi-content">
             <div class="container">
                 <div class="row">
@@ -19,24 +37,43 @@
                 </div>
             </div>
         </div>
-    </section>
+    }
 }
 else
 {
-<section class="page-info-section set-bg" data-setbg="@UserImageUrl@screenshots.ToList()[0]">
-    <div class="pi-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-9 text-white">
-                    <h1>@Model.Name</h1>
+    @if (screenshots.Any())
+    {
+        <section class="page-info-section set-bg" data-setbg="@UserImageUrl@screenshots.ToList()[0]">
+            <div class="pi-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-9 text-white">
+                            <h1>@Model.Name</h1>
+                        </div>
+                        <div class="justify-content-xl-end">
+                            <img src="@UserImageUrl@Model.Cover" width="280px" height="350px" alt="Game Cover" />
+                        </div>
+                    </div>
                 </div>
-                <div class="justify-content-xl-end">
-                    <img src="@UserImageUrl@Model.Cover" width="280px" height="350px" alt="Game Cover" />
+            </div>
+        </section>
+    }
+    else
+    {
+        <div class="pi-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-9 text-white">
+                        <h1>@Model.Name</h1>
+                    </div>
+                    <div class="justify-content-xl-end">
+                        <img src="@UserImageUrl@Model.Cover" alt="Game Cover" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    }
+    
 }
 
 <section class="container">
@@ -171,9 +208,9 @@ else
                 }
                 else
                 {
-        <div class="carousel-item @(screenshot == Model.Screenshots.First() ? "active" : "")">
-            <img src="@UserImageUrl@screenshot" alt="@Model.Name">
-        </div>
+                    <div class="carousel-item @(screenshot == Model.Screenshots.First() ? "active" : "")">
+                        <img src="@UserImageUrl@screenshot" alt="@Model.Name">
+                    </div>
                 }
             }
         </div>

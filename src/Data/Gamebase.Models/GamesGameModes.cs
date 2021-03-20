@@ -8,10 +8,10 @@
         {
 
         }
-        public GamesGameModes(Game game, GameMode gameMode)
+        public GamesGameModes(int gameId, int gameModeId)
         {
-            Game = game;
-            GameMode = GameMode;
+            GameId = gameId;
+            GameModeId = gameModeId;
         }
         public int GameId { get; set; }
 
