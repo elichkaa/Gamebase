@@ -415,12 +415,12 @@
             }
         }
 
-        private bool CheckIfEntityExists<T>(string name) where T : BaseEntity
+        public bool CheckIfEntityExists<T>(string name) where T : BaseEntity
         {
             return this.context.Set<T>().Any(x => x.Name.ToLower() == name.ToLower());
         }
 
-        private int GetBiggestId<T>() where T : MainEntity
+        public int GetBiggestId<T>() where T : MainEntity
         {
             if (this.context.Set<T>().Any())
             {
@@ -430,7 +430,7 @@
             return 0;
         }
 
-        private bool InputFieldIsNull(string field)
+        public bool InputFieldIsNull(string field)
         {
             return field == null;
         }

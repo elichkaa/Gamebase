@@ -259,5 +259,87 @@
             ArgumentException exception = Assert.Throws<ArgumentException>(act);
             Assert.Equal("Invalid UserId", exception.Message);
         }
+
+        [Fact]
+        public void GetGameModesTest()
+        {
+            //Act
+            var gameModes = this.gamesService.GetGameModes();
+
+            //Assert
+            Assert.Equal(5, gameModes.Count);
+        }
+
+        [Fact]
+        public void CheckIfEntityExistsReturnsTrueIfEntityExists()
+        {
+            //Assert
+            var gameName = "Game1";
+
+            //Act
+            var entityExists = this.gamesService.CheckIfEntityExists<Game>(gameName);
+
+            //Assert
+            Assert.True(entityExists);
+        }
+
+        [Fact]
+        public void CheckIfEntityExistsReturnsFalseIfEntityDoesNotExist()
+        {
+            //Assert
+            var gameName = "Game100";
+
+            //Act
+            var entityExists = this.gamesService.CheckIfEntityExists<Game>(gameName);
+
+            //Assert
+            Assert.False(entityExists);
+        }
+
+        [Fact]
+        public void GetBiggestIdReturnsCorrectValue()
+        {
+            //Act
+            var biggestId = this.gamesService.GetBiggestId<Game>();
+
+            //Assert
+            Assert.Equal(15, biggestId);
+        }
+
+        [Fact]
+        public void GetBiggestIdReturnsZeroIfNoEntitiesInDbSet()
+        {
+            //Act
+            var biggestId = this.gamesService.GetBiggestId<Developer>();
+
+            //Assert
+            Assert.Equal(0, biggestId);
+        }
+
+        [Fact]
+        public void InputFieldIsNullReturnsTrueIfNull()
+        {
+            //Assert
+            string gameName = null;
+
+            //Act
+            var check = this.gamesService.InputFieldIsNull(gameName);
+
+            //Assert
+            Assert.True(check);
+        }
+
+        [Fact]
+        public void InputFieldIsNullReturnsFalseIfNotNull()
+        {
+            //Assert
+            string gameName = "game";
+
+            //Act
+            var check = this.gamesService.InputFieldIsNull(gameName);
+
+            //Assert
+            Assert.False(check);
+        }
     }
 }

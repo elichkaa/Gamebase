@@ -29,5 +29,11 @@
         public ICollection<GameMode> GetGameModes();
 
         public ICollection<GameOnAllPageViewModel> GetGamesByUser(string userId);
+
+        public bool InputFieldIsNull(string field);
+
+        public int GetBiggestId<T>() where T : MainEntity;
+
+        public bool CheckIfEntityExists<T>(string name) where T : BaseEntity;
     }
 }

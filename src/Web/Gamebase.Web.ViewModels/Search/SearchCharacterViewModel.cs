@@ -9,5 +9,7 @@
         public string Image { get; set; }
 
         public ICollection<SearchGameViewModel> Games { get; set; }
+
+
     }
 }

@@ -43,12 +43,12 @@
                         <div class="card">
                             @if (@Model[i].Image != ".jpg")
                             {
-                        <img class="card-img-top" src="@BaseUrl@ScreenshotBig/@Model[i+1].Image" alt="Card image cap">}
+                        <img class="card-img-top" src="@BaseUrl@ScreenshotBig/@Model[i+1].Image" alt="Card image cap">
+
+                            }
                     else
                     {
                         <img class="card-img-top" src="/img/review-bg-2.jpg" alt="Card image cap">}
-                            }
-
                             <div class="card-body">
                                 <h5 class="card-title">@Model[i + 1].Name</h5>
                                 <p class="card-text">@Model[i + 1].GameNames</p>
@@ -61,8 +61,6 @@
                     else
                     {
                         <img class="card-img-top" src="/img/review-bg-2.jpg" alt="Card image cap">}
-                            }
-
                             <div class="card-body">
                                 <h5 class="card-title">@Model[i + 2].Name</h5>
                                 <p class="card-text">@Model[i + 2].GameNames</p>
