@@ -41,7 +41,18 @@
                 {
                     Id = i,
                     Name = $"Game{i}",
-                    FirstReleaseDate=dateTime
+                    FirstReleaseDate=dateTime,
+                    Developers = new List<GamesDevelopers>()
+                    {
+                        new GamesDevelopers()
+                        {
+                            Developer = new Developer()
+                            {
+                                Id = i,
+                                Name =  $"Developer{i}"
+                            }
+                        }
+                    }
                 });
             }
 

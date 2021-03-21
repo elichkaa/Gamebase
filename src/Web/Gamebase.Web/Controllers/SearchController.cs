@@ -38,7 +38,7 @@
                 this.TempData["ModelState"] = this.ModelState.Root.Errors[0].ErrorMessage;
                 return this.Redirect("/Search/Game/");
             }
-            var games = gamesService.GetGame(input);
+            var games = gamesService.SearchGames(input);
             return this.View(games);
         }
 

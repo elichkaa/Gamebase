@@ -11,6 +11,8 @@
     using Models;
     using Settings;
     using Web.InputModels.AddDelete;
+    using Web.InputModels.Search;
+    using Web.ViewModels.Games;
     using Xunit;
 
     public class GamesServiceTest
@@ -56,7 +58,7 @@
         }
 
         [Fact]
-        public void GetAllRetunsAllGames()
+        public void GetAllReturnsAllGames()
         {
             var gamesOnFirstPage = this.gamesService.GetAll(1);
             Assert.Equal(10, gamesOnFirstPage.Count);
@@ -64,16 +66,16 @@
             var gamesOnSecondPage = this.gamesService.GetAll(2);
             Assert.Equal(5, gamesOnSecondPage.Count);
 
-            var counter = 1;
+            var counter = 15;
             foreach (var game in gamesOnFirstPage)
             {
-                Assert.Equal($"Game{counter}", gamesOnFirstPage.ToList()[counter - 1].Name);
-                counter++;
+                Assert.Equal($"Game{counter}", game.Name);
+                counter--;
             }
             foreach (var game in gamesOnSecondPage)
             {
-                Assert.Equal($"Game{counter}", gamesOnSecondPage.ToList()[counter - 11].Name);
-                counter++;
+                Assert.Equal($"Game{counter}", game.Name);
+                counter--;
             }
 
         }
@@ -112,8 +114,8 @@
             //Assert
             Assert.Equal(16, this.context.Games.Count());
             Assert.Equal(1, this.context.Covers.Count());
-            Assert.Equal(1, this.context.Developers.Count());
-            Assert.Equal(1, this.context.GamesDevelopers.Count());
+            Assert.Equal(16, this.context.Developers.Count());
+            Assert.Equal(16, this.context.GamesDevelopers.Count());
             Assert.Equal(1, this.context.Collections.Count());
             Assert.Equal(1, this.context.GameEngines.Count());
             Assert.Equal(1, this.context.GamesEngines.Count());
@@ -227,7 +229,7 @@
         }
 
         [Fact]
-        public void DeleteGameThrowsExceptionIfGameIdIsInvalid()
+        public void DeleteGameShouldThrowExceptionIfGameIdIsInvalid()
         {
             //Arrange
             int gameId = 20;
@@ -327,7 +329,7 @@
         public void GetBiggestIdReturnsZeroIfNoEntitiesInDbSet()
         {
             //Act
-            var biggestId = this.gamesService.GetBiggestId<Developer>();
+            var biggestId = this.gamesService.GetBiggestId<GameEngine>();
 
             //Assert
             Assert.Equal(0, biggestId);
@@ -415,6 +417,72 @@
             Assert.Equal("GTA", game.Name);
         }
 
+        [Fact]
+        public void SearchGamesShouldThrowExceptionIfNameIsNull()
+        {
+            //Arrange
+            var input = new SearchGameInputModel()
+            {
+                Name = null
+            };
 
+            //Act
+            Action act = () => this.gamesService.SearchGames(input);
+
+            //Assert
+            ArgumentException exception = Assert.Throws<ArgumentException>(act);
+            Assert.Equal("Game name cannot be null", exception.Message);
+        }
+
+        [Fact]
+        public void SearchGamesShouldReturnCorrectSpecificGame()
+        {
+            //Arrange
+            var input = new SearchGameInputModel()
+            {
+                Name = "gAmE15"
+            };
+
+            //Act
+            var result = this.gamesService.SearchGames(input);
+
+            //Assert
+            Assert.Equal(1, result.Count);
+            Assert.Equal("Game15", result.ToList()[0].Name);
+        }
+
+        [Fact]
+        public void SearchGamesShouldReturnAllGames()
+        {
+            //Arrange
+            var input = new SearchGameInputModel()
+            {
+                Name = "GaME"
+            };
+
+            //Act
+            var result = this.gamesService.SearchGames(input);
+
+            //Assert
+            Assert.Equal(15, result.Count);
+        }
+
+        [Fact]
+        public void SearchGamesReturnsCorrectGameWithDeveloper()
+        {
+            //Arrange
+            var input = new SearchGameInputModel()
+            {
+                Name = "game",
+                DeveloperName = "dEVeLOPeR15"
+            };
+
+            //Act
+            var result = this.gamesService.SearchGames(input);
+
+            //Assert
+            Assert.Equal(1, result.Count);
+            Assert.Equal("Game15", result.ToList()[0].Name);
+        }
     }
 }

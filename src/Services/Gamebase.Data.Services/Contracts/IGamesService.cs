@@ -14,7 +14,7 @@
 
         public GameOnDetailsPageViewModel GetSingle(int id);
 
-        public ICollection<SearchGameViewModel> GetGame(SearchGameInputModel input);
+        public ICollection<SearchGameViewModel> SearchGames(SearchGameInputModel input);
 
         public int AddGame(AddGameInputModel input, ApplicationUser user, string basePath);
 

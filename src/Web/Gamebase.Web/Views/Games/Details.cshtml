@@ -9,7 +9,7 @@
 {
     @if (screenshots.Any())
     {
-        <section class="page-info-section set-bg" data-setbg="@BaseUrl@ScreenshotHuge/@screenshots.ToList()[0]">
+        <section class="page-info-section set-bg" data-setbg="@BaseUrl@ScreenshotHuge/@(screenshots.ToList()[0]).jpg">
             <div class="pi-content">
                 <div class="container">
                     <div class="row">
@@ -44,7 +44,7 @@ else
 {
     @if (screenshots.Any())
     {
-        <section class="page-info-section set-bg" data-setbg="@UserImageUrl@screenshots.ToList()[0]">
+        <section class="page-info-section set-bg" data-setbg="@UserImageUrl@(screenshots.ToList()[0])">
             <div class="pi-content">
                 <div class="container">
                     <div class="row">
@@ -209,7 +209,7 @@ else
                 @if (!@Model.IsFromUser)
                 {
                     <div class="carousel-item @(screenshot == Model.Screenshots.First() ? "active" : "")">
-                        <img src="@BaseUrl@ScreenshotHuge/@screenshot" alt="@Model.Name">
+                        <img src="@BaseUrl@ScreenshotHuge/@(screenshot).jpg" alt="@Model.Name">
                     </div>
                 }
                 else

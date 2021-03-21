@@ -40,7 +40,7 @@
                     Name = x.Name,
                     Summary = x.Summary,
                     Cover = x.ApplicationUser.Id == null ? x.Cover.ImageId + ".jpg" : x.Cover.ImageId,
-                    AverageRating = $"{Math.Floor((decimal)x.TotalRating)}",
+                    AverageRating = x.TotalRating != null ? $"{Math.Floor((decimal)x.TotalRating)}" : "0",
                     PageCount = (int)pageCount,
                     CurrentPage = currentPage,
                     ApplicationUserId = x.ApplicationUserId
@@ -59,8 +59,6 @@
                 return null;
             }
 
-            this.context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-
             var game = context.
                 Games.
                 AsNoTracking().
@@ -71,13 +69,13 @@
                     Summary = x.Summary,
                     Cover = x.ApplicationUser.Id == null ? x.Cover.ImageId + ".jpg" : x.Cover.ImageId,
                     FirstReleaseDate = x.FirstReleaseDate,
-                    AverageRating = $"{Math.Floor((decimal)x.TotalRating)}",
+                    AverageRating = x.TotalRating != null ? $"{Math.Floor((decimal)x.TotalRating)}" : "0",
                     GameEngines = x.GameEngines.Select(y => y.GameEngine.Name).ToList(),
                     Developers = x.Developers.Select(y => y.Developer.Name).ToList(),
                     Genres = x.Genres.Select(y => y.Genre).ToList(),
                     Keywords = x.Keywords.Select(y => y.Keyword.Name).ToList(),
                     Platforms = x.Platforms.Select(y => y.Platform.Name).ToList(),
-                    Screenshots = x.Screenshots.Select(y => (x.ApplicationUser.Id == null ? y.ImageId + ".jpg" : y.ImageId)).ToList(),
+                    Screenshots = x.Screenshots.Select(y => y.ImageId).ToList(),
                     Status = x.Status,
                     Storyline = x.Storyline,
                     IsFromUser = x.ApplicationUserId != null
@@ -86,8 +84,12 @@
             return game;
         }
 
-        public ICollection<SearchGameViewModel> GetGame(SearchGameInputModel input)
+        public ICollection<SearchGameViewModel> SearchGames(SearchGameInputModel input)
         {
+            if (input.Name == null)
+            {
+                throw new ArgumentException("Game name cannot be null");
+            }
             var games = context
                 .Games
                 .Where(x => x.Name.ToLower().Contains(input.Name.ToLower()))

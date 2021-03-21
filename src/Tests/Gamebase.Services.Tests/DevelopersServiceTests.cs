@@ -131,5 +131,15 @@ namespace Gamebase.Services.Tests
             Assert.Equal("Garfield Kart: Redemption", developers.ToList()[1].GamesByDeveloper.ToList()[1].Name);
 
         }
+
+        [Fact]
+        public void GetSingleDeveloperReturnsNullIfNotFound()
+        {
+            //Arrange
+            string devName = "EA";
+
+            //Act + Assert
+            Assert.Null(this.developerService.GetSingleDeveloper(devName));
+        }
     }
 }

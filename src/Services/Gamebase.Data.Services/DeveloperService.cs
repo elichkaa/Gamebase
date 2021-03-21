@@ -30,14 +30,12 @@
                  }).
                  FirstOrDefault();
 
-            if (developer != null)
-            {
-                return developer;
-            }
-            else
+            if (developer == null)
             {
                 return null;
             }
+
+            return developer;
         }
 
         public ICollection<SearchDeveloperViewModel> GetDeveloperByName(SearchDeveloperInputModel input)
