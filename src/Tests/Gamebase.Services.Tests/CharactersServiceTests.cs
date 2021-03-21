@@ -44,7 +44,7 @@
             Assert.Equal(15, charactersCount);
         }
         [Fact]
-        public void GetAllRetunsAllCharacters()
+        public void GetAllReturnsAllCharacters()
         {
             var charactersOnFirstPage=this.charactersService.GetAll(1);
             Assert.Equal(9, charactersOnFirstPage.Count);
